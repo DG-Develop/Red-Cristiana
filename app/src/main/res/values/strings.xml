@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Red Cristiana</string>
+    <string name="btnRed">Red</string>
+    <string name="btnSubRed">SubRed</string>
+    <string name="btnCedulas">Celulas</string>
+    <string name="btnVer">Ver</string>
+    <string name="btnBibilia">Biblia</string>
+    <string name="btnInformacion">Acerca De</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="txtAsistencia">Asistencia</string>
+    <string name="txtInvitados">Invitados</string>
+    <string name="txtNiños">Niños</string>
+    <string name="txtOfrenda">Ofrenda</string>
+    <string name="txtTotalOfrenda">Total de Ofrenda</string>
+    <string name="txtNombreCedula">Nombre de celula</string>
+    <string name="txtNombreSubred">Nombre de Subred</string>
+    <string name="txtNombreRed">Nombre de Red</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="formato_fecha">dd/mm/yyyy</string>
+    <string name="select_fecha">Seleccione una fecha: </string>
+    <string name="btn_buscar">Buscar </string>
+    <string name="btn_ver_registro">Ver registro</string>
+</resources>

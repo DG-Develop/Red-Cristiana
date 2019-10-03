@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "184366355605",
+    "firebase_url": "https://red-cristiana-adc2d.firebaseio.com",
+    "project_id": "red-cristiana-adc2d",
+    "storage_bucket": "red-cristiana-adc2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184366355605:android:3559a5324de3cb69",
+        "android_client_info": {
+          "package_name": "com.david.redcristianauno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184366355605-gpv6ijureu7ruab2n5g1ldeu4fovoe6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.david.redcristianauno",
+            "certificate_hash": "aec97fa0f82ca8ed5b362ee070b29051c9af216a"
+          }
+        },
+        {
+          "client_id": "184366355605-76mqeh46jbvlo0uk5assv61al3f3genn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPmjGn4ygZ8-j2WXtEv6xVemWZg2i0egk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184366355605-76mqeh46jbvlo0uk5assv61al3f3genn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

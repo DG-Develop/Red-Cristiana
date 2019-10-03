@@ -1,8 +1,8 @@
-package com.david.redcristianauno.DTO;
+package com.david.redcristianauno.POJOs;
 
 public class RegistroSubred {
     private String id_registroSubred;
-    private String nombre_subred;
+    private String id_usuario;
     private int asistencia_subred;
     private double ofrenda_subred;
     private String fecha_subred;
@@ -10,10 +10,9 @@ public class RegistroSubred {
     public RegistroSubred() {
 
     }
-
-    public RegistroSubred(String id_registroSubred, String nombre_subred, int asistencia_subred, double ofrenda_subred, String fecha_subred) {
+    public RegistroSubred(String id_registroSubred, String id_usuario, int asistencia_subred, double ofrenda_subred, String fecha_subred) {
         this.id_registroSubred = id_registroSubred;
-        this.nombre_subred = nombre_subred;
+        this.id_usuario = id_usuario;
         this.asistencia_subred = asistencia_subred;
         this.ofrenda_subred = ofrenda_subred;
         this.fecha_subred = fecha_subred;
@@ -25,14 +24,6 @@ public class RegistroSubred {
 
     public void setId_registroSubred(String id_registroSubred) {
         this.id_registroSubred = id_registroSubred;
-    }
-
-    public String getNombre_subred() {
-        return nombre_subred;
-    }
-
-    public void setNombre_subred(String nombre_subred) {
-        this.nombre_subred = nombre_subred;
     }
 
     public int getAsistencia_subred() {
@@ -57,5 +48,13 @@ public class RegistroSubred {
 
     public void setFecha_subred(String fecha_subred) {
         this.fecha_subred = fecha_subred;
+    }
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
     }
 }

@@ -15,20 +15,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BibliaActivity"></activity>
-        <activity
-            android:name=".PopUpInfoHistorico"
-            android:theme="@style/AppTheme.PopupTema" />
-        <activity android:name=".HistoricoActivity" />
-        <activity android:name=".SubredActivity" />
-        <activity android:name=".CelulaActivity" />
-        <activity android:name=".MenuActivity">
+        <activity android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".PrincipalActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_principal"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.david.redcristianauno.DTO;
+package com.david.redcristianauno.POJOs;
 
 public class HistoricoSemanal {
     private String id_historico;

@@ -1,8 +1,9 @@
-package com.david.redcristianauno.DTO;
+package com.david.redcristianauno.POJOs;
 
 public class RegistroCelula {
     private String id_registroCelula;
-    private String nombre_celula;
+    private String id_celula;
+    private String id_usuario;
     private int asistencia_celula;
     private int invitados_celula;
     private int ninos_celula;
@@ -12,9 +13,10 @@ public class RegistroCelula {
     public RegistroCelula() {
     }
 
-    public RegistroCelula(String id_registroCelula, String nombre_celula, int asistencia_celula, int invitados_celula, int ninos_celula, double ofrenda_celula, String fecha_celula) {
+    public RegistroCelula(String id_registroCelula, String id_celula, String id_usuario, int asistencia_celula, int invitados_celula, int ninos_celula, double ofrenda_celula, String fecha_celula) {
         this.id_registroCelula = id_registroCelula;
-        this.nombre_celula = nombre_celula;
+        this.id_celula = id_celula;
+        this.id_usuario = id_usuario;
         this.asistencia_celula = asistencia_celula;
         this.invitados_celula = invitados_celula;
         this.ninos_celula = ninos_celula;
@@ -30,12 +32,12 @@ public class RegistroCelula {
         this.id_registroCelula = id_registroCelula;
     }
 
-    public String getNombre_celula() {
-        return nombre_celula;
+    public String getId_celula() {
+        return id_celula;
     }
 
-    public void setNombre_celula(String nombre_celula) {
-        this.nombre_celula = nombre_celula;
+    public void setId_celula(String id_celula) {
+        this.id_celula = id_celula;
     }
 
     public int getAsistencia_celula() {
@@ -76,5 +78,13 @@ public class RegistroCelula {
 
     public void setFecha_celula(String fecha_celula) {
         this.fecha_celula = fecha_celula;
+    }
+
+    public String getId_usuario() {
+        return id_usuario;
+    }
+
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
     }
 }

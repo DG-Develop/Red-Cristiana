@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/red"
+            android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/celulas"
+            android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/nav_tools"
+            android:icon="@drawable/ver"
+            android:title="@string/menu_tools" />
+        <item
+            android:id="@+id/nav_biblia"
+            android:icon="@drawable/biblia"
+            android:title="@string/btnBibilia" />
+    </group>
+
+    <item android:title="Opciones de Superusuario">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/candado"
+                android:title="@string/menu_share" />
+            <item
+                android:id="@+id/crear"
+                android:icon="@drawable/crear"
+                android:title="@string/crear" />
+        </menu>
+    </item>
+
+
+</menu>

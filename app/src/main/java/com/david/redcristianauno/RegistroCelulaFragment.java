@@ -34,10 +34,10 @@ import java.util.UUID;
 
 
 public class RegistroCelulaFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
-    private EditText etAsistencia, etInvitados,etNiños, etOfrenda;
+    private EditText etAsistencia, etInvitados,etNiños, etOfrenda, etDireccion, etAnfitrion;
     public static EditText etFecha;
     private Spinner sp1,sp2,sp3;
-    private Button btnEnviar;
+    private Button btnEnviar, btnVerDireccion;
     private ImageButton btnFecha;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -64,6 +64,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
 
         etAsistencia = (EditText)view.findViewById(R.id.txt_asistencia);
         etInvitados = (EditText)view.findViewById(R.id.txt_invitados);
+        etAnfitrion = (EditText)view.findViewById(R.id.txtnombre_anfitrion);
+        etDireccion = (EditText)view.findViewById(R.id.txtDireccion);
         etNiños = (EditText)view.findViewById(R.id.txt_niños);
         etOfrenda = (EditText)view.findViewById(R.id.txt_ofrenda);
         sp1 = (Spinner)view.findViewById(R.id.spinner_nombres);
@@ -72,6 +74,7 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
         etFecha = (EditText) view.findViewById(R.id.et_mostrar_fecha_picker);
         btnEnviar = (Button)view.findViewById(R.id.btnEnviar);
         btnFecha = (ImageButton) view.findViewById(R.id.ib_obtener_fecha_celula);
+        btnVerDireccion = view.findViewById(R.id.btnverDireccion);
 
         etFecha.setFocusable(false);
 
@@ -99,6 +102,7 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
                 Toast.makeText(getActivity(), "No has seleccionado nada", Toast.LENGTH_SHORT).show();
             }
         });
+
         btnFecha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,7 +130,19 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
                 }
             }
         });
+
+        btnVerDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ocultar();
+            }
+        });
         return view;
+    }
+
+    private void ocultar() {
+        etDireccion.setVisibility(View.VISIBLE);
+        btnVerDireccion.setVisibility(View.INVISIBLE);
     }
 
     public String getIdSubred() {
@@ -236,27 +252,40 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             ofrenda = Double.parseDouble(res);
         }
 
-        String fecha = etFecha.getText().toString();
-
         if(asistencia < invitados || asistencia < ninos){
             Toast.makeText(getContext(), "El valor de la asistencia no debe de ser menor que el de invitados o niños", Toast.LENGTH_LONG).show();
             Toast.makeText(getContext(), "No se registraron los datos", Toast.LENGTH_SHORT).show();
         }else {
             RegistroCelula rc = new RegistroCelula();
             rc.setId_registroCelula(UUID.randomUUID().toString());
-            rc.setId_celula(getIdCelula());
             rc.setId_usuario(getIdUsuario());
+            if(pusoDireccion()){
+                rc.setDomicilio(etDireccion.getText().toString().trim());
+            }else{
+                rc.setDomicilio(sp2.getSelectedItem().toString());
+            }
+            rc.setNombre_anfitrion(etAnfitrion.getText().toString().trim());
             rc.setAsistencia_celula(asistencia);
             rc.setInvitados_celula(invitados);
             rc.setNinos_celula(ninos);
             rc.setOfrenda_celula(ofrenda);
-            rc.setFecha_celula(fecha);
+            rc.setFecha_celula(etFecha.getText().toString().trim());
 
             databaseReference.child("Registro Celula").child(rc.getId_registroCelula()).setValue(rc);
             Toast.makeText(getContext(), "Regitrado Correctamente", Toast.LENGTH_SHORT).show();
         }
 
         limpiarCampos();
+    }
+
+    public boolean pusoDireccion(){
+        boolean bandera = true;
+
+        if(etDireccion.getText().toString().isEmpty()){
+            bandera = false;
+        }
+
+        return bandera;
     }
 
     private void limpiarCampos() {
@@ -290,6 +319,7 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
                     sp2.setAdapter(arrayAdapterCelula);
 
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

@@ -51,7 +51,6 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
     private com.david.redcristianauno.adapters.adaptador_historico adaptador_historico;
 
     private String nombre_card;
-    private String nombre_celula_card;
     private String nombre_sured_card;
 
 
@@ -62,11 +61,11 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
 
         inicializarFirebase();
 
-        etFecha = (EditText) view.findViewById(R.id.txt_fecha_historico);
+        etFecha = view.findViewById(R.id.txt_fecha_historico);
         btnMostrarDia = view.findViewById(R.id.btnbuscar);
-        btnFecha = (ImageView) view.findViewById(R.id.ib_fecha_historico);
+        btnFecha = view.findViewById(R.id.ib_fecha_historico);
 
-        rc = (RecyclerView) view.findViewById(R.id.rcDatosDiarios);
+        rc = view.findViewById(R.id.rcDatosDiarios);
         rc.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
 
         hddc = new HistoricoDatosDiariosCard();
@@ -107,13 +106,15 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
                     if(fecha.equals(rgc.getFecha_celula())) {
 
                         hddc.setNombre_subred_card(getNombre_sured_card());
+                        hddc.setNombre_anfitrion(rgc.getNombre_anfitrion());
+                        hddc.setNombre_direccion_card(rgc.getDomicilio());
                         hddc.setAsistencia_card(rgc.getAsistencia_celula());
                         hddc.setInvitados_card(rgc.getInvitados_celula());
                         hddc.setNinos_card(rgc.getNinos_celula());
                         hddc.setOfrenda_card(rgc.getOfrenda_celula());
 
-                        verUsuario(rgc.getId_usuario(),hddc.getAsistencia_card(), hddc.getInvitados_card(), hddc.getNinos_card(),
-                                hddc.getOfrenda_card(),rgc.getId_celula());
+                        verUsuario(rgc.getId_usuario(),hddc.getNombre_anfitrion(),hddc.getNombre_direccion_card(),hddc.getAsistencia_card(), hddc.getInvitados_card(), hddc.getNinos_card(),
+                                hddc.getOfrenda_card());
 
                     }
 
@@ -139,8 +140,7 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
     }
 
 
-    public void verUsuario(final String id_usuario, final int asistencia, final int invitados, final int ninos, final double ofrenda,
-                           final String id_celula){
+    public void verUsuario(final String id_usuario, final String nombre_anfitrion, final String direccion, final int asistencia, final int invitados, final int ninos, final double ofrenda){
 
         databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -150,45 +150,9 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
 
                     if (id_usuario.equals(u.getId_usuario())){
                         setNombre_card(u.getNombre());
-                        verSubred(u.getId_subred(), getNombre_card(), asistencia, invitados, ninos, ofrenda, id_celula);
+                        verSubred(u.getId_subred(), getNombre_card(),nombre_anfitrion,direccion,asistencia, invitados, ninos, ofrenda);
                     }
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    public String getNombre_celula_card() {
-        return nombre_celula_card;
-    }
-
-    public void setNombre_celula_card(String nombre_celula_card) {
-        this.nombre_celula_card = nombre_celula_card;
-    }
-
-    public void verCelula(final String id_celula, final String nombre, final int asistencia, final int invitados, final int ninos, final double ofrenda,
-                          final String nombre_subred){
-        databaseReference.child("Celula").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Celula c = snapshot.getValue(Celula.class);
-
-                    if(id_celula.equals(c.getId_celula())){
-                        setNombre_celula_card(c.getNombre_celula());
-
-
-                        listDatos.add(new HistoricoDatosDiariosCard(nombre, asistencia, invitados,
-                                ninos, ofrenda, getNombre_celula_card(), nombre_subred));
-
-                    }
-                }
-                adaptador_historico = new adaptador_historico(getContext(),listDatos);
-                rc.setAdapter(adaptador_historico);
             }
 
             @Override
@@ -206,8 +170,7 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
         this.nombre_sured_card = nombre_sured_card;
     }
 
-    public void verSubred(final String id_subred, final String nombre, final int asistencia, final int invitados, final int ninos, final double ofrenda,
-                          final String id_celula){
+    public void verSubred(final String id_subred, final String nombre, final String nombre_anfitrion, final String direccion, final int asistencia, final int invitados, final int ninos, final double ofrenda){
         databaseReference.child("Subred").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -217,11 +180,13 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
                     if(id_subred.equals(sr.getId_subred())){
                        setNombre_sured_card(sr.getNombre_subred());
 
-
-                       verCelula(id_celula, nombre, asistencia,invitados, ninos, ofrenda,getNombre_sured_card());
+                        listDatos.add(new HistoricoDatosDiariosCard(nombre,nombre_anfitrion, asistencia, invitados,
+                                ninos, ofrenda, direccion, getNombre_sured_card()));
 
                     }
                 }
+                adaptador_historico = new adaptador_historico(getContext(),listDatos);
+                rc.setAdapter(adaptador_historico);
             }
 
             @Override

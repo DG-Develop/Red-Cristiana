@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                style="@style/spinner_style"/>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"

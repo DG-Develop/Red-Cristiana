@@ -9,9 +9,13 @@
     <string name="btnInformacion">Acerca De</string>
     <string name="btnEnviar">Enviar</string>
     <string name="txtAsistencia">Asistencia</string>
+    <string name="txtAnfitrion">Nombre Anfitrion</string>
+    <string name="txtDirreccion">Dirección</string>
     <string name="txtInvitados">Invitados</string>
     <string name="txtNiños">Niños</string>
     <string name="txtOfrenda">Ofrenda</string>
+    <string name="txtOtroCelula">Si no aparece tú celula, presione aquí</string>
+    <string name="txtRegistro">Introduce los datos</string>
 
     <string name="txtTotalOfrenda">Total de Ofrenda</string>
     <string name="txtNombreCedula">Nombre de celula</string>

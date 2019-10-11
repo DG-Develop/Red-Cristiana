@@ -238,12 +238,31 @@ public class PrincipalActivity extends AppCompatActivity
                 visible.setVisible(false);
                 MenuItem visible2 = menu.findItem(R.id.nav_share);
                 visible2.setVisible(false);
+                MenuItem visible3 = menu.findItem(R.id.nav_slideshow);
+                visible3.setVisible(false);
+                MenuItem visible4 = menu.findItem(R.id.crear);
+                visible4.setVisible(false);
                 break;
             case 2:
+                menu = navigationView.getMenu();
+                MenuItem visible5 = menu.findItem(R.id.nav_gallery);
+                visible5.setVisible(false);
+                MenuItem visible6 = menu.findItem(R.id.nav_share);
+                visible6.setVisible(false);
+                MenuItem visible7 = menu.findItem(R.id.crear);
+                visible7.setVisible(false);
                 break;
             case 3:
+                menu = navigationView.getMenu();
+                MenuItem visible8 = menu.findItem(R.id.nav_share);
+                visible8.setVisible(false);
+                MenuItem visible9 = menu.findItem(R.id.crear);
+                visible9.setVisible(false);
                 break;
             case 4:
+                menu = navigationView.getMenu();
+                MenuItem visible10 = menu.findItem(R.id.nav_share);
+                visible10.setVisible(false);
                 break;
             case 5:
                 Toast.makeText(PrincipalActivity.this, "Super Usuario activo", Toast.LENGTH_SHORT).show();

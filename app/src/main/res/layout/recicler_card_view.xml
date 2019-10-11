@@ -31,6 +31,14 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/rc_txtnombre_anfitrion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:textAlignment="center"
+                android:text="@string/txtAnfitrion" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -91,7 +99,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
-                    android:text="@string/txtNombreCedula" />
+                    android:text="@string/txtDirreccion" />
 
                 <TextView
                     android:id="@+id/rc_txt_subred"

@@ -35,12 +35,13 @@ public class adaptador_historico extends RecyclerView.Adapter<adaptador_historic
     @Override
     public void onBindViewHolder(@NonNull adaptador_historico.ViewHolderDatos holder, int i) {
         holder.txtnombre.setText(listregistro.get(i).getNombre_card());
-        holder.txtasistencia.setText("Asistencia: " + String.valueOf(listregistro.get(i).getAsistencia_card()));
-        holder.txtinvitados.setText("Invitados: " + String.valueOf( listregistro.get(i).getInvitados_card()));
-        holder.txtninos.setText("Ninos: " + String.valueOf(listregistro.get(i).getNinos_card()));
-        holder.txtofrenda.setText("Ofrenda: " + String.valueOf(listregistro.get(i).getOfrenda_card()));
+        holder.txtnombreAnfitrion.setText("Anfitrion: " + listregistro.get(i).getNombre_anfitrion());
+        holder.txtasistencia.setText("Asistencia: " + listregistro.get(i).getAsistencia_card());
+        holder.txtinvitados.setText("Invitados: " + listregistro.get(i).getInvitados_card());
+        holder.txtninos.setText("Ninos: " + listregistro.get(i).getNinos_card());
+        holder.txtofrenda.setText("Ofrenda: " + listregistro.get(i).getOfrenda_card());
         holder.txtnombre_subred.setText("Subred: " + listregistro.get(i).getNombre_subred_card());
-        holder.txtnombre_celula.setText("Celula: " + listregistro.get(i).getNombre_celula_card());
+        holder.txtnombreDireccion.setText("Celula: " + listregistro.get(i).getNombre_direccion_card());
     }
 
     @Override
@@ -49,18 +50,19 @@ public class adaptador_historico extends RecyclerView.Adapter<adaptador_historic
     }
 
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
-        private TextView txtnombre, txtasistencia, txtinvitados,txtninos, txtofrenda, txtnombre_celula, txtnombre_subred;
+        private TextView txtnombre, txtnombreAnfitrion, txtasistencia, txtinvitados,txtninos, txtofrenda, txtnombreDireccion, txtnombre_subred;
 
         public ViewHolderDatos(@NonNull View itemView) {
 
             super(itemView);
 
             txtnombre = itemView.findViewById(R.id.rc_txtnombre_usuario);
+            txtnombreAnfitrion = itemView.findViewById(R.id.rc_txtnombre_anfitrion);
             txtasistencia = itemView.findViewById(R.id.rc_txt_asistencia);
             txtinvitados = itemView.findViewById(R.id.rc_txt_invitados);
             txtninos = itemView.findViewById(R.id.rc_txt_niños);
             txtofrenda = itemView.findViewById(R.id.rc_txt_ofrenda);
-            txtnombre_celula = itemView.findViewById(R.id.rc_txt_celula);
+            txtnombreDireccion = itemView.findViewById(R.id.rc_txt_celula);
             txtnombre_subred = itemView.findViewById(R.id.rc_txt_subred);
 
 

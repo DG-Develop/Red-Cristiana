@@ -2,23 +2,25 @@ package com.david.redcristianauno.Clases;
 
 public class HistoricoDatosDiariosCard {
     private String nombre_card;
+    private String nombre_anfitrion;
     private int asistencia_card;
     private int invitados_card;
     private int ninos_card;
     private double ofrenda_card;
-    private String nombre_celula_card;
+    private String nombre_direccion_card;
     private String nombre_subred_card;
 
     public HistoricoDatosDiariosCard() {
     }
 
-    public HistoricoDatosDiariosCard(String nombre_card, int asistencia_card, int invitados_card, int ninos_card, double ofrenda_card, String nombre_celula_card, String nombre_subred_card) {
+    public HistoricoDatosDiariosCard(String nombre_card, String nombre_anfitrion, int asistencia_card, int invitados_card, int ninos_card, double ofrenda_card, String nombre_direccion_card, String nombre_subred_card) {
         this.nombre_card = nombre_card;
+        this.nombre_anfitrion = nombre_anfitrion;
         this.asistencia_card = asistencia_card;
         this.invitados_card = invitados_card;
         this.ninos_card = ninos_card;
         this.ofrenda_card = ofrenda_card;
-        this.nombre_celula_card = nombre_celula_card;
+        this.nombre_direccion_card = nombre_direccion_card;
         this.nombre_subred_card = nombre_subred_card;
     }
 
@@ -62,12 +64,12 @@ public class HistoricoDatosDiariosCard {
         this.ofrenda_card = ofrenda_card;
     }
 
-    public String getNombre_celula_card() {
-        return nombre_celula_card;
+    public String getNombre_direccion_card() {
+        return nombre_direccion_card;
     }
 
-    public void setNombre_celula_card(String nombre_celula_card) {
-        this.nombre_celula_card = nombre_celula_card;
+    public void setNombre_direccion_card(String nombre_direccion_card) {
+        this.nombre_direccion_card = nombre_direccion_card;
     }
 
     public String getNombre_subred_card() {
@@ -76,5 +78,13 @@ public class HistoricoDatosDiariosCard {
 
     public void setNombre_subred_card(String nombre_subred_card) {
         this.nombre_subred_card = nombre_subred_card;
+    }
+
+    public String getNombre_anfitrion() {
+        return nombre_anfitrion;
+    }
+
+    public void setNombre_anfitrion(String nombre_anfitrion) {
+        this.nombre_anfitrion = nombre_anfitrion;
     }
 }

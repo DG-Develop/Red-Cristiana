@@ -1,42 +1,96 @@
 package com.david.redcristianauno;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.david.redcristianauno.Clases.Foto;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.io.LineReader;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 
 public class MenuFragment extends Fragment {
     private ViewFlipper vfliper;
     private Button ibizq, ibder;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
+    ArrayList<Foto> arrayListFotos = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        int images[] = {R.drawable.flor, R.drawable.tuli, R.drawable.paloma};
+        vfliper = view.findViewById(R.id.slideNoticias);
+        ibizq = view.findViewById(R.id.ibizq);
+        ibder = view.findViewById(R.id.ibder);
 
-        vfliper = (ViewFlipper) view.findViewById(R.id.slideNoticias);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        ibizq = (Button) view.findViewById(R.id.ibizq);
-        ibder = (Button) view.findViewById(R.id.ibder);
+        CollectionReference reference = db.collection("Galeria");
+
+        reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
+            ImageView imageView;
+
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
 
-        for (int image : images){
-            fliperImages(image);
-        }
+                for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+
+                    Foto foto = documentSnapshot.toObject(Foto.class);
+
+                    arrayListFotos.add(foto);
+                }
+
+                for (int i = 0; i < arrayListFotos.size(); i++){
+                    imageView = new ImageView(getActivity());
+
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    //lp.setMargins(0, -30, 0, 0);
+                    imageView.setLayoutParams(lp);
+
+                    Picasso.get()
+                            .load(arrayListFotos.get(i).getRuta_foto())
+                            .resize(1080,1200)
+                            .centerCrop()
+                            .into(imageView);
+
+                    vfliper.addView(imageView);
+                }
+            }
+        });
+
+        fliperImagesNoticias();
 
         ibder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,17 +108,16 @@ public class MenuFragment extends Fragment {
 
         return view;
     }
-    public void fliperImages(int image){
-        ImageView imageView = new ImageView(getActivity());
-        imageView.setBackgroundResource(image);
 
-        vfliper.addView(imageView);
+    public void fliperImagesNoticias(){
+
         vfliper.setFlipInterval(4000);
         vfliper.setAutoStart(true);
         vfliper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Soy una imagen", Toast.LENGTH_SHORT).show();
+
             }
         });
 

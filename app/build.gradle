@@ -31,6 +31,7 @@ dependencies {
     implementation 'com.android.support:support-annotations:28.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -40,5 +41,11 @@ dependencies {
 
     //menu para los actionbuttons flotantes
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+
+    //vista de los alertDialogos
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
+    //Se agrega picasso para cargar imagenes del url;
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }
 apply plugin: 'com.google.gms.google-services'

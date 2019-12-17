@@ -56,6 +56,7 @@
 
 
     <string name="crear">Crear Subred/Celula</string>
+    <string name="noticia">Subir Noticias</string>
 
     <string name="action_sign_in">Sign in or register</string>
     <string name="login_sign_in">Ver</string>

@@ -194,6 +194,8 @@ public class PrincipalActivity extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.contenedor, new PermisosUsuariosFragment()).commit();
         }else if(id == R.id.crear){
             fragmentManager.beginTransaction().replace(R.id.contenedor, new SubredFragment()).commit();
+        }else if(id == R.id.noticias){
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new noticiasFragment()).commit();
         }
 
 
@@ -242,27 +244,33 @@ public class PrincipalActivity extends AppCompatActivity
                 visible3.setVisible(false);
                 MenuItem visible4 = menu.findItem(R.id.crear);
                 visible4.setVisible(false);
+                MenuItem visible5 = menu.findItem(R.id.noticias);
+                visible5.setVisible(false);
                 break;
             case 2:
                 menu = navigationView.getMenu();
-                MenuItem visible5 = menu.findItem(R.id.nav_gallery);
-                visible5.setVisible(false);
-                MenuItem visible6 = menu.findItem(R.id.nav_share);
+                MenuItem visible6 = menu.findItem(R.id.nav_gallery);
                 visible6.setVisible(false);
-                MenuItem visible7 = menu.findItem(R.id.crear);
+                MenuItem visible7 = menu.findItem(R.id.nav_share);
                 visible7.setVisible(false);
+                MenuItem visible8 = menu.findItem(R.id.crear);
+                visible8.setVisible(false);
+                MenuItem visible9 = menu.findItem(R.id.noticias);
+                visible9.setVisible(false);
                 break;
             case 3:
                 menu = navigationView.getMenu();
-                MenuItem visible8 = menu.findItem(R.id.nav_share);
-                visible8.setVisible(false);
-                MenuItem visible9 = menu.findItem(R.id.crear);
-                visible9.setVisible(false);
+                MenuItem visible10 = menu.findItem(R.id.nav_share);
+                visible10.setVisible(false);
+                MenuItem visible11 = menu.findItem(R.id.crear);
+                visible11.setVisible(false);
+                MenuItem visible12 = menu.findItem(R.id.noticias);
+                visible12.setVisible(false);
                 break;
             case 4:
                 menu = navigationView.getMenu();
-                MenuItem visible10 = menu.findItem(R.id.nav_share);
-                visible10.setVisible(false);
+                MenuItem visible13 = menu.findItem(R.id.nav_share);
+                visible13.setVisible(false);
                 break;
             case 5:
                 Toast.makeText(PrincipalActivity.this, "Super Usuario activo", Toast.LENGTH_SHORT).show();

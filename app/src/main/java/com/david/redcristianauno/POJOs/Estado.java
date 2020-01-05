@@ -12,6 +12,10 @@ public class Estado {
         this.nombre_estado = nombre_estado;
     }
 
+    public Estado(String nombre_estado) {
+        this.nombre_estado = nombre_estado;
+    }
+
     public int getId_estado() {
         return id_estado;
     }

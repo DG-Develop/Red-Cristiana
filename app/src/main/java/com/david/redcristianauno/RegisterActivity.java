@@ -12,12 +12,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.POJOs.Estado;
 import com.david.redcristianauno.POJOs.Municipio;
 import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuario;
+import com.david.redcristianauno.POJOs.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -28,6 +31,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
     private int id_estado, id_municipio;
 
     private String id_subred;
+
+    private InsertarDatos inda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +207,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
     private void listarEstados(){
         databaseReference.child("Estado").orderByChild("nombre_municipio").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -335,7 +345,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.setApellido_paterno(txtApellidoPaterno.getText().toString().trim());
         user.setApellido_materno(txtApellidoMaterno.getText().toString().trim());
         user.setCorreo(txtCorreo.getText().toString().trim());
-        user.setContraseña(txtContraseña.getText().toString().trim());
+        user.setContraseña(txtCorreo.getText().toString().trim());
         user.setId_estado(getId_estado());
         user.setId_municipio(getId_municipio());
         user.setColonia(txtColonia.getText().toString().trim());
@@ -354,6 +364,32 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
+    void crear(){
+        Usuarios u = new Usuarios(
+                txtNombre.getText().toString().trim(),
+                txtApellidoPaterno.getText().toString().trim(),
+                txtApellidoMaterno.getText().toString().trim(),
+                txtColonia.getText().toString().trim(),
+                txtCalle.getText().toString().trim(),
+                txtNum_ext.getText().toString().trim(),
+                Integer.parseInt(txtCodigo_postal.getText().toString().trim()),
+                txtTelefono.getText().toString().trim(),
+                txtCorreo.getText().toString().trim(),
+                txtCorreo.getText().toString().trim(),
+                "Normal"
+        );
+
+        inda = new InsertarDatos();
+
+        inda.crearUsuario(u);
+
+        Toast.makeText(this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
+
+        Intent  i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     private void procesaUsuario() {
             if(txtContraseña.getText().toString().trim().length() < 6){
                 Toast.makeText(this, "Introduzca un contraseña mas grande", Toast.LENGTH_SHORT).show();
@@ -365,7 +401,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            crearUsuario();
+                            //crearUsuario();
+                            crear();
                         }else{
                             Toast.makeText(RegisterActivity.this, "No se pudo crear usuarioprivado", Toast.LENGTH_SHORT).show();
                         }

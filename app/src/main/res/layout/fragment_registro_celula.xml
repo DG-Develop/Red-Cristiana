@@ -65,18 +65,18 @@
                     android:ems="10"
                     android:hint="@string/txtDirreccion"
                     android:inputType="textPersonName"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
 
                 <Button
                     android:id="@+id/btnverDireccion"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_gravity="center"
                     android:background="#405FE3"
-                    android:textColor="@android:color/background_light"
-                    android:text="@string/txtOtroCelula" />
+                    android:text="@string/txtOtroCelula"
+                    android:textColor="@android:color/background_light" />
 
             </FrameLayout>
 

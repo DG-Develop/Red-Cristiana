@@ -4,6 +4,7 @@ public class Usuarios {
     private String nombre;
     private String apellido_paterno;
     private String apellido_materno;
+    private String municipio;
     private String colonia;
     private String calle;
     private String no_exterior;
@@ -14,11 +15,13 @@ public class Usuarios {
     private String tipo_permiso;
     private String celula;
 
-    public Usuarios(String nombre, String apellido_paterno, String apellido_materno, String colonia, String calle,
-                    String no_exterior, int codigo_postal, String telefono, String correo, String pass, String tipo_permiso, String celula) {
+    public Usuarios(String nombre, String apellido_paterno, String apellido_materno,String municipio, String colonia, String calle,
+                    String no_exterior, int codigo_postal, String telefono, String correo, String pass,
+                    String tipo_permiso, String celula) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
+        this.municipio = municipio;
         this.colonia = colonia;
         this.calle = calle;
         this.no_exterior = no_exterior;
@@ -33,11 +36,13 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public Usuarios(String nombre, String apellido_paterno, String apellido_materno, String colonia, String calle, String no_exterior,
-                    int codigo_postal, String telefono, String correo, String pass, String tipo_permiso) {
+    public Usuarios(String nombre, String apellido_paterno, String apellido_materno, String municipio, String colonia,
+                    String calle, String no_exterior, int codigo_postal, String telefono,
+                    String correo, String pass, String tipo_permiso) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
+        this.municipio = municipio;
         this.colonia = colonia;
         this.calle = calle;
         this.no_exterior = no_exterior;
@@ -142,5 +147,13 @@ public class Usuarios {
 
     public void setCelula(String celula) {
         this.celula = celula;
+    }
+
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 }

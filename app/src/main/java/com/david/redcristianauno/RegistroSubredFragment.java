@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.POJOs.RegistroSubred;
 import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuario;
@@ -45,6 +46,8 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
 
     private String idUsuario;
     public static String correo_usuario = "";
+    private InsertarDatos inda = new InsertarDatos();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,13 +95,38 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
                 if(etAsistencia.getText().toString().isEmpty() || etFecha.getText().toString().isEmpty()){
                     Toast.makeText(getActivity(), "Por favor llenar los campos de asistencia y de fecha", Toast.LENGTH_SHORT).show();
                 }else{
-                    registrarDatosSubred();
+                    //registrarDatosSubred();
+                    registrarDatos();
                 }
             }
         });
         return view;
     }
 
+    public void registrarDatos(){
+        final String centavos = sp2.getSelectedItem().toString();
+        String opc_ofrenda = etOfrenda.getText().toString();
+        String res = opc_ofrenda.concat(centavos);
+
+        int asistencia = Integer.parseInt(etAsistencia.getText().toString());
+        double ofrenda;
+        if(etOfrenda.getText().toString().isEmpty()){
+            ofrenda = 0.0;
+        }else{
+            ofrenda = Double.parseDouble(res);
+        }
+        String fecha = etFecha.getText().toString();
+
+        RegistroSubred rs = new RegistroSubred();
+        rs.setAsistencia_subred(asistencia);
+        rs.setOfrenda_subred(ofrenda);
+        rs.setFecha_subred(fecha);
+
+        inda.crearRegistroSubred(rs, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
+        Toast.makeText(getActivity(), "Registrado Correctamente", Toast.LENGTH_SHORT).show();
+        limpiarCampos();
+
+    }
     public String getIdUsuario() {
         return idUsuario;
     }

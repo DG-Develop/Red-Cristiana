@@ -13,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.InsertarDatos;
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Estado;
 import com.david.redcristianauno.POJOs.Municipio;
 import com.david.redcristianauno.POJOs.Subred;
@@ -62,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private String id_subred;
 
     private InsertarDatos inda;
+    private LeerDatos l = new LeerDatos();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +93,16 @@ public class RegisterActivity extends AppCompatActivity {
         ,"Morelos","Nayarit","Nuevo León","Oaxaca","Puebla","Querétaro","Quintana Roo","San Luis Potosí","Sinaloa"
         ,"Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"};*/
 
-        listarEstados();
+        //listarEstados();
+        l.leerColeccionEstados(spEstado, RegisterActivity.this);
 
         spEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String nombre_estado = spEstado.getSelectedItem().toString();
 
-                verEstados(nombre_estado);
+                //verEstados(nombre_estado);
+                l.leerEstados(nombre_estado,spMunicipio, RegisterActivity.this);
             }
 
             @Override
@@ -369,6 +373,7 @@ public class RegisterActivity extends AppCompatActivity {
                 txtNombre.getText().toString().trim(),
                 txtApellidoPaterno.getText().toString().trim(),
                 txtApellidoMaterno.getText().toString().trim(),
+                spMunicipio.getSelectedItem().toString(),
                 txtColonia.getText().toString().trim(),
                 txtCalle.getText().toString().trim(),
                 txtNum_ext.getText().toString().trim(),

@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.Subred;
@@ -50,6 +51,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
     private String idCelula;
     private String idSubred;
     public static String correo_usuario = "";
+
+    private InsertarDatos inda = new InsertarDatos();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +129,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
                 if(etAsistencia.getText().toString().isEmpty() || etFecha.getText().toString().isEmpty()){
                     Toast.makeText(getContext(), "Por favor llenar los campos de asistencia y de fecha", Toast.LENGTH_SHORT).show();
                 }else{
-                    registrarDatosCelula();
+                    //registrarDatosCelula();
+                    registrarDatos();
                 }
             }
         });
@@ -138,6 +142,55 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             }
         });
         return view;
+    }
+
+    public void registrarDatos(){
+        final String centavos = sp3.getSelectedItem().toString();
+        String opc_ofrenda = etOfrenda.getText().toString();
+        String res =opc_ofrenda.concat(centavos);
+
+        int asistencia = Integer.parseInt(etAsistencia.getText().toString());
+        int invitados;
+        if(etInvitados.getText().toString().isEmpty()){
+            invitados = 0;
+        }else{
+            invitados = Integer.parseInt(etInvitados.getText().toString());
+        }
+        int ninos;
+        if(etNiños.getText().toString().isEmpty()){
+            ninos = 0;
+        }else{
+            ninos = Integer.parseInt(etNiños.getText().toString());
+        }
+        double ofrenda;
+        if (etOfrenda.getText().toString().isEmpty()) {
+            ofrenda=0.0;
+        }else {
+            ofrenda = Double.parseDouble(res);
+        }
+
+        if(asistencia < invitados || asistencia < ninos){
+            Toast.makeText(getContext(), "El valor de la asistencia no debe de ser menor que el de invitados o niños", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "No se registraron los datos", Toast.LENGTH_SHORT).show();
+        }else {
+            RegistroCelula rc = new RegistroCelula();
+            rc.setNombre_anfitrion(etAnfitrion.getText().toString().trim());
+            if(pusoDireccion()){
+                rc.setDomicilio(etDireccion.getText().toString().trim());
+            }else{
+                rc.setDomicilio(sp2.getSelectedItem().toString());
+            }
+            rc.setAsistencia_celula(asistencia);
+            rc.setInvitados_celula(invitados);
+            rc.setNinos_celula(ninos);
+            rc.setOfrenda_celula(ofrenda);
+            rc.setFecha_celula(etFecha.getText().toString().trim());
+
+            inda.crearRegistroCelula(rc,Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
+            Toast.makeText(getContext(), "Regitrado Correctamente", Toast.LENGTH_SHORT).show();
+        }
+
+        limpiarCampos();
     }
 
     private void ocultar() {

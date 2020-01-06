@@ -18,6 +18,12 @@ public class RegistroSubred {
         this.fecha_subred = fecha_subred;
     }
 
+    public RegistroSubred(int asistencia_subred, double ofrenda_subred, String fecha_subred) {
+        this.asistencia_subred = asistencia_subred;
+        this.ofrenda_subred = ofrenda_subred;
+        this.fecha_subred = fecha_subred;
+    }
+
     public String getId_registroSubred() {
         return id_registroSubred;
     }

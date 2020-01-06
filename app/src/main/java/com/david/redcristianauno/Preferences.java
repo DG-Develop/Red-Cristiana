@@ -7,6 +7,7 @@ public class Preferences {
     public static final String STRING_PREFRENCES = "com.david.redcristianauno";
     public static final String PREFENCE_ESTADO_BUTTON_SESION = "estado.button.sesion";
     public static final String PREFERENCES_USUARIO_LOGIN = "usuarioprivado.login";
+    public static final String PREFERENCES_ID_USUARIO = "usuario.id";
 
 
     public static void savePreferenceBoolean(Context c, boolean b, String key){

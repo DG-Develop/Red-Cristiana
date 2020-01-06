@@ -30,6 +30,8 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.david.redcristianauno.Firestore.InsertarDatos;
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.Historico.HistoricoDiarioFragment;
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
@@ -75,6 +77,9 @@ public class PrincipalActivity extends AppCompatActivity
     long maxid = 0;
     long maxidSubred = 0;
 
+    private LeerDatos l = new LeerDatos();
+    private InsertarDatos inda = new InsertarDatos();
+
 
 
     @Override
@@ -114,10 +119,13 @@ public class PrincipalActivity extends AppCompatActivity
 
         checar(fecha);
 
+        //inda.formatoSemanal();
+
         correo_usuario = Preferences.obtenerPreferencesString(this, Preferences.PREFERENCES_USUARIO_LOGIN);
 
-        datosSesion(correo_usuario);
+        tv_correo_usuario.setText(correo_usuario);
 
+        l.datosSesion(tv_nombre_usuario,correo_usuario, menu, navigationView, PrincipalActivity.this);
 
         //ocultardatos();
     }
@@ -208,76 +216,6 @@ public class PrincipalActivity extends AppCompatActivity
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-    }
-
-    public void datosSesion(final String correo){
-        tv_correo_usuario.setText(correo);
-        databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Usuario u = snapshot.getValue(Usuario.class);
-
-                    if(correo.equals(u.getCorreo())){
-                       tv_nombre_usuario.setText(u.getNombre());
-                       visualiza(u.getId_permiso());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void visualiza(int id_permiso) {
-        switch (id_permiso){
-            case 1:
-                menu = navigationView.getMenu();
-                MenuItem visible = menu.findItem(R.id.nav_gallery);
-                visible.setVisible(false);
-                MenuItem visible2 = menu.findItem(R.id.nav_share);
-                visible2.setVisible(false);
-                MenuItem visible3 = menu.findItem(R.id.nav_slideshow);
-                visible3.setVisible(false);
-                MenuItem visible4 = menu.findItem(R.id.crear);
-                visible4.setVisible(false);
-                MenuItem visible5 = menu.findItem(R.id.noticias);
-                visible5.setVisible(false);
-                break;
-            case 2:
-                menu = navigationView.getMenu();
-                MenuItem visible6 = menu.findItem(R.id.nav_gallery);
-                visible6.setVisible(false);
-                MenuItem visible7 = menu.findItem(R.id.nav_share);
-                visible7.setVisible(false);
-                MenuItem visible8 = menu.findItem(R.id.crear);
-                visible8.setVisible(false);
-                MenuItem visible9 = menu.findItem(R.id.noticias);
-                visible9.setVisible(false);
-                break;
-            case 3:
-                menu = navigationView.getMenu();
-                MenuItem visible10 = menu.findItem(R.id.nav_share);
-                visible10.setVisible(false);
-                MenuItem visible11 = menu.findItem(R.id.crear);
-                visible11.setVisible(false);
-                MenuItem visible12 = menu.findItem(R.id.noticias);
-                visible12.setVisible(false);
-                break;
-            case 4:
-                menu = navigationView.getMenu();
-                MenuItem visible13 = menu.findItem(R.id.nav_share);
-                visible13.setVisible(false);
-                break;
-            case 5:
-                Toast.makeText(PrincipalActivity.this, "Super Usuario activo", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                break;
-        }
     }
 
     private void checar(final String fecha) {

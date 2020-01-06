@@ -26,6 +26,17 @@ public class RegistroCelula {
         this.fecha_celula = fecha_celula;
     }
 
+    public RegistroCelula(String nombre_anfitrion, String domicilio, int asistencia_celula,
+                          int invitados_celula, int ninos_celula, double ofrenda_celula, String fecha_celula) {
+        this.nombre_anfitrion = nombre_anfitrion;
+        this.domicilio = domicilio;
+        this.asistencia_celula = asistencia_celula;
+        this.invitados_celula = invitados_celula;
+        this.ninos_celula = ninos_celula;
+        this.ofrenda_celula = ofrenda_celula;
+        this.fecha_celula = fecha_celula;
+    }
+
     public String getId_registroCelula() {
         return id_registroCelula;
     }

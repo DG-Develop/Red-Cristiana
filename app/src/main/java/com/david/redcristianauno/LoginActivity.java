@@ -1,9 +1,7 @@
 package com.david.redcristianauno;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText txtCorreo, txtPassword;
@@ -29,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private boolean isActivatedRadioButton;
 
+    private LeerDatos l = new LeerDatos();
 
 
     @Override
@@ -63,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        LeerDatos l = new LeerDatos();
+
     }
 
     public void ingresar(View view){
@@ -70,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = txtPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this, "Ingresa un usuarioprivado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Ingresa un usuario", Toast.LENGTH_SHORT).show();
             return;
         }
         if(TextUtils.isEmpty(password)){
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     Preferences.savePreferenceBoolean(LoginActivity.this, rbSesion.isChecked(),Preferences.PREFENCE_ESTADO_BUTTON_SESION);
                     Preferences.savePreferenceString(LoginActivity.this,email,Preferences.PREFERENCES_USUARIO_LOGIN);
+                    l.preferencesUsuarios(email, LoginActivity.this);
 
                     Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
                     startActivity(i);

@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.InsertarDatos;
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.Subred;
@@ -53,6 +54,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
     public static String correo_usuario = "";
 
     private InsertarDatos inda = new InsertarDatos();
+    private LeerDatos l = new LeerDatos();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_registro_celula, container,false);
+
+
 
         etAsistencia = (EditText)view.findViewById(R.id.txt_asistencia);
         etInvitados = (EditText)view.findViewById(R.id.txt_invitados);
@@ -85,6 +90,7 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_david,centavos);
         sp3.setAdapter(adapter);
+
 
         correo_usuario = Preferences.obtenerPreferencesString(getActivity(), Preferences.PREFERENCES_USUARIO_LOGIN);
 
@@ -141,6 +147,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
                 ocultar();
             }
         });
+
+
         return view;
     }
 
@@ -174,6 +182,7 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             Toast.makeText(getContext(), "No se registraron los datos", Toast.LENGTH_SHORT).show();
         }else {
             RegistroCelula rc = new RegistroCelula();
+            rc.setId_usuario(Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
             rc.setNombre_anfitrion(etAnfitrion.getText().toString().trim());
             if(pusoDireccion()){
                 rc.setDomicilio(etDireccion.getText().toString().trim());
@@ -186,7 +195,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             rc.setOfrenda_celula(ofrenda);
             rc.setFecha_celula(etFecha.getText().toString().trim());
 
-            inda.crearRegistroCelula(rc,Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
+            l.leerUsuarioRegistroCelula(rc, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
+
             Toast.makeText(getContext(), "Regitrado Correctamente", Toast.LENGTH_SHORT).show();
         }
 

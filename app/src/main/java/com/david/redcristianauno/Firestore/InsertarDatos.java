@@ -19,10 +19,11 @@ import java.util.Calendar;
 public class InsertarDatos {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    public int total_asistencia = 0;
-    public  int total_invitados = 0;
-    public  int total_ninos = 0;
-    public double total_ofrenda = 0;
+
+    public static int total_asistencia = 0;
+    public static int total_invitados = 0;
+    public static int total_ninos = 0;
+    public static double total_ofrenda = 0;
 
     public InsertarDatos(){
 
@@ -32,12 +33,12 @@ public class InsertarDatos {
         db.collection("usuarios").document().set(usuario);
     }
 
-    public void crearRegistroCelula(RegistroCelula registroCelula, String id){
-        db.collection("usuarios").document(id).collection("Datos Celula").document().set(registroCelula);
+    public void crearRegistroCelula(RegistroCelula registroCelula){
+        db.collection("Datos Celula").document().set(registroCelula);
     }
 
-    public void crearRegistroSubred(RegistroSubred registroSubred, String id){
-        db.collection("usuarios").document(id).collection("Datos Subred").document().set(registroSubred);
+    public void crearRegistroSubred(RegistroSubred registroSubred){
+        db.collection("Datos Subred").document().set(registroSubred);
     }
 
     public void leerHistorico(final String fecha){
@@ -180,13 +181,10 @@ public class InsertarDatos {
                 miCalendario.set(Calendar.MONTH, mes - 1);
                 miCalendario.set(Calendar.YEAR, año);
                 final String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(miCalendario.getTime());
-               // Log.d("Result", fecha);
                 fechas[i] = fecha;
             }
 
             leerIdUsuario(fechas);
-            total();
-            //crearFormato(fechas);
 
             crearFormatoSubred(fechas);
 
@@ -194,17 +192,20 @@ public class InsertarDatos {
     }
 
     public void leerIdUsuario(final String[] fechas){
+
         db.collection("usuarios")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                crearFormato(fechas,document.getId());
-                                totalSemanal(getTotal_asistencia(),getTotal_invitados(),getTotal_ninos(),getTotal_ofrenda());
-                            }
 
+                        if (task.isSuccessful()){
+
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                crearFormato(document.getId());
+
+                            }
+                            //totalSemanal(total_asistencia, total_invitados,total_ninos,total_ofrenda);
                         }
                     }
                 });
@@ -215,48 +216,24 @@ public class InsertarDatos {
 
     }
 
-    public void crearFormato(final String[] fechas, String id) {
+    public void crearFormato(String id) {
 
-        db.collection("usuarios").document(id).collection("Datos Celula")
+        /*db.collection("usuarios").document(id).collection("Datos Celula")
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        if (task.isSuccessful()){
-
-                            for (QueryDocumentSnapshot document : task.getResult()){
-                                RegistroCelula rc = document.toObject(RegistroCelula.class);
-                                for (int i = 0; i < fechas.length; i++){
-                                    if(fechas[i].equals(rc.getFecha_celula())){
-                                        total_asistencia = total_asistencia + rc.getAsistencia_celula();
-                                        total_invitados = total_invitados + rc.getInvitados_celula();
-                                        total_ninos = total_ninos + rc.getNinos_celula();
-                                        total_ofrenda = total_ofrenda + rc.getOfrenda_celula();
-                                    }
-                                }
-                            }
-                            //Log.d("Result", String.valueOf(total_asistencia));
-                            setTotal_asistencia(total_asistencia);
-                            setTotal_invitados(total_invitados);
-                            setTotal_ninos(total_ninos);
-                            setTotal_ofrenda(total_ofrenda);
-                        }
-                    }
-                });
+                .addOnCompleteListener();*/
 
 
     }
+    public void conteoTotal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda){
 
-    private void totalSemanal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda) {
-        Log.d("Result", String.valueOf(total_asistencia));
-       this.total_asistencia += total_asistencia;
+        this.total_asistencia += total_asistencia;
         this.total_invitados += total_invitados;
         this.total_ninos += total_ninos;
         this.total_ofrenda += total_ofrenda;
     }
 
-    public void total(){
+
+    public void totalSemanal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda) {
         Calendar c = Calendar.getInstance();
         c.get(Calendar.DAY_OF_MONTH);
         c.get(Calendar.MONTH);
@@ -273,35 +250,4 @@ public class InsertarDatos {
         db.collection("Historico Celulas").document().set(hs3);
     }
 
-    public int getTotal_asistencia() {
-        return total_asistencia;
-    }
-
-    public void setTotal_asistencia(int total_asistencia) {
-        this.total_asistencia = total_asistencia;
-    }
-
-    public int getTotal_invitados() {
-        return total_invitados;
-    }
-
-    public void setTotal_invitados(int total_invitados) {
-        this.total_invitados = total_invitados;
-    }
-
-    public int getTotal_ninos() {
-        return total_ninos;
-    }
-
-    public void setTotal_ninos(int total_ninos) {
-        this.total_ninos = total_ninos;
-    }
-
-    public double getTotal_ofrenda() {
-        return total_ofrenda;
-    }
-
-    public void setTotal_ofrenda(double total_ofrenda) {
-        this.total_ofrenda = total_ofrenda;
-    }
 }

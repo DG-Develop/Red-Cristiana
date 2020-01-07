@@ -12,12 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
+import com.david.redcristianauno.POJOs.RegistroCelula;
+import com.david.redcristianauno.POJOs.RegistroSubred;
+import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.Preferences;
 import com.david.redcristianauno.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -31,6 +36,7 @@ import java.util.Map;
 
 public class LeerDatos {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference mDocRef;
     static Map<String, Object> datos;
 
     public LeerDatos(){
@@ -201,6 +207,66 @@ public class LeerDatos {
                 });
     }
 
+
+    //Busco el usuario con el Id para crear un registro de celula en RegistroCelulaFragment
+    public void leerUsuarioRegistroCelula(final RegistroCelula rc, final String id){
+        mDocRef = db.collection("usuarios").document(id);
+        mDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    private InsertarDatos inda = new InsertarDatos();
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+
+                            if(documentSnapshot.exists()){
+                                Usuarios u = documentSnapshot.toObject(Usuarios.class);
+
+                                if (id.equals(documentSnapshot.getId())) {
+                                    rc.setNombre_usuario(u.getNombre());
+
+                                    inda.crearRegistroCelula(rc);
+                                }else{
+                                    Log.d("Result", "No se encontraron coincidencias con el ID");
+                                }
+                            }else{
+                                Log.d("Result","No se encontro el documento");
+                            }
+                        }else{
+                            Log.d("Result", "Fallo al encontrar la tarea asignada", task.getException());
+                        }
+                    }
+                });
+    }
+
+    //Busco el usuario con el Id para crear un registro de Subred en RegistroSubredFragment
+    public void leerUsuarioRegistroSubred(final RegistroSubred rs, final String id){
+        mDocRef = db.collection("usuarios").document(id);
+        mDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            private InsertarDatos inda = new InsertarDatos();
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+
+                    if(documentSnapshot.exists()){
+                        Usuarios u = documentSnapshot.toObject(Usuarios.class);
+
+                        if (id.equals(documentSnapshot.getId())) {
+                            rs.setNombre_usuario(u.getNombre());
+
+                            inda.crearRegistroSubred(rs);
+                        }else{
+                            Log.d("Result", "No se encontraron coincidencias con el ID");
+                        }
+                    }else{
+                        Log.d("Result","No se encontro el documento");
+                    }
+                }else{
+                    Log.d("Result", "Fallo al encontrar la tarea asignada", task.getException());
+                }
+            }
+        });
+    }
 
     public void obtenerDatosColeccion(){
         db.collection("usuarios")

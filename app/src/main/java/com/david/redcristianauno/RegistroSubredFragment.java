@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.InsertarDatos;
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.RegistroSubred;
 import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuario;
@@ -47,7 +48,7 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
     private String idUsuario;
     public static String correo_usuario = "";
     private InsertarDatos inda = new InsertarDatos();
-
+    private LeerDatos l = new LeerDatos();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,11 +119,13 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
         String fecha = etFecha.getText().toString();
 
         RegistroSubred rs = new RegistroSubred();
+        rs.setId_usuario(Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
         rs.setAsistencia_subred(asistencia);
         rs.setOfrenda_subred(ofrenda);
         rs.setFecha_subred(fecha);
 
-        inda.crearRegistroSubred(rs, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
+        l.leerUsuarioRegistroSubred(rs, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
+
         Toast.makeText(getActivity(), "Registrado Correctamente", Toast.LENGTH_SHORT).show();
         limpiarCampos();
 

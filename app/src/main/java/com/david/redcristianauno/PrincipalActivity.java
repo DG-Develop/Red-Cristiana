@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -117,9 +118,9 @@ public class PrincipalActivity extends AppCompatActivity
         c.get(Calendar.YEAR);
         String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-        checar(fecha);
+        //checar(fecha);
 
-        //inda.formatoSemanal();
+        inda.leerHistorico(fecha);
 
         correo_usuario = Preferences.obtenerPreferencesString(this, Preferences.PREFERENCES_USUARIO_LOGIN);
 

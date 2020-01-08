@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.david.redcristianauno.POJOs.Usuario;
+import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.interfaces.ItemClickListener;
 
@@ -18,10 +19,10 @@ import java.util.ArrayList;
 public class adaptador_usuarios extends RecyclerView.Adapter<adaptador_usuarios.ViewHolderDatos> {
 
     Context c;
-    ArrayList<Usuario> lisDatos;
-    public ArrayList<Usuario> checkedDatos = new ArrayList<>();
+    ArrayList<Usuarios> lisDatos;
+    public ArrayList<Usuarios> checkedDatos = new ArrayList<>();
 
-    public adaptador_usuarios(Context c,ArrayList<Usuario> lisDatos) {
+    public adaptador_usuarios(Context c,ArrayList<Usuarios> lisDatos) {
         this.c = c;
         this.lisDatos = lisDatos;
     }

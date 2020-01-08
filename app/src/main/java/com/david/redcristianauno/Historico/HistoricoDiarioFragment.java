@@ -21,17 +21,24 @@ import android.widget.LinearLayout;
 import com.david.redcristianauno.Clases.HistoricoDatosDiariosCard;
 import com.david.redcristianauno.DatePickerFragment;
 import com.david.redcristianauno.POJOs.Celula;
+import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_historico;
+import com.david.redcristianauno.adapters.adaptador_historico_semanal;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,14 +51,17 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
     private DatabaseReference databaseReference;
 
     private ArrayList<HistoricoDatosDiariosCard> listDatos;
+    private ArrayList<RegistroCelula> listDatosDiarios;
 
     private HistoricoDatosDiariosCard hddc;
 
     private RecyclerView rc;
-    private com.david.redcristianauno.adapters.adaptador_historico adaptador_historico;
+    private adaptador_historico adaptador_historico;
 
     private String nombre_card;
     private String nombre_sured_card;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
     @Override
@@ -71,6 +81,8 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
         hddc = new HistoricoDatosDiariosCard();
 
         listDatos = new ArrayList<>();
+
+        listDatosDiarios = new ArrayList<>();
         etFecha.setFocusable(false);
 
 
@@ -78,7 +90,8 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
             @Override
             public void onClick(View v) {
 
-                mostrarLista(etFecha.getText().toString());
+                //mostrarLista(etFecha.getText().toString());
+                crearRegistroDiario(etFecha.getText().toString());
 
             }
         });
@@ -92,6 +105,35 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
         });
 
         return view;
+    }
+
+    //Busco los datos de registro celula por fecha para agregarlas al recyclerview
+    public void crearRegistroDiario(final String fecha){
+        db.collection("Datos Celula")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        listDatosDiarios.clear();
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot docunment : task.getResult()){
+                                RegistroCelula rc = docunment.toObject(RegistroCelula.class);
+                                if(fecha.equals(rc.getFecha_celula())){
+                                    listDatosDiarios.add(new RegistroCelula(rc.getNombre_usuario(),rc.getNombre_anfitrion(),
+                                            rc.getDomicilio(), rc.getAsistencia_celula(), rc.getInvitados_celula(),
+                                            rc.getNinos_celula(), rc.getOfrenda_celula(), rc.getFecha_celula()));
+                                    agregarAdaptador(listDatosDiarios);
+                                }
+                            }
+
+                        }
+                    }
+                });
+    }
+
+    private void agregarAdaptador(ArrayList<RegistroCelula> listDatosDiarios) {
+        adaptador_historico = new adaptador_historico(getContext(), listDatosDiarios);
+        rc.setAdapter(adaptador_historico);
     }
 
     public void verRegistro(final String fecha){
@@ -185,8 +227,8 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
 
                     }
                 }
-                adaptador_historico = new adaptador_historico(getContext(),listDatos);
-                rc.setAdapter(adaptador_historico);
+                //adaptador_historico = new adaptador_historico(getContext(),listDatos);
+                //rc.setAdapter(adaptador_historico);
             }
 
             @Override

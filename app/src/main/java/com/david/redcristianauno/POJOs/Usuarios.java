@@ -53,6 +53,11 @@ public class Usuarios {
         this.tipo_permiso = tipo_permiso;
     }
 
+    public Usuarios(String nombre, String correo) {
+        this.nombre = nombre;
+        this.correo = correo;
+    }
+
     public String getNombre() {
         return nombre;
     }

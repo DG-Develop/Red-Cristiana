@@ -14,27 +14,35 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.david.redcristianauno.POJOs.Usuario;
+import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_usuarios;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 
 public class UserGeneralFragment extends Fragment {
     private RecyclerView rc;
-    private ArrayList<Usuario> lisDatos;
-    private com.david.redcristianauno.adapters.adaptador_usuarios adaptador_usuarios;
+    private ArrayList<Usuarios> lisDatos;
+    private adaptador_usuarios adaptador_usuarios;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FloatingActionButton fb;
 
     private StringBuffer sb= null;
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,15 +61,16 @@ public class UserGeneralFragment extends Fragment {
 
         inicializarFirebase();
         lisDatos = new ArrayList<>();
-        listarUsuarios();
+        //listarUsuarios();
+        crearListaUsuarios();
 
-        adaptador_usuarios = new adaptador_usuarios(getContext(),listarUsuarios());
+        adaptador_usuarios = new adaptador_usuarios(getContext(),crearListaUsuarios());
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sb = new StringBuffer();
 
-                for(Usuario u : adaptador_usuarios.checkedDatos){
+                for(Usuarios u : adaptador_usuarios.checkedDatos){
                     sb.append(u.getNombre());
                     sb.append("\n");
                 }
@@ -82,7 +91,7 @@ public class UserGeneralFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference();
     }
 
-    public ArrayList<Usuario> listarUsuarios(){
+    public ArrayList<Usuarios> listarUsuarios(){
 
         databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -93,9 +102,9 @@ public class UserGeneralFragment extends Fragment {
                     String nombre = u.getNombre();
                     String correo = u.getCorreo();
 
-                    lisDatos.add(new Usuario(nombre, correo));
+                    //lisDatos.add(new Usuario(nombre, correo));
 
-                    adaptador_usuarios = new adaptador_usuarios(getContext(),lisDatos);
+                    //daptador_usuarios = new adaptador_usuarios(getContext(),lisDatos);
                     rc.setAdapter(adaptador_usuarios);
                 }
             }
@@ -107,5 +116,27 @@ public class UserGeneralFragment extends Fragment {
         });
         return lisDatos;
     }
+
+    public ArrayList<Usuarios> crearListaUsuarios(){
+        db.collection("usuarios")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        lisDatos.clear();
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Usuarios u = document.toObject(Usuarios.class);
+                                lisDatos.add(new Usuarios(u.getNombre(), u.getCorreo()));
+                                adaptador_usuarios = new adaptador_usuarios(getContext(), lisDatos);
+                                rc.setAdapter(adaptador_usuarios);
+                            }
+                        }
+
+                    }
+                });
+        return  lisDatos;
+    }
+
 
 }

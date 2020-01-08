@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.david.redcristianauno.Clases.HistoricoDatosDiariosCard;
+import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.R;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class adaptador_historico extends RecyclerView.Adapter<adaptador_historico.ViewHolderDatos> {
 
     Context c;
-    ArrayList<HistoricoDatosDiariosCard> listregistro;
+    ArrayList<RegistroCelula> listregistro;
 
-    public adaptador_historico(Context c, ArrayList<HistoricoDatosDiariosCard> listregistro) {
+    public adaptador_historico(Context c, ArrayList<RegistroCelula> listregistro) {
         this.c = c;
         this.listregistro = listregistro;
     }
@@ -34,14 +35,14 @@ public class adaptador_historico extends RecyclerView.Adapter<adaptador_historic
 
     @Override
     public void onBindViewHolder(@NonNull adaptador_historico.ViewHolderDatos holder, int i) {
-        holder.txtnombre.setText(listregistro.get(i).getNombre_card());
+        holder.txtnombre.setText(listregistro.get(i).getNombre_usuario());
         holder.txtnombreAnfitrion.setText("Anfitrion: " + listregistro.get(i).getNombre_anfitrion());
-        holder.txtasistencia.setText("Asistencia: " + listregistro.get(i).getAsistencia_card());
-        holder.txtinvitados.setText("Invitados: " + listregistro.get(i).getInvitados_card());
-        holder.txtninos.setText("Ninos: " + listregistro.get(i).getNinos_card());
-        holder.txtofrenda.setText("Ofrenda: " + listregistro.get(i).getOfrenda_card());
-        holder.txtnombre_subred.setText("Subred: " + listregistro.get(i).getNombre_subred_card());
-        holder.txtnombreDireccion.setText("Celula: " + listregistro.get(i).getNombre_direccion_card());
+        holder.txtasistencia.setText("Asistencia: " + listregistro.get(i).getAsistencia_celula());
+        holder.txtinvitados.setText("Invitados: " + listregistro.get(i).getInvitados_celula());
+        holder.txtninos.setText("Ninos: " + listregistro.get(i).getNinos_celula());
+        holder.txtofrenda.setText("Ofrenda: " + listregistro.get(i).getOfrenda_celula());
+        //holder.txtnombre_subred.setText("Subred: " + listregistro.get(i).getNombre_subred_card());
+        holder.txtnombreDireccion.setText("Celula: " + listregistro.get(i).getDomicilio());
     }
 
     @Override

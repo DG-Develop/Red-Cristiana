@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
+import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
 import com.david.redcristianauno.POJOs.Usuarios;
@@ -19,11 +20,6 @@ import java.util.Calendar;
 public class InsertarDatos {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-    public static int total_asistencia = 0;
-    public static int total_invitados = 0;
-    public static int total_ninos = 0;
-    public static double total_ofrenda = 0;
 
     public InsertarDatos(){
 
@@ -96,144 +92,123 @@ public class InsertarDatos {
                 }
                 nuevo-=1;
 
-                switch (mes){
-                    case 1:
-                        if (nuevo <= 0){
-                            mes = mes-1;
-                            nuevo = 31-nuevo;
-                        }
-                        break;
-                    case 2:
-                        if (nuevo <= 0){
-                            mes = mes-1;
-                            nuevo = 31-nuevo;
-                        }
-                        break;
-                    case 3:
-                        if((año%4 == 0) && ((año % 100 !=0) || (año % 400 == 0))){
-                            if(nuevo<=0){
-                                mes = mes -1;
-                                nuevo = 29-nuevo;
-                            }
-                        }else {
-                            if(nuevo<=0){
-                                mes = mes -1;
-                                nuevo = 28 - nuevo;
-                            }
-                        }
-                        break;
-                    case 4:
-                        if (nuevo <= 0){
+                if(mes == 1 ||mes == 2 || mes == 4 || mes == 6 || mes == 8 || mes == 9 || mes == 11){
+                    if (nuevo <= 0){
+                        mes = mes-1;
+                        nuevo = 31-nuevo;
+                    }
+                }else if(mes == 3){
+                    if(año%4 == 0 && año % 100 !=0 || año % 400 == 0){
+                        if(nuevo<=0){
                             mes = mes -1;
-                            nuevo = 31 - nuevo;
+                            nuevo = 29-nuevo;
                         }
-                        break;
-                    case 5:
-                        if (nuevo <= 0){
+                    }else {
+                        if(nuevo<=0){
                             mes = mes -1;
-                            nuevo = 30 - nuevo;
+                            nuevo = 28 - nuevo;
                         }
-                        break;
-                    case 6:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 31 - nuevo;
-                        }
-                        break;
-                    case 7:
-                        if (nuevo <= 0){
-                            mes = mes-1;
-                            nuevo = 30 - nuevo;
-                        }
-                        break;
-                    case 8:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 31 - nuevo;
-                        }
-                        break;
-                    case 9:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 31 - nuevo;
-                        }
-                        break;
-                    case 10:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 30 - nuevo;
-                        }
-                        break;
-                    case 11:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 31 - nuevo;
-                        }
-                        break;
-                    case 12:
-                        if (nuevo <= 0){
-                            mes = mes -1;
-                            nuevo = 30 - nuevo;
-                        }
-                        break;
+                    }
+                }else{
+                    if (nuevo <= 0){
+                        mes = mes -1;
+                        nuevo = 30 - nuevo;
+                    }
                 }
+
+
                 miCalendario.set(Calendar.DAY_OF_MONTH, nuevo);
                 miCalendario.set(Calendar.MONTH, mes - 1);
                 miCalendario.set(Calendar.YEAR, año);
+
+                Log.d("Result", String.valueOf(miCalendario.get(Calendar.MONTH)));
                 final String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(miCalendario.getTime());
                 fechas[i] = fecha;
             }
 
-            leerIdUsuario(fechas);
+            crearFormatoCelula(fechas);
 
             crearFormatoSubred(fechas);
 
         }
     }
 
-    public void leerIdUsuario(final String[] fechas){
 
-        db.collection("usuarios")
+    public void crearFormatoSubred(final String[] fechas) {
+        db.collection("Datos Subred")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    private int total_asistencia;
+                    private double total_ofrenda;
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                         if (task.isSuccessful()){
-
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                crearFormato(document.getId());
-
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                RegistroSubred rs = document.toObject(RegistroSubred.class);
+                                for (int i = 0; i < fechas.length; i++){
+                                    //Log.d("Result", fechas[i]);
+                                    if (fechas[i].equals(rs.getFecha_subred())){
+                                        total_asistencia = total_asistencia + rs.getAsistencia_subred();
+                                        total_ofrenda = total_ofrenda + rs.getOfrenda_subred();
+                                    }
+                                }
                             }
-                            //totalSemanal(total_asistencia, total_invitados,total_ninos,total_ofrenda);
+                            totalSemanalSubred(total_asistencia,total_ofrenda);
+                        }else{
+                            Log.d("Result", "Error al encontrar la tarea asignada", task.getException());
                         }
                     }
                 });
     }
 
+    private void totalSemanalSubred(final int total_asistencia, final double total_ofrenda) {
+        Calendar c = Calendar.getInstance();
+        c.get(Calendar.DAY_OF_MONTH);
+        c.get(Calendar.MONTH);
+        c.get(Calendar.YEAR);
+        String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-    public void crearFormatoSubred(String[] fechas) {
+        HistoricoSemanalSubred hs3 = new HistoricoSemanalSubred();
+        hs3.setTotal_asistencia(total_asistencia);
+        hs3.setTotal_ofrenda(total_ofrenda);
+        hs3.setFecha(fecha);
 
+        db.collection("Historico Subred").document().set(hs3);
     }
 
-    public void crearFormato(String id) {
+    public void crearFormatoCelula(final String [] fechas) {
 
-        /*db.collection("usuarios").document(id).collection("Datos Celula")
+        db.collection("Datos Celula")
                 .get()
-                .addOnCompleteListener();*/
-
-
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    public int total_asistencia = 0;
+                    public int total_invitados = 0;
+                    public int total_ninos = 0;
+                    public  double total_ofrenda = 0;
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                RegistroCelula rc = document.toObject(RegistroCelula.class);
+                                for (int i = 0; i < fechas.length; i++){
+                                    if (fechas[i].equals(rc.getFecha_celula())){
+                                        total_asistencia = total_asistencia + rc.getAsistencia_celula();
+                                        total_invitados = total_invitados + rc.getInvitados_celula();
+                                        total_ninos = total_ninos + rc.getNinos_celula();
+                                        total_ofrenda = total_ofrenda + rc.getOfrenda_celula();
+                                    }
+                                }
+                            }
+                            totalSemanalCelula(total_asistencia,total_invitados,total_ninos,total_ofrenda);
+                        }else{
+                            Log.d("Result", "Error al encontrar la tarea asignada", task.getException());
+                        }
+                    }
+                });
     }
-    public void conteoTotal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda){
 
-        this.total_asistencia += total_asistencia;
-        this.total_invitados += total_invitados;
-        this.total_ninos += total_ninos;
-        this.total_ofrenda += total_ofrenda;
-    }
-
-
-    public void totalSemanal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda) {
+    public void totalSemanalCelula(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda) {
         Calendar c = Calendar.getInstance();
         c.get(Calendar.DAY_OF_MONTH);
         c.get(Calendar.MONTH);

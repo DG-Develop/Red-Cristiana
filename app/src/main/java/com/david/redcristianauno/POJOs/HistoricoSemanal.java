@@ -20,6 +20,14 @@ public class HistoricoSemanal {
         this.fecha = fecha;
     }
 
+    public HistoricoSemanal(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda, String fecha) {
+        this.total_asistencia = total_asistencia;
+        this.total_invitados = total_invitados;
+        this.total_ninos = total_ninos;
+        this.total_ofrenda = total_ofrenda;
+        this.fecha = fecha;
+    }
+
     public double getTotal_ofrenda() {
         return total_ofrenda;
     }

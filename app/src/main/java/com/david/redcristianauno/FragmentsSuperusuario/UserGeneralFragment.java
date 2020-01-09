@@ -7,12 +7,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.R;
@@ -43,6 +45,7 @@ public class UserGeneralFragment extends Fragment {
     private StringBuffer sb= null;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private LeerDatos l = new LeerDatos();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,14 +64,16 @@ public class UserGeneralFragment extends Fragment {
 
         inicializarFirebase();
         lisDatos = new ArrayList<>();
-        //listarUsuarios();
-        crearListaUsuarios();
+
+
 
         adaptador_usuarios = new adaptador_usuarios(getContext(),crearListaUsuarios());
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sb = new StringBuffer();
+
+                Log.d("Result",String.valueOf(adaptador_usuarios.checkedDatos.size()));
 
                 for(Usuarios u : adaptador_usuarios.checkedDatos){
                     sb.append(u.getNombre());
@@ -89,32 +94,6 @@ public class UserGeneralFragment extends Fragment {
         FirebaseApp.initializeApp(getActivity());
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-    }
-
-    public ArrayList<Usuarios> listarUsuarios(){
-
-        databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                lisDatos.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Usuario u = snapshot.getValue(Usuario.class);
-                    String nombre = u.getNombre();
-                    String correo = u.getCorreo();
-
-                    //lisDatos.add(new Usuario(nombre, correo));
-
-                    //daptador_usuarios = new adaptador_usuarios(getContext(),lisDatos);
-                    rc.setAdapter(adaptador_usuarios);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        return lisDatos;
     }
 
     public ArrayList<Usuarios> crearListaUsuarios(){

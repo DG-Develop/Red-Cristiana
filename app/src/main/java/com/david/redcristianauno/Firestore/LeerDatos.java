@@ -20,6 +20,7 @@ import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.Preferences;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_historico_semanal;
+import com.david.redcristianauno.adapters.adaptador_permisos;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +41,9 @@ public class LeerDatos {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference mDocRef;
     static Map<String, Object> datos;
+    public ArrayList<Usuarios> lisDatos =  new ArrayList<>();
+
+    public adaptador_permisos adaptador_permisos;
 
     public LeerDatos(){
     }
@@ -156,7 +160,7 @@ public class LeerDatos {
                 MenuItem visible5 = menu.findItem(R.id.noticias);
                 visible5.setVisible(false);
                 break;
-            case "Lideres de Celula":
+            case "Lideres Celula":
                 menu = navigationView.getMenu();
                 MenuItem visible6 = menu.findItem(R.id.nav_gallery);
                 visible6.setVisible(false);

@@ -1,9 +1,12 @@
 package com.david.redcristianauno.adapters;
 
+
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +17,7 @@ public class SeccionesAdapter extends FragmentStatePagerAdapter {
 
     public SeccionesAdapter(FragmentManager fm) {
         super(fm);
+
     }
 
     @Nullable
@@ -27,6 +31,7 @@ public class SeccionesAdapter extends FragmentStatePagerAdapter {
         return listaFrgaments.get(i);
     }
 
+
     @Override
     public int getCount() {
         return listaFrgaments.size();
@@ -37,5 +42,20 @@ public class SeccionesAdapter extends FragmentStatePagerAdapter {
         listaFrgaments.add(fragment);
         listaTitulos.add(titulo);
 
+    }
+
+    private boolean mIsUpdating = false;
+
+    public void setIsUpdating(boolean mIsUpdating){
+        this.mIsUpdating = mIsUpdating;
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        if(mIsUpdating){
+            return POSITION_NONE;
+        }else{
+            return super.getItemPosition(object);
+        }
     }
 }

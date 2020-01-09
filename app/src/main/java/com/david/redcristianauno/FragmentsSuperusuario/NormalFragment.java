@@ -1,6 +1,7 @@
 package com.david.redcristianauno.FragmentsSuperusuario;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -9,26 +10,36 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.david.redcristianauno.POJOs.Permisos;
+import com.david.redcristianauno.Firestore.ActualizaDatos;
+import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Usuario;
+import com.david.redcristianauno.POJOs.Usuarios;
+import com.david.redcristianauno.PermisosUsuariosFragment;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_permisos;
+import com.david.redcristianauno.adapters.adaptador_usuarios;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,19 +48,30 @@ import java.util.Map;
 
 public class NormalFragment extends Fragment {
     private RecyclerView rc;
-    private ArrayList<Usuario> lisDatos;
+    private ArrayList<Usuarios> lisDatos;
 
-    private com.david.redcristianauno.adapters.adaptador_permisos adaptador_permisos;
+    public adaptador_permisos adaptador_permisos;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FloatingActionButton fbSubred,fbRed,fbSuperUser,fbLiderCelula;
     private FloatingActionsMenu menuBotones;
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ActualizaDatos ad = new ActualizaDatos();
+
+    PermisosUsuariosFragment pu = new PermisosUsuariosFragment();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        crearListaUsuarios("Normal");
     }
 
     @Override
@@ -69,17 +91,21 @@ public class NormalFragment extends Fragment {
 
         inicializarFirebase();
         lisDatos = new ArrayList<>();
-        listarUsuarios();
+        //l.crearListaUsuarios(lisDatos, getContext(), rc, "Normal");
 
-        adaptador_permisos = new adaptador_permisos(getContext(),listarUsuarios());
+        adaptador_permisos = new adaptador_permisos(getContext(),
+                crearListaUsuarios("Normal"));
 
         fbLiderCelula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Result",String.valueOf(adaptador_permisos.checkedDatos.size()));
                 if(adaptador_permisos.checkedDatos.size()>0){
-                    for(Usuario p : adaptador_permisos.checkedDatos){
+                    for(Usuarios p : adaptador_permisos.checkedDatos){
                         String correo =  p.getCorreo();
-                        actualizarPermisos(correo, 2);
+                        ad.actualizaPermiso(correo, "Lideres Celula");
+                        crearListaUsuarios("Normal");
+
                     }
                 }else{
                     Toast.makeText(getContext(), "Porfavor seleccione algo", Toast.LENGTH_SHORT).show();
@@ -92,9 +118,10 @@ public class NormalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(adaptador_permisos.checkedDatos.size()>0){
-                    for(Usuario p : adaptador_permisos.checkedDatos){
+                    for(Usuarios p : adaptador_permisos.checkedDatos){
                      String correo =  p.getCorreo();
-                     actualizarPermisos(correo, 3);
+                        ad.actualizaPermiso(correo, "Subred");
+                        crearListaUsuarios("Normal");
                     }
                 }else{
                     Toast.makeText(getContext(), "Porfavor seleccione algo", Toast.LENGTH_SHORT).show();
@@ -106,9 +133,10 @@ public class NormalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(adaptador_permisos.checkedDatos.size()>0){
-                    for(Usuario p : adaptador_permisos.checkedDatos){
+                    for(Usuarios p : adaptador_permisos.checkedDatos){
                         String correo =  p.getCorreo();
-                        actualizarPermisos(correo, 4);
+                        ad.actualizaPermiso(correo, "Red");
+                        crearListaUsuarios("Normal");
                     }
                 }else{
                     Toast.makeText(getContext(), "Porfavor seleccione algo", Toast.LENGTH_SHORT).show();
@@ -121,9 +149,10 @@ public class NormalFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(adaptador_permisos.checkedDatos.size()>0){
-                    for(Usuario p : adaptador_permisos.checkedDatos){
+                    for(Usuarios p : adaptador_permisos.checkedDatos){
                         String correo =  p.getCorreo();
-                        actualizarPermisos(correo, 5);
+                        ad.actualizaPermiso(correo, "Super Usuario");
+                        crearListaUsuarios("Normal");
                     }
                 }else{
                     Toast.makeText(getContext(), "Porfavor seleccione algo", Toast.LENGTH_SHORT).show();
@@ -135,7 +164,7 @@ public class NormalFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listarUsuarios();
+                crearListaUsuarios("Normal");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -194,7 +223,7 @@ public class NormalFragment extends Fragment {
                                 Snackbar.make(getView(),"Hubo error al tratar de actualzar datos", Snackbar.LENGTH_SHORT).setAction("Action",null).show();
                             }
                         });
-                        listarUsuarios();
+                        crearListaUsuarios("Normal");
                     }
                 }
             }
@@ -206,33 +235,31 @@ public class NormalFragment extends Fragment {
         });
     }
 
-    public ArrayList<Usuario> listarUsuarios(){
+    public ArrayList<Usuarios> crearListaUsuarios(final String tipo_permiso){
+        db.collection("usuarios")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        lisDatos.clear();
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Usuarios u = document.toObject(Usuarios.class);
 
-        databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                lisDatos.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Usuario p = snapshot.getValue(Usuario.class);
-                    String nombre = p.getNombre();
-                    String correo = p.getCorreo();
-                    int permiso = p.getId_permiso();
+                                if (u.getTipo_permiso().equals(tipo_permiso)){
+                                    Log.d("Result", u.getNombre());
+                                    lisDatos.add(new Usuarios(u.getNombre(), u.getCorreo()));
 
-                    if(permiso == 1){
-                        lisDatos.add(new Usuario(nombre, correo));
+                                }
+
+                            }
+                            adaptador_permisos = new adaptador_permisos(getContext(),lisDatos);
+                            rc.setAdapter(adaptador_permisos);
+                        }
                     }
-
-
-                    adaptador_permisos = new adaptador_permisos(getContext(),lisDatos);
-                    rc.setAdapter(adaptador_permisos);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                });
         return lisDatos;
     }
+
+
 }

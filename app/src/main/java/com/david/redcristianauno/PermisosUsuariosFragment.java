@@ -29,6 +29,7 @@ public class PermisosUsuariosFragment extends Fragment {
     private AppBarLayout appBar;
     private TabLayout pestanas;
     private ViewPager viewPager;
+    SeccionesAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class PermisosUsuariosFragment extends Fragment {
     }
 
     private void llenarViewPager(ViewPager viewPager) {
-        SeccionesAdapter adapter = new SeccionesAdapter(getFragmentManager());
+        adapter = new SeccionesAdapter(getFragmentManager());
         adapter.addFragment(new UserGeneralFragment(),  "Lista usuarios");
         adapter.addFragment(new NormalFragment(),  "Usuarios normales");
         adapter.addFragment(new LideresCelulaFragment(),  "Lideres de Celula");
@@ -86,6 +87,12 @@ public class PermisosUsuariosFragment extends Fragment {
         adapter.addFragment(new SuperUserFragment(),  "Super Usuarios");
 
         viewPager.setAdapter(adapter);
+    }
+
+    public  void actualizar(){
+        adapter.setIsUpdating(true);
+        adapter.notifyDataSetChanged();
+        adapter.setIsUpdating(false);
     }
 
     @Override

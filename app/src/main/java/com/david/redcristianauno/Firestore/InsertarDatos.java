@@ -1,12 +1,17 @@
 package com.david.redcristianauno.Firestore;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
+import com.david.redcristianauno.POJOs.Red;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
+import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -225,4 +230,75 @@ public class InsertarDatos {
         db.collection("Historico Celulas").document().set(hs3);
     }
 
+    public void existeRed(final Red red, final String nombre, final Context context){
+        db.collection("redes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Red r = document.toObject(Red.class);
+                                if(nombre.equals(r.getNombre_red())){
+                                    Toast.makeText(context, "ya existe una red con ese nombre", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    crearRed(red);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void crearRed(Red red) {
+        db.collection("redes").document().set(red);
+    }
+
+    public void existeSubred(final Subred subred, final String nombre, final Context context){
+        db.collection("subredes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Subred sb = document.toObject(Subred.class);
+                                if(nombre.equals(sb.getNombre_subred())){
+                                    Toast.makeText(context, "ya existe una red con ese nombre", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    crearSubred(subred);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void crearSubred(Subred subred) {
+        db.collection("subredes").document().set(subred);
+    }
+
+    public void existeCelula(final Celula celula, final String nombre, final Context context){
+        db.collection("celulas")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Celula c = document.toObject(Celula.class);
+                                if(nombre.equals(c.getNombre_celula())){
+                                    Toast.makeText(context, "ya existe una red con ese nombre", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    crearCelula(celula);
+                                }
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void crearCelula(Celula celula) {
+        db.collection("celulas").document().set(celula);
+    }
 }

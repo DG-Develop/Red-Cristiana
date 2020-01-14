@@ -13,11 +13,11 @@ public class Usuarios {
     private String correo;
     private String pass;
     private String tipo_permiso;
-    private String celula;
+    private String subred;
 
     public Usuarios(String nombre, String apellido_paterno, String apellido_materno,String municipio, String colonia, String calle,
                     String no_exterior, int codigo_postal, String telefono, String correo, String pass,
-                    String tipo_permiso, String celula) {
+                    String tipo_permiso, String subred) {
         this.nombre = nombre;
         this.apellido_paterno = apellido_paterno;
         this.apellido_materno = apellido_materno;
@@ -30,7 +30,7 @@ public class Usuarios {
         this.correo = correo;
         this.pass = pass;
         this.tipo_permiso = tipo_permiso;
-        this.celula = celula;
+        this.subred = subred;
     }
 
     public Usuarios() {
@@ -146,12 +146,12 @@ public class Usuarios {
         this.tipo_permiso = tipo_permiso;
     }
 
-    public String getCelula() {
-        return celula;
+    public String getSubred() {
+        return subred;
     }
 
-    public void setCelula(String celula) {
-        this.celula = celula;
+    public void setSubred(String subred) {
+        this.subred = subred;
     }
 
     public String getMunicipio() {

@@ -14,11 +14,11 @@
     <string name="txtInvitados">Invitados</string>
     <string name="txtNiños">Niños</string>
     <string name="txtOfrenda">Ofrenda</string>
-    <string name="txtOtroCelula">Si no aparece tú celula, presione aquí</string>
+    <string name="txtOtroCelula">Si no aparece tú subred, presione aquí</string>
     <string name="txtRegistro">Introduce los datos</string>
 
     <string name="txtTotalOfrenda">Total de Ofrenda</string>
-    <string name="txtNombreCedula">Nombre de celula</string>
+    <string name="txtNombreCedula">Nombre de subred</string>
     <string name="txtNombreSubred">Nombre de Subred</string>
     <string name="txtregistrar">Registrar</string>
 

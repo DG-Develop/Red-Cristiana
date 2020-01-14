@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.LeerDatos;
+import com.david.redcristianauno.POJOs.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +20,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText txtCorreo, txtPassword;
@@ -26,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
     private boolean isActivatedRadioButton;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private LeerDatos l = new LeerDatos();
 
@@ -90,9 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     Preferences.savePreferenceString(LoginActivity.this,email,Preferences.PREFERENCES_USUARIO_LOGIN);
                     l.preferencesUsuarios(email, LoginActivity.this);
 
-                    Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
-                    startActivity(i);
-                    finish();
+                    buscarSubredUsuario(Preferences.obtenerPreferencesString(LoginActivity.this, Preferences.PREFERENCES_ID_USUARIO));
                 }
                 progressDialog.dismiss();
             }
@@ -114,6 +117,30 @@ public class LoginActivity extends AppCompatActivity {
     public void registrar(View view){
         Intent i = new Intent(this, RegisterActivity.class);
         startActivity(i);
+    }
+
+    public void buscarSubredUsuario(final String id_usuario){
+        db.collection("usuarios")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()){
+                                Usuarios u = document.toObject(Usuarios.class);
+                                if (id_usuario.equals(document.getId()) && u.getSubred() == null){
+                                    Intent i = new Intent(LoginActivity.this, UnirCrearRedActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }else{
+                                    Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
 }

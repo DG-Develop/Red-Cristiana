@@ -1,6 +1,7 @@
 package com.david.redcristianauno.Firestore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.RecyclerView;
@@ -12,12 +13,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.david.redcristianauno.LoginActivity;
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.Preferences;
+import com.david.redcristianauno.PrincipalActivity;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_historico_semanal;
 import com.david.redcristianauno.adapters.adaptador_permisos;
@@ -273,6 +276,8 @@ public class LeerDatos {
             }
         });
     }
+
+
 
     public void obtenerDatosColeccion(){
         db.collection("usuarios")

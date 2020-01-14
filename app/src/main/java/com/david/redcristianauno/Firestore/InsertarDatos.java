@@ -42,6 +42,7 @@ public class InsertarDatos {
         db.collection("Datos Subred").document().set(registroSubred);
     }
 
+    // El metodo checa si no hay otro registro con la misma fecha del historico para poder crear dicho hisotrico
     public void leerHistorico(final String fecha){
         db.collection("Historico Celulas")
                 .get()
@@ -64,11 +65,12 @@ public class InsertarDatos {
                 });
     }
 
+    //Checha los ultimos 7 dias despues del cierre de los diesmos
     public void formatoSemanal() {
         Calendar miCalendario = Calendar.getInstance();
         miCalendario.setFirstDayOfWeek(Calendar.TUESDAY);
 
-        boolean bandera = false;
+        boolean bandera;
 
         int diaSemana = miCalendario.get(Calendar.DAY_OF_WEEK);
 
@@ -138,7 +140,7 @@ public class InsertarDatos {
         }
     }
 
-
+    //Registra todos los datos pero determina quienes tienen la fecha de la semana seleccionada  para la subred
     public void crearFormatoSubred(final String[] fechas) {
         db.collection("Datos Subred")
                 .get()
@@ -167,6 +169,7 @@ public class InsertarDatos {
                 });
     }
 
+    //Crea el formato de subred con los datos proporcionados de subred
     private void totalSemanalSubred(final int total_asistencia, final double total_ofrenda) {
         Calendar c = Calendar.getInstance();
         c.get(Calendar.DAY_OF_MONTH);
@@ -182,6 +185,7 @@ public class InsertarDatos {
         db.collection("Historico Subred").document().set(hs3);
     }
 
+    //Registra todos los datos pero determina quienes tienen la fecha de la semana seleccionada  para la celula
     public void crearFormatoCelula(final String [] fechas) {
 
         db.collection("Datos Celula")
@@ -213,6 +217,7 @@ public class InsertarDatos {
                 });
     }
 
+    //Crea el formato de subred con los datos proporcionados de celula
     public void totalSemanalCelula(int total_asistencia, int total_invitados, int total_ninos, double total_ofrenda) {
         Calendar c = Calendar.getInstance();
         c.get(Calendar.DAY_OF_MONTH);
@@ -230,6 +235,7 @@ public class InsertarDatos {
         db.collection("Historico Celulas").document().set(hs3);
     }
 
+    //Busca si no hay una red con el mismo nombre
     public void existeRed(final Red red, final String nombre, final Context context){
         db.collection("redes")
                 .get()
@@ -250,10 +256,12 @@ public class InsertarDatos {
                 });
     }
 
+    //En caso de no existir el mismo nombre crea la red
     private void crearRed(Red red) {
         db.collection("redes").document().set(red);
     }
 
+    //Busca si no hay una subred con el mismo nombre
     public void existeSubred(final Subred subred, final String nombre, final Context context){
         db.collection("subredes")
                 .get()
@@ -274,10 +282,12 @@ public class InsertarDatos {
                 });
     }
 
+    //En caso de no existir el mismo nombre crea la subred
     private void crearSubred(Subred subred) {
         db.collection("subredes").document().set(subred);
     }
 
+    //Busca si no hay una celula con el mismo nombre
     public void existeCelula(final Celula celula, final String nombre, final Context context){
         db.collection("celulas")
                 .get()
@@ -298,6 +308,7 @@ public class InsertarDatos {
                 });
     }
 
+    //En caso de no existir el mismo nombre crea la celula
     private void crearCelula(Celula celula) {
         db.collection("celulas").document().set(celula);
     }

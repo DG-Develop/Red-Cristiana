@@ -32,7 +32,7 @@
     <string name="select_subred_reg">Seleccione una subred</string>
     <string name="btn_buscar">Buscar </string>
     <string name="btn_ver_registro">Ver registro</string>
-    <string name="title_activity_login">Registrar</string>
+    <string name="title_activity_login">Registrate</string>
     <string name="nombres">Nombre(s)</string>
     <string name="nombre">Nombre</string>
     <string name="apellido_paterno">Apellido Paterno</string>
@@ -50,8 +50,8 @@
 
 
     <string name="telefono">Telefono</string>
-    <string name="prompt_email">Correo</string>
-    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_email">"  Correo electrónico"</string>
+    <string name="prompt_password">"  Contraseña"</string>
     <string name="list_user">Lista de Usuarios: </string>
 
 
@@ -60,7 +60,7 @@
 
     <string name="action_sign_in">Sign in or register</string>
     <string name="login_sign_in">Ver</string>
-    <string name="action_sign_in_short">Ingresar</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
@@ -83,6 +83,7 @@
     <string name="menu_share">Permisos de usuario</string>
     <string name="menu_send">Send</string>
     <string name="title_activity_principal">Red Cristiana</string>
+    <string name="registrar">"¿Aún no tienes una cuenta? "</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

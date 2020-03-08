@@ -6,7 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <style name="transparente">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
     <!--Estilo para los spinners-->
     <style name="spinner_style">

@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Customize your theme here.#4391B0, #397C96, #5DCAF4 -->
-    <color name="colorPrimary">#4391B0</color>
-    <color name="colorPrimaryDark">#397C96</color>
-    <color name="colorAccent">#5DCAF4</color>
+    <color name="colorPrimary">#97D3DD</color>
+    <color name="colorPrimaryDark">#72B8C4</color>
+    <color name="colorAccent">#529DAA</color>
+
+    <color name="secondaryPrimary">#3E4C4C</color>
+    <color name="secondaryPrimaryDark">#253435</color>
+    <color name="secondaryAccent">#5D6666</color>
+
+    <color name="background">#F0F6F7</color>
+    <color name="statusBar">#E1E9EA</color>
+    <color name="titleBar">#BCDBDD</color>
+
+    <color name="buttonIngresarFirstColor">#A7D2D6</color>
+    <color name="buttonIngresarSecondColor">#CC92AA</color>
+    <color name="buttonRegistrar">#CEC689</color>
+
 </resources>

@@ -14,10 +14,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".UnirCrearRedActivity"></activity>
+
         <activity
+            android:theme="@style/MainTheme"
             android:name=".LoginActivity"
             android:configChanges="orientation|screenSize">
             <intent-filter>
@@ -26,14 +27,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
+            android:theme="@style/MainTheme"
             android:name=".RegisterActivity"
             android:configChanges="orientation|screenSize" />
+
         <activity
             android:name=".PrincipalActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_principal"
             android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

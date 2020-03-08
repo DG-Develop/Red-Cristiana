@@ -6,47 +6,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".UnirCrearRedActivity">
+    tools:context=".UnirCrearRedActivity"
+    android:layout_marginTop="40dp">
 
 
-    <android.support.v7.widget.CardView
+    <Button
+        android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        card_view:cardBackgroundColor="#E996002F">
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:height="150dp"
+        android:background="#dd1122"
+        android:textColor="@android:color/background_light"
+        android:text="Crear red" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Crear Red"
-            android:textColor="@android:color/background_light"
-            android:textSize="20dp" />
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
+    <Button
+        android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardBackgroundColor="#ece7e7"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unirse a una Red"/>
-
-    </android.support.v7.widget.CardView>
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:height="150dp"
+        android:background="#1122ff"
+        android:textColor="@android:color/background_light"
+        android:text="Unirte a una red" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:height="150dp"
+        android:background="#22ff11"
+        android:textColor="@android:color/background_light"
+        android:text="Ignorar"  />
+
 </LinearLayout>

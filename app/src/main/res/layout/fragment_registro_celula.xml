@@ -74,7 +74,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:background="#405FE3"
+                    android:background="#D6CEA1"
                     android:text="@string/txtOtroCelula"
                     android:textColor="@android:color/background_light" />
 
@@ -201,7 +201,8 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="40dp"
-                android:background="#3EBD9C"
+                android:layout_marginBottom="20dp"
+                android:background="#CC92AA"
                 android:text="@string/btnEnviar"
                 android:textColor="@android:color/background_light" />
         </LinearLayout>

@@ -352,6 +352,8 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
     }
 
     private void limpiarCampos() {
+        etAnfitrion.setText("");
+        etDireccion.setText("");
         etAsistencia.setText("");
         etInvitados.setText("");
         etNiños.setText("");

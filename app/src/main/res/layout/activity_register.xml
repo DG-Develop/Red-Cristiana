@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
+    style="@style/MainTheme"
     android:orientation="vertical">
 
     <ScrollView
@@ -22,11 +23,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="69dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@color/statusBar"
                 android:gravity="center"
                 android:text="@string/dat_user"
                 android:textAlignment="center"
-                android:textColor="@android:color/background_light"
+                android:textColor="@android:color/background_dark"
                 android:textSize="30sp" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -347,8 +348,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="30dp"
                 android:onClick="registrarUsuarios"
+                android:textAllCaps="false"
                 android:text="@string/title_activity_login"
-                android:background="#E36640"
+                android:background="@color/buttonIngresarSecondColor"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 

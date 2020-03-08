@@ -4,86 +4,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/MainTheme"
     tools:context=".LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="120dp">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="350dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/titulo" />
+
+
+            </FrameLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="168dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:textColorHint="@android:color/background_dark">
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="40dp"
+                app:hintEnabled="false"
+                android:textColorHint="@color/secondaryPrimaryDark">
+
                 <EditText
                     android:id="@+id/txtCorreoLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="51dp"
+                    android:layout_height="55dp"
+                    android:drawableStart="@drawable/baseline_person_black_24"
                     android:hint="@string/prompt_email"
+                    android:padding="6dp"
+                    android:textColorHint="@color/secondaryPrimaryDark"
                     android:inputType="textEmailAddress"
-                    android:textSize="24sp" />
+                    android:background="@drawable/custom_edittext_sesion" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:passwordToggleEnabled="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="20dp"
-                android:ems="10"
-                android:textColorHint="@android:color/background_dark">
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="40dp"
+                app:hintEnabled="false"
+                android:textColorHint="@color/secondaryPrimaryDark"
+                app:passwordToggleEnabled="true">
 
                 <EditText
                     android:id="@+id/txtPasswordLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="51dp"
+                    android:layout_height="55dp"
+                    android:drawableStart="@drawable/baseline_lock_black_24"
                     android:hint="@string/prompt_password"
+                    android:padding="5dp"
                     android:inputType="textPassword"
-                    android:textSize="24sp" />
+                    android:background="@drawable/custom_edittext_sesion"
+                    android:textColorHint="@color/secondaryPrimaryDark" />
+
             </android.support.design.widget.TextInputLayout>
 
             <RadioButton
                 android:id="@+id/sesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="30dp"
-                android:text="@string/sesionActiva" />
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="45dp"
+                android:text="@string/sesionActiva"
+                android:textColor="@color/secondaryPrimaryDark"
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="20dp"
-                android:background="#405FE3"
+                android:layout_height="55dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/button_start_sesion"
+                android:elevation="10dp"
                 android:onClick="ingresar"
                 android:text="@string/action_sign_in_short"
-                android:textColor="@android:color/background_light" />
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/button4"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="36dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
                 android:layout_marginEnd="20dp"
-                android:background="#E36640"
-                android:onClick="registrar"
-                android:layout_marginBottom="30dp"
-                android:text="@string/title_activity_login"
-                android:textColor="@android:color/background_light" />
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registrar"
+                    android:textSize="16sp"
+                    android:textColor="@color/secondaryPrimaryDark"/>
+
+                <Button
+                    android:id="@+id/button4"
+                    style="@style/transparente"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:onClick="registrar"
+                    android:text="@string/title_activity_login"
+                    android:textAllCaps="false"
+                    android:textColor="@color/secondaryPrimaryDark"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+
         </LinearLayout>
     </ScrollView>
 

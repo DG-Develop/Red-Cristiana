@@ -349,7 +349,7 @@ public class RegisterActivity extends AppCompatActivity {
         user.setApellido_paterno(txtApellidoPaterno.getText().toString().trim());
         user.setApellido_materno(txtApellidoMaterno.getText().toString().trim());
         user.setCorreo(txtCorreo.getText().toString().trim());
-        user.setContraseña(txtCorreo.getText().toString().trim());
+        user.setContraseña(txtContraseña.getText().toString().trim());
         user.setId_estado(getId_estado());
         user.setId_municipio(getId_municipio());
         user.setColonia(txtColonia.getText().toString().trim());
@@ -380,7 +380,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Integer.parseInt(txtCodigo_postal.getText().toString().trim()),
                 txtTelefono.getText().toString().trim(),
                 txtCorreo.getText().toString().trim(),
-                txtCorreo.getText().toString().trim(),
+                txtContraseña.getText().toString().trim(),
                 "Normal"
         );
 

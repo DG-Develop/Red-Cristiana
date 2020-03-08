@@ -2,6 +2,7 @@ package com.david.redcristianauno;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.LeerDatos;
@@ -32,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isActivatedRadioButton;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    //private TextView txt_titulo;
+    //private Typeface script;
+
     private LeerDatos l = new LeerDatos();
 
 
@@ -52,6 +57,12 @@ public class LoginActivity extends AppCompatActivity {
         txtCorreo = (EditText) findViewById(R.id.txtCorreoLogin);
         txtPassword = (EditText) findViewById(R.id.txtPasswordLogin);
         rbSesion = (RadioButton) findViewById(R.id.sesion);
+        //txt_titulo = findViewById(R.id.txt_titulo);
+
+        //String fuente = "Fonts/OpenSans-BoldItalic.ttf";
+
+        //this.script = Typeface.createFromAsset(getAssets(), fuente);
+        //txt_titulo.setTypeface(script);
 
         progressDialog = new ProgressDialog(this);
 
@@ -95,7 +106,10 @@ public class LoginActivity extends AppCompatActivity {
                     Preferences.savePreferenceString(LoginActivity.this,email,Preferences.PREFERENCES_USUARIO_LOGIN);
                     l.preferencesUsuarios(email, LoginActivity.this);
 
-                    buscarSubredUsuario(Preferences.obtenerPreferencesString(LoginActivity.this, Preferences.PREFERENCES_ID_USUARIO));
+                    //buscarSubredUsuario(Preferences.obtenerPreferencesString(LoginActivity.this, Preferences.PREFERENCES_ID_USUARIO));
+                    Intent i = new Intent(LoginActivity.this, PrincipalActivity.class);
+                    startActivity(i);
+                    finish();
                 }
                 progressDialog.dismiss();
             }

@@ -18,6 +18,7 @@
         <activity android:name=".UnirCrearRedActivity"></activity>
 
         <activity
+            android:label="@string/app_name"
             android:theme="@style/MainTheme"
             android:name=".LoginActivity"
             android:configChanges="orientation|screenSize">
@@ -29,14 +30,15 @@
         </activity>
 
         <activity
+            android:label="@string/app_name"
             android:theme="@style/MainTheme"
             android:name=".RegisterActivity"
             android:configChanges="orientation|screenSize" />
 
         <activity
+            android:label="@string/app_name"
             android:name=".PrincipalActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_principal"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

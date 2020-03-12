@@ -32,7 +32,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 public class RegistroCelulaFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
@@ -235,9 +234,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             }
         });
     }
-    public String getIdUsuario() {
-        return idUsuario;
-    }
 
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
@@ -263,10 +259,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
         });
     }
 
-    public String getIdCelula() {
-        return idCelula;
-    }
-
     public void setIdCelula(String idCelula) {
         this.idCelula = idCelula;
     }
@@ -289,56 +281,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
 
             }
         });
-    }
-    public void registrarDatosCelula(){
-        final String centavos = sp3.getSelectedItem().toString();
-        String opc_ofrenda = etOfrenda.getText().toString();
-        String res =opc_ofrenda.concat(centavos);
-
-        int asistencia = Integer.parseInt(etAsistencia.getText().toString());
-        int invitados;
-        if(etInvitados.getText().toString().isEmpty()){
-            invitados = 0;
-        }else{
-            invitados = Integer.parseInt(etInvitados.getText().toString());
-        }
-        int ninos;
-        if(etNiños.getText().toString().isEmpty()){
-            ninos = 0;
-        }else{
-            ninos = Integer.parseInt(etNiños.getText().toString());
-        }
-        double ofrenda;
-        if (etOfrenda.getText().toString().isEmpty()) {
-            ofrenda=0.0;
-        }else {
-            ofrenda = Double.parseDouble(res);
-        }
-
-        if(asistencia < invitados || asistencia < ninos){
-            Toast.makeText(getContext(), "El valor de la asistencia no debe de ser menor que el de invitados o niños", Toast.LENGTH_LONG).show();
-            Toast.makeText(getContext(), "No se registraron los datos", Toast.LENGTH_SHORT).show();
-        }else {
-            RegistroCelula rc = new RegistroCelula();
-            rc.setId_registroCelula(UUID.randomUUID().toString());
-            rc.setId_usuario(getIdUsuario());
-            if(pusoDireccion()){
-                rc.setDomicilio(etDireccion.getText().toString().trim());
-            }else{
-                rc.setDomicilio(sp2.getSelectedItem().toString());
-            }
-            rc.setNombre_anfitrion(etAnfitrion.getText().toString().trim());
-            rc.setAsistencia_celula(asistencia);
-            rc.setInvitados_celula(invitados);
-            rc.setNinos_celula(ninos);
-            rc.setOfrenda_celula(ofrenda);
-            rc.setFecha_celula(etFecha.getText().toString().trim());
-
-            databaseReference.child("Registro Celula").child(rc.getId_registroCelula()).setValue(rc);
-            Toast.makeText(getContext(), "Regitrado Correctamente", Toast.LENGTH_SHORT).show();
-        }
-
-        limpiarCampos();
     }
 
     public boolean pusoDireccion(){

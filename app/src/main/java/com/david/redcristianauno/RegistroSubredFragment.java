@@ -29,9 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
-import java.util.UUID;
 
 
 public class RegistroSubredFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
@@ -158,31 +156,6 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
         });
     }
 
-    public void registrarDatosSubred(){
-        final String centavos = sp2.getSelectedItem().toString();
-        String opc_ofrenda = etOfrenda.getText().toString();
-        String res = opc_ofrenda.concat(centavos);
-
-        int asistencia = Integer.parseInt(etAsistencia.getText().toString());
-        double ofrenda;
-        if(etOfrenda.getText().toString().isEmpty()){
-            ofrenda = 0.0;
-        }else{
-            ofrenda = Double.parseDouble(res);
-        }
-        String fecha = etFecha.getText().toString();
-
-        RegistroSubred rs = new RegistroSubred();
-        rs.setId_registroSubred(UUID.randomUUID().toString());
-        rs.setId_usuario(getIdUsuario());
-        rs.setAsistencia_subred(asistencia);
-        rs.setOfrenda_subred(ofrenda);
-        rs.setFecha_subred(fecha);
-
-        databaseReference.child("Registro Subred").child(rs.getId_registroSubred()).setValue(rs);
-        Toast.makeText(getActivity(), "Registrado Correctamente", Toast.LENGTH_SHORT).show();
-        limpiarCampos();
-    }
 
     private void limpiarCampos() {
         etAsistencia.setText("");

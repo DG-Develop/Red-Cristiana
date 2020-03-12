@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.ActualizaDatos;
-import com.david.redcristianauno.Firestore.LeerDatos;
-import com.david.redcristianauno.POJOs.Permisos;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.R;
@@ -168,57 +166,6 @@ public class UserRedFragment extends Fragment {
         FirebaseApp.initializeApp(getActivity());
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-    }
-    public void actualizarPermisos(final String correo, final int permiso){
-        databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Usuario p = snapshot.getValue(Usuario.class);
-
-                    Map<String, Object> permisoMap = new HashMap<>();
-                    permisoMap.put("id_usuario",p.getId_usuario());
-                    permisoMap.put("nombre",p.getNombre());
-                    permisoMap.put("apellido_paterno",p.getApellido_paterno());
-                    permisoMap.put("apellido_materno",p.getApellido_materno());
-                    permisoMap.put("correo",p.getCorreo());
-                    permisoMap.put("contraseña",p.getContraseña());
-                    permisoMap.put("id_estado",p.getId_estado());
-                    permisoMap.put("id_municipio",p.getId_municipio());
-                    permisoMap.put("colonia",p.getColonia());
-                    permisoMap.put("calle",p.getCalle());
-                    permisoMap.put("no_exterior",p.getNo_exterior());
-                    permisoMap.put("codigo_postal",p.getCodigo_postal());
-                    permisoMap.put("telefono",p.getTelefono());
-                    permisoMap.put("id_permiso",permiso);
-                    permisoMap.put("id_subred",p.getId_subred());
-
-
-
-                    String correoPermiso = p.getCorreo();
-
-
-                    if(correo.equals(correoPermiso)){
-                        databaseReference.child("Usuario").child(p.getId_usuario()).updateChildren(permisoMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Snackbar.make(getView(),"Los datos se han actualizado correctamente", Snackbar.LENGTH_SHORT).setAction("Action",null).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Snackbar.make(getView(),"Hubo error al tratar de actualzar datos", Snackbar.LENGTH_SHORT).setAction("Action",null).show();
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public ArrayList<Usuarios> crearListaUsuarios(final String tipo_permiso){

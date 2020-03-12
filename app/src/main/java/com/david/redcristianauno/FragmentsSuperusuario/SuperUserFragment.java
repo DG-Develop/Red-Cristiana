@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.ActualizaDatos;
-import com.david.redcristianauno.Firestore.LeerDatos;
-import com.david.redcristianauno.POJOs.Permisos;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.R;

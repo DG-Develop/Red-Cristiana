@@ -2,13 +2,11 @@ package com.david.redcristianauno;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,24 +21,13 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.Historico.HistoricoDiarioFragment;
 import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
-import com.david.redcristianauno.POJOs.Permisos;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
-import com.david.redcristianauno.POJOs.Subred;
-import com.david.redcristianauno.POJOs.Usuario;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,12 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+
 
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener {
@@ -370,8 +353,6 @@ public class PrincipalActivity extends AppCompatActivity
             }
             crearFormato(fechas);
             crearFormatoSubred(fechas);
-            crearSheet();
-            crearSheetSubred();
         }
     }
 
@@ -440,158 +421,6 @@ public class PrincipalActivity extends AppCompatActivity
 
     }
 
-    private void crearSheetSubred() {
-        databaseReference.child("Registro Subred").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (final DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    RegistroSubred sb = snapshot.getValue(RegistroSubred.class);
-
-                    asistencia = asistencia+ sb.getAsistencia_subred();
-                    ofrenda = ofrenda+ sb.getOfrenda_subred();
-                }
-                final ProgressDialog loading = ProgressDialog.show(PrincipalActivity.this, "Adding Item","Please wait..");
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbwM-fhGj9rxsksQNz63g_D_vcoK6PwKgUDbivhVrhkYSrDgwKne/exec", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        loading.dismiss();
-                        Toast.makeText(PrincipalActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },new Response.ErrorListener(){
-
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-
-                    }
-                }){
-                    protected Map<String, String> getParams(){
-                        Map<String, String> parmas = new HashMap<>();
-
-
-                        //here we pass params
-                        parmas.put("action","addItem");
-                        parmas.put("asistencia",String.valueOf(asistencia));
-                        parmas.put("ofrenda",String.valueOf(ofrenda));
-
-                        return parmas;
-                    }
-                };
-
-
-                int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
-
-                RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-                stringRequest.setRetryPolicy(retryPolicy);
-
-                RequestQueue queue = Volley.newRequestQueue(PrincipalActivity.this);
-
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void crearSheet() {
-        databaseReference.child("Historico").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listaSemanal.clear();
-
-                for (final DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    HistoricoSemanal rc = snapshot.getValue(HistoricoSemanal.class);
-                    String fecha_celula = rc.getFecha();
-                    listaSemanal.add(fecha_celula);
-                }
-
-                Set<String> hasSet = new HashSet<String>(listaSemanal);
-                listaSemanal.clear();
-                listaSemanal.addAll(hasSet);
-                for (String semana : listaSemanal){
-                    addItemToSheet(semana);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void addItemToSheet(final String fecha){
-
-        databaseReference.child("Historico").orderByChild("fecha").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                for (final DataSnapshot snapshot: dataSnapshot.getChildren()){
-                    HistoricoSemanal rc = snapshot.getValue(HistoricoSemanal.class);
-                    String fecha_celula = rc.getFecha();
-
-
-
-                    if(fecha.equals(fecha_celula)){
-                        asistencia = asistencia+ rc.getTotal_asistencia();
-                        invitados = invitados+ rc.getTotal_invitados();
-                        ninos = ninos+ rc.getTotal_ninos();
-                        ofrenda = ofrenda+ rc.getTotal_ofrenda();
-                    }
-                }
-
-                final ProgressDialog loading = ProgressDialog.show(PrincipalActivity.this, "Adding Item","Please wait..");
-
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbzE-w2x1j5HFTt05OZrmGzqu8uwS5P_U-wov4larDr6qVQdmeEe/exec", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        loading.dismiss();
-                        Toast.makeText(PrincipalActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },new Response.ErrorListener(){
-
-                    @Override
-                    public void onErrorResponse(VolleyError error){
-
-                    }
-                }){
-                    protected Map<String, String> getParams(){
-                        Map<String, String> parmas = new HashMap<>();
-
-
-                        //here we pass params
-                        parmas.put("action","addItem");
-                        parmas.put("asistencia",String.valueOf(asistencia));
-                        parmas.put("invitados",String.valueOf(invitados));
-                        parmas.put("ninos",String.valueOf(ninos));
-                        parmas.put("ofrenda",String.valueOf(ofrenda));
-
-                        return parmas;
-                    }
-                };
-
-
-                int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
-
-                RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-                stringRequest.setRetryPolicy(retryPolicy);
-
-                RequestQueue queue = Volley.newRequestQueue(PrincipalActivity.this);
-
-                queue.add(stringRequest);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     private void crearFormato(final String [] fecha) {
         databaseReference.child("Registro Celula").addListenerForSingleValueEvent(new ValueEventListener() {

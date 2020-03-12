@@ -1,17 +1,9 @@
 package com.david.redcristianauno.Firestore;
 
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 
-import com.david.redcristianauno.FragmentsSuperusuario.LideresCelulaFragment;
-import com.david.redcristianauno.FragmentsSuperusuario.NormalFragment;
-import com.david.redcristianauno.FragmentsSuperusuario.SuperUserFragment;
-import com.david.redcristianauno.FragmentsSuperusuario.UserGeneralFragment;
-import com.david.redcristianauno.FragmentsSuperusuario.UserRedFragment;
-import com.david.redcristianauno.FragmentsSuperusuario.UserSuberdFragment;
 import com.david.redcristianauno.POJOs.Usuarios;
-import com.david.redcristianauno.adapters.SeccionesAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -60,7 +52,7 @@ public class ActualizaDatos {
 
     }
 
-    public void actualizar(ViewPager viewPager, SeccionesAdapter adapter){
+    /*public void actualizar(ViewPager viewPager, SeccionesAdapter adapter){
         viewPager.setOffscreenPageLimit(2);
         UserGeneralFragment secc1;
         NormalFragment secc2;
@@ -87,5 +79,5 @@ public class ActualizaDatos {
         if (adapter.getItem(5)!=null){
             secc6 = (SuperUserFragment) adapter.getItem(0);
         }
-    }
+    }*/
 }

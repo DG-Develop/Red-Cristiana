@@ -89,11 +89,11 @@ public class PermisosUsuariosFragment extends Fragment {
         viewPager.setAdapter(adapter);
     }
 
-    public  void actualizar(){
+   /* public  void actualizar(){
         adapter.setIsUpdating(true);
         adapter.notifyDataSetChanged();
         adapter.setIsUpdating(false);
-    }
+    }*/
 
     @Override
     public void onDestroyView() {

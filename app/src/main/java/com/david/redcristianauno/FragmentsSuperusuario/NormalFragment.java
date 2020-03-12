@@ -1,7 +1,7 @@
 package com.david.redcristianauno.FragmentsSuperusuario;
 
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,13 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.ActualizaDatos;
-import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.david.redcristianauno.PermisosUsuariosFragment;
 import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_permisos;
-import com.david.redcristianauno.adapters.adaptador_usuarios;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -60,7 +58,6 @@ public class NormalFragment extends Fragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private ActualizaDatos ad = new ActualizaDatos();
 
-    PermisosUsuariosFragment pu = new PermisosUsuariosFragment();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -182,7 +179,7 @@ public class NormalFragment extends Fragment {
         databaseReference = firebaseDatabase.getReference();
     }
 
-    public void actualizarPermisos(final String correo, final int permiso){
+    /*public void actualizarPermisos(final String correo, final int permiso){
         databaseReference.child("Usuario").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -233,7 +230,7 @@ public class NormalFragment extends Fragment {
 
             }
         });
-    }
+    }*/
 
     public ArrayList<Usuarios> crearListaUsuarios(final String tipo_permiso){
         db.collection("usuarios")

@@ -58,31 +58,6 @@ public class HistoricoSemanalFragment extends Fragment {
         return view;
     }
 
-    private void listarSemanal() {
-        databaseReference.child("Historico").orderByChild("id_historico").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listDatos.clear();
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    HistoricoSemanal hs = snapshot.getValue(HistoricoSemanal.class);
-
-                    System.out.println("Ninos " +  hs.getTotal_ninos());
-                    System.out.println("Ofrenda " +  hs.getTotal_ofrenda());
-                    listDatos.add(new HistoricoSemanal(hs.getId_historico(),hs.getTotal_asistencia(),hs.getTotal_invitados(),
-                            hs.getTotal_ninos(),hs.getTotal_ofrenda(),hs.getFecha()));
-                }
-
-                adaptador_historico_semanal = new adaptador_historico_semanal(getContext(), listDatos);
-                rc.setAdapter(adaptador_historico_semanal);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     //Hace la busqueda de todos los historicos semanales y los muestra en un ReciclerView
     private void crearLista(){

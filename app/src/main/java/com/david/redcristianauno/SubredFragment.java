@@ -17,25 +17,18 @@ import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.Red;
 import com.david.redcristianauno.POJOs.Subred;
-import com.david.redcristianauno.POJOs.Usuario;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.snapshot.StringNode;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.UUID;
 
 
 public class SubredFragment extends Fragment {

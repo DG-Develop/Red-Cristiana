@@ -14,14 +14,11 @@ import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.Firestore.LeerDatos;
-import com.david.redcristianauno.POJOs.Estado;
 import com.david.redcristianauno.POJOs.Municipio;
 import com.david.redcristianauno.POJOs.Subred;
-import com.david.redcristianauno.POJOs.Usuario;
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
@@ -32,14 +29,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText txtNombre, txtApellidoPaterno, txtApellidoMaterno,
@@ -189,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void verEstados(final String nombre_estado) {
+   /*private void verEstados(final String nombre_estado) {
         databaseReference.child("Estado").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -209,10 +202,10 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
 
-    private void listarEstados(){
+   /* private void listarEstados(){
         databaseReference.child("Estado").orderByChild("nombre_municipio").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -235,7 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private void listarSubred() {
         databaseReference.child("Subred").orderByChild("nombre_subred").addValueEventListener(new ValueEventListener() {
@@ -261,7 +254,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void llenarMunicipio(final int id_estado_municipio) {
+    /*private void llenarMunicipio(final int id_estado_municipio) {
         databaseReference.child("Municipio").orderByChild("nombre_municipio").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -287,15 +280,15 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private void setMunicipio(int id_municipio) {
          this.id_municipio = id_municipio;
     }
 
-    private void setEstado(int id_estado) {
+   /*private void setEstado(int id_estado) {
         this.id_estado = id_estado;
-    }
+    }*/
 
     public int getId_estado() {
         return id_estado;
@@ -339,33 +332,6 @@ public class RegisterActivity extends AppCompatActivity {
                 procesaUsuario();
             }
         }
-    }
-
-    private void crearUsuario() {
-
-        Usuario user = new Usuario();
-        user.setId_usuario(UUID.randomUUID().toString());
-        user.setNombre( txtNombre.getText().toString().trim());
-        user.setApellido_paterno(txtApellidoPaterno.getText().toString().trim());
-        user.setApellido_materno(txtApellidoMaterno.getText().toString().trim());
-        user.setCorreo(txtCorreo.getText().toString().trim());
-        user.setContraseña(txtContraseña.getText().toString().trim());
-        user.setId_estado(getId_estado());
-        user.setId_municipio(getId_municipio());
-        user.setColonia(txtColonia.getText().toString().trim());
-        user.setCalle(txtCalle.getText().toString().trim());
-        user.setNo_exterior(txtNum_ext.getText().toString().trim());
-        user.setCodigo_postal(Integer.parseInt(txtCodigo_postal.getText().toString().trim()));
-        user.setTelefono(txtTelefono.getText().toString().trim());
-        user.setId_permiso(1);
-        user.setId_subred(getId_subred());
-
-        databaseReference.child("Usuario").child(user.getId_usuario()).setValue(user);
-        Toast.makeText(this, "Se registro correctamente", Toast.LENGTH_SHORT).show();
-
-        Intent  i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        finish();
     }
 
     void crear(){

@@ -2,7 +2,6 @@ package com.david.redcristianauno;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.david.redcristianauno.Firestore.LeerDatos;
@@ -133,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void buscarSubredUsuario(final String id_usuario){
+    /*public void buscarSubredUsuario(final String id_usuario){
         db.collection("usuarios")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -155,6 +153,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
+    }*/
 
 }

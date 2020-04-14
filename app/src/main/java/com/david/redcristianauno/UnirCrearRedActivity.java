@@ -1,7 +1,9 @@
 package com.david.redcristianauno;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class UnirCrearRedActivity extends AppCompatActivity {
 

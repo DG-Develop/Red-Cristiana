@@ -1,9 +1,10 @@
 package com.david.redcristianauno.Firestore;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.HistoricoSemanal;

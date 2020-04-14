@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Customize your theme here.#4391B0, #397C96, #5DCAF4 -->
-    <color name="colorPrimary">#97D3DD</color>
-    <color name="colorPrimaryDark">#72B8C4</color>
-    <color name="colorAccent">#529DAA</color>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#545659</color>
+    <color name="colorAccent">#EC407A</color>
 
     <color name="secondaryPrimary">#3E4C4C</color>
     <color name="secondaryPrimaryDark">#253435</color>

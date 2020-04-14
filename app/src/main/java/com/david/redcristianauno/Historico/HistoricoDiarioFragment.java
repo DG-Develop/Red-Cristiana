@@ -3,11 +3,6 @@ package com.david.redcristianauno.Historico;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +11,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.david.redcristianauno.Clases.HistoricoDatosDiariosCard;
 import com.david.redcristianauno.DatePickerFragment;
@@ -37,9 +38,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class HistoricoDiarioFragment extends Fragment  implements DatePickerDialog.OnDateSetListener {
+public class HistoricoDiarioFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
     public static EditText etFecha;
     private Button btnMostrarDia;
     private ImageView btnFecha;
@@ -72,7 +72,7 @@ public class HistoricoDiarioFragment extends Fragment  implements DatePickerDial
         btnFecha = view.findViewById(R.id.ib_fecha_historico);
 
         rc = view.findViewById(R.id.rcDatosDiarios);
-        rc.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayout.VERTICAL, false));
+        rc.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
 
         hddc = new HistoricoDatosDiariosCard();
 

@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/MainTheme"
     tools:context=".LoginActivity">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="120dp">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/left_login"
+                android:layout_marginTop="79dp"
+                android:fontFamily="@font/roboto"
+                android:text="@string/welcome_login"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/Headline"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="58dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/app_name"
+                android:textColor="@color/colorAccent"
+                android:textSize="50sp"/>
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/titulo" />
 
-
-            </FrameLayout>
-
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
@@ -47,14 +44,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:drawableStart="@drawable/baseline_person_black_24"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/email"
                     android:padding="6dp"
                     android:textColorHint="@color/secondaryPrimaryDark"
                     android:inputType="textEmailAddress"
                     android:background="@drawable/custom_edittext_sesion" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="40dp"
@@ -69,13 +66,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:drawableStart="@drawable/baseline_lock_black_24"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/pass"
                     android:padding="5dp"
                     android:inputType="textPassword"
                     android:background="@drawable/custom_edittext_sesion"
                     android:textColorHint="@color/secondaryPrimaryDark" />
 
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RadioButton
                 android:id="@+id/sesion"
@@ -84,7 +81,7 @@
                 android:layout_marginStart="55dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="45dp"
-                android:text="@string/sesionActiva"
+                android:text="@string/session_active"
                 android:textColor="@color/secondaryPrimaryDark"
                 android:textSize="16sp"/>
 
@@ -98,7 +95,7 @@
                 android:background="@drawable/button_start_sesion"
                 android:elevation="10dp"
                 android:onClick="ingresar"
-                android:text="@string/action_sign_in_short"
+                android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
@@ -115,7 +112,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/registrar"
+                    android:text="@string/register"
                     android:textSize="16sp"
                     android:textColor="@color/secondaryPrimaryDark"/>
 
@@ -137,6 +134,5 @@
 
 
         </LinearLayout>
-    </ScrollView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

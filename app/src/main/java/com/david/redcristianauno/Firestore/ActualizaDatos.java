@@ -1,7 +1,9 @@
 package com.david.redcristianauno.Firestore;
 
-import android.support.annotation.NonNull;
+
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.david.redcristianauno.POJOs.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;

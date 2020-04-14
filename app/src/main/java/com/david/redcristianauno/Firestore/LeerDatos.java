@@ -1,8 +1,7 @@
 package com.david.redcristianauno.Firestore;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
@@ -19,6 +20,7 @@ import com.david.redcristianauno.R;
 import com.david.redcristianauno.adapters.adaptador_permisos;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;

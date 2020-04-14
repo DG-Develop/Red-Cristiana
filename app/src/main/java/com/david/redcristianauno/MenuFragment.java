@@ -2,7 +2,7 @@ package com.david.redcristianauno;
 
 import android.os.Bundle;
 
-import android.support.v4.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import androidx.fragment.app.Fragment;
 
 import com.david.redcristianauno.Clases.Foto;
 import com.google.android.gms.tasks.OnSuccessListener;

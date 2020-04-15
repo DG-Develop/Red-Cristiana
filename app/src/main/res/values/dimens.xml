@@ -12,6 +12,14 @@
     <dimen name="Subtitle">16sp</dimen>
     <dimen name="Normal">14sp</dimen>
 
+    <!--Standar Size-->
+    <dimen name="VeryBig">40dp</dimen>
+    <dimen name="Big">32dp</dimen>
+    <dimen name="Medium">24dp</dimen>
+    <dimen name="Small">16dp</dimen>
+    <dimen name="VerySmall">8dp</dimen>
+    <dimen name="Diminute">4dp</dimen>
+
     <!--Login specification-->
     <dimen name="left_login">37dp</dimen>
 

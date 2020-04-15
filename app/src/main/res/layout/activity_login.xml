@@ -28,49 +28,63 @@
                 android:text="@string/app_name"
                 android:textColor="@color/colorAccent"
                 android:textSize="50sp"/>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/Medium"
+                android:layout_marginRight="@dimen/Small"
+                android:layout_marginLeft="@dimen/Small"
+                android:background="@color/colorPrimaryDark"
+                android:alpha="0.5"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="@dimen/Big"
+                android:layout_marginEnd="36dp"
                 app:hintEnabled="false"
                 android:textColorHint="@color/secondaryPrimaryDark">
 
                 <EditText
                     android:id="@+id/txtCorreoLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:drawableStart="@drawable/baseline_person_black_24"
+                    android:layout_height="@dimen/VeryBig"
+                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawablePadding="@dimen/Diminute"
                     android:hint="@string/email"
-                    android:padding="6dp"
-                    android:textColorHint="@color/secondaryPrimaryDark"
+                    android:padding="@dimen/VerySmall"
+                    android:fontFamily="@font/roboto"
+                    android:textColorHint="@color/Gray"
+                    android:textSize="@dimen/Normal"
                     android:inputType="textEmailAddress"
-                    android:background="@drawable/custom_edittext_sesion" />
+                    android:background="@drawable/shape_tvgeneral"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="@dimen/Medium"
+                android:layout_marginEnd="36dp"
                 app:hintEnabled="false"
                 android:textColorHint="@color/secondaryPrimaryDark"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/Gray">
 
                 <EditText
                     android:id="@+id/txtPasswordLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:drawableStart="@drawable/baseline_lock_black_24"
+                    android:layout_height="@dimen/VeryBig"
+                    android:drawableStart="@drawable/baseline_lock_24"
                     android:hint="@string/pass"
-                    android:padding="5dp"
+                    android:drawablePadding="@dimen/Diminute"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textPassword"
-                    android:background="@drawable/custom_edittext_sesion"
-                    android:textColorHint="@color/secondaryPrimaryDark" />
+                    android:background="@drawable/shape_tvgeneral"
+                    android:textColorHint="@color/Gray"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="@dimen/Normal"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,43 +92,46 @@
                 android:id="@+id/sesion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="45dp"
+                android:layout_marginStart="42dp"
+                android:layout_marginTop="@dimen/Medium"
+                android:layout_marginEnd="42dp"
+                android:buttonTint="@color/Gray"
                 android:text="@string/session_active"
-                android:textColor="@color/secondaryPrimaryDark"
-                android:textSize="16sp"/>
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/Normal"
+                android:paddingLeft="@dimen/VerySmall"/>
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/button_start_sesion"
-                android:elevation="10dp"
+                android:layout_height="@dimen/VeryBig"
+                android:layout_marginStart="46dp"
+                android:layout_marginTop="@dimen/Medium"
+                android:layout_marginEnd="46dp"
+                android:fontFamily="@font/roboto"
                 android:onClick="ingresar"
                 android:text="@string/sign_in"
                 android:textAllCaps="false"
-                android:textColor="@android:color/background_light"
-                android:textSize="18sp" />
+                android:textColor="@color/colorSecondary"
+                android:textSize="@dimen/Normal"
+                android:background="@drawable/button_start_sesion"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="20dp"
-                android:gravity="center"
+                android:layout_marginTop="@dimen/Medium"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/register"
-                    android:textSize="16sp"
-                    android:textColor="@color/secondaryPrimaryDark"/>
+                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:fontFamily="@font/roboto"/>
 
                 <Button
                     android:id="@+id/button4"
@@ -124,9 +141,10 @@
                     android:layout_marginEnd="10dp"
                     android:background="?selectableItemBackgroundBorderless"
                     android:onClick="registrar"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/title_activity_login"
                     android:textAllCaps="false"
-                    android:textColor="@color/secondaryPrimaryDark"
+                    android:textColor="@color/Black"
                     android:textStyle="bold" />
 
             </LinearLayout>

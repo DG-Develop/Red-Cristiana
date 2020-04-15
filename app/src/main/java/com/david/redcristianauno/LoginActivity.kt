@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
     private val l = LeerDatos()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_r)
+        setContentView(R.layout.activity_login)
         if (Preferences.obtenerPreferencesBoolean(
                 this,
                 Preferences.PREFENCE_ESTADO_BUTTON_SESION

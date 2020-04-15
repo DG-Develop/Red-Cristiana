@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Customize your theme here.#4391B0, #397C96, #5DCAF4 -->
+    <!-- Principal Colors -->
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#545659</color>
     <color name="colorAccent">#EC407A</color>
+    
+    <!--Colors Gray-->
+    <color name="Black">#111317</color>
+    <color name="Gray">#8C8D8F</color>
+    <color name="GraySecondary">#C6C6C7</color>
+    <color name="GrayLow">#E5E7EA</color>
+
+    <color name="colorSecondary">#40A7EC</color>
 
     <color name="secondaryPrimary">#3E4C4C</color>
     <color name="secondaryPrimaryDark">#253435</color>

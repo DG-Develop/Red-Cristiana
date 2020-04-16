@@ -8,8 +8,8 @@
     <!--Colors Gray-->
     <color name="Black">#111317</color>
     <color name="Gray">#8C8D8F</color>
+    <color name="GrayBlue">#E5E7EA</color>
     <color name="GraySecondary">#C6C6C7</color>
-    <color name="GrayLow">#E5E7EA</color>
 
     <color name="colorSecondary">#40A7EC</color>
 

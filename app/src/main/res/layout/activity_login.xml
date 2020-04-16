@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +53,7 @@
                     android:id="@+id/txtCorreoLogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/VeryBig"
-                    android:drawableStart="@drawable/baseline_person_24"
+                    android:drawableStart="@drawable/profile"
                     android:drawablePadding="@dimen/Diminute"
                     android:hint="@string/email"
                     android:padding="@dimen/VerySmall"
@@ -76,7 +79,7 @@
                     android:id="@+id/txtPasswordLogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/VeryBig"
-                    android:drawableStart="@drawable/baseline_lock_24"
+                    android:drawableStart="@drawable/lock"
                     android:hint="@string/pass"
                     android:drawablePadding="@dimen/Diminute"
                     android:padding="@dimen/VerySmall"
@@ -148,9 +151,7 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-
-
-
         </LinearLayout>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

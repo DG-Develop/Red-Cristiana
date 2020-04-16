@@ -3,10 +3,19 @@
 
     <string name="welcome_login">Bienvenido a</string>
     <string name="email">"Correo electrónico"</string>
-    <string name="pass">"  Contraseña"</string>
+    <string name="pass">"Contraseña"</string>
     <string name="session_active">No cerrar sesión</string>
     <string name="sign_in">Iniciar Sesión</string>
     <string name="register">"¿Aún no tienes una cuenta? "</string>
+
+    <string name="lets_start">¡Vamos A Comenzar!</string>
+    <string name="msg_create_account">Crea tu cuenta para unirte con nosotros</string>
+    <string name="names">Nombre(s)</string>
+    <string name="last_names">Apellidos</string>
+    <string name="confirmPass">Confirmar contraseña</string>
+    <string name="create_account">Crear cuenta</string>
+    
+    <string name="title_home">Descubre lo que está pasando</string>
 
 
     <string name="dat_user">Datos de Usuario</string>

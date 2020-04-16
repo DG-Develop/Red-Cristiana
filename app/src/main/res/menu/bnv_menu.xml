@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navHomeFragment"
+        android:title="Inicio"
+        android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/navDataFragment"
+        android:title="Registros"
+        android:icon="@drawable/ic_register"/>
+    <item
+        android:id="@+id/navHistoryFragment"
+        android:title="Historicos"
+        android:icon="@drawable/ic_history"/>
+    <item
+        android:id="@+id/navBiblieFragment"
+        android:title="Biblia"
+        android:icon="@drawable/ic_biblie"/>
+    <item
+        android:id="@+id/navSettingFragment"
+        android:title="Configuracion"
+        android:icon="@drawable/ic_settings"/>
+</menu>

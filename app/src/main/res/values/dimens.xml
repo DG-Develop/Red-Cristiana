@@ -9,6 +9,7 @@
     <!--Fonts size-->
     <dimen name="Headline">40sp</dimen>
     <dimen name="Title">24sp</dimen>
+    <dimen name="TitleSecondary">18sp</dimen>
     <dimen name="Subtitle">16sp</dimen>
     <dimen name="Normal">14sp</dimen>
 

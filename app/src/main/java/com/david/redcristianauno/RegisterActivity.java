@@ -69,9 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
 
-        txtNombre = (EditText) findViewById(R.id.txtNombre);
-        txtApellidoPaterno = (EditText) findViewById(R.id.txtApellidoPaterno);
-        txtApellidoMaterno = (EditText) findViewById(R.id.txtApellidoMaterno);
+        txtNombre = (EditText) findViewById(R.id.etNamesResgisterActivity);
+        txtApellidoPaterno = (EditText) findViewById(R.id.etLastNamesRegisterActivity);
         txtCorreo = (EditText) findViewById(R.id.txtCorreo);
         txtContraseña = (EditText) findViewById(R.id.txtContraseña);
         spEstado = (Spinner) findViewById(R.id.spEstado);

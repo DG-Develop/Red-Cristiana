@@ -14,13 +14,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".UnirCrearRedActivity" />
         <activity
             android:name=".LoginActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,13 +31,11 @@
         <activity
             android:name=".RegisterActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/MainTheme" />
+            android:label="@string/app_name" />
         <activity
             android:name=".PrincipalActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="preloaded_fonts"

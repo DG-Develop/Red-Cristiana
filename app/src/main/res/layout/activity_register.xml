@@ -177,7 +177,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_create_account_registerActivity"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/VeryBig"
                 android:layout_marginStart="46dp"

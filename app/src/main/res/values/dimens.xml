@@ -23,6 +23,9 @@
 
     <!--Login specification-->
     <dimen name="left_login">37dp</dimen>
+    <dimen name="image_notice_size">200dp</dimen>
+    <dimen name="width_btn_small">140dp</dimen>
+    <dimen name="height_btn_small">30dp</dimen>
 
 
 </resources>

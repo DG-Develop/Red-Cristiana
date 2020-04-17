@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="@dimen/VerySmall"
+    app:cardElevation="@dimen/Diminute"
+    android:layout_margin="@dimen/VerySmall">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_item_home_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/image_notice_size"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/notice1"/>
+        <TextView
+            android:id="@+id/tv_item_home_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/VerySmall"
+            android:fontFamily="@font/roboto_bold"
+            tools:text="Coronavirus"
+            android:textSize="@dimen/Subtitle"
+            android:textStyle="bold"
+            android:textColor="@color/colorSecondary"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="@dimen/VerySmall"
+            android:layout_marginEnd="@dimen/VerySmall"
+            android:background="@color/colorPrimaryDark"
+            android:alpha="0.5"/>
+        <TextView
+            android:id="@+id/tv_item_home_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/VerySmall"
+            android:fontFamily="@font/roboto"
+            tools:text="Los coronavirus son una extensa familia de virus que pueden causar enfermedades tanto en animales como en humanos. En los humanos, se sabe que varios coronavirus causan infecciones respiratorias que pueden ir desde el resfriado común hasta enfermedades más graves como el síndrome respiratorio de Oriente Medio (MERS) y el síndrome respiratorio agudo severo (SRAS). El coronavirus que se ha descubierto más recientemente causa la enfermedad por coronavirus COVID-19."
+            android:textColor="@color/Gray"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -14,9 +14,26 @@
     <string name="last_names">Apellidos</string>
     <string name="confirmPass">Confirmar contraseña</string>
     <string name="create_account">Crear cuenta</string>
-    
+
     <string name="title_home">Descubre lo que está pasando</string>
 
+    <string name="subred_register_title">Registro Subred</string>
+    <string name="subred_register_description">¿Eres el encargado de la reunion de lideres de celula? Entonces aquí puedes registrar los datos de asistencia y lo recaudado.</string>
+    <string name="btn_enteroky">Ingresar datos</string>
+    <string name="celular_register_title">Registro Celula</string>
+    <string name="celula_register_description">¿Eres líder de una celula? Registra aquí los datos de tus reuniones</string>
+
+    <string name="daily_history_register_title">Historico Diario</string>
+    <string name="weekly_history_register_title">Historico Semanal</string>
+    <string name="btn_see_data">Ver datos</string>
+    <string name="daily_history_register_description">Checa quienes han registrado los datos en las reuniones de células por medio de un calendario y ahí podrás verificar el registro por usuarios.</string>
+    <string name="weekly_history_register_description">Checa cuanto se ha recaudado semanalmente por todas las reuniones de celula realizadas en dicha semana.</string>
+
+    <string name="profile_configurarion_title">Perfil</string>
+    <string name="create_subred_celula_configurarion_title">Crear Subred / Celula</string>
+    <string name="user_managment_configurarion_title">Administrar Usuarios</string>
+    <string name="upload_notice_configurarion_title">Subir Noticias</string>
+    <string name="close_session_configurarion_title">Cerrar Sesión</string>
 
     <string name="dat_user">Datos de Usuario</string>
     <string name="btnRed">Red</string>
@@ -90,8 +107,6 @@
     <string name="sesionInactiva">Cerrar sesión</string>
 
     <string name="menu_home">Incio</string>
-    <string name="menu_gallery">Registro Subred</string>
-    <string name="menu_slideshow">Registro Celula</string>
     <string name="menu_tools">Historico</string>
     <string name="menu_biblia">Biblia</string>
     <string name="menu_share">Permisos de usuario</string>

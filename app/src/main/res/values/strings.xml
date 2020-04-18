@@ -35,6 +35,24 @@
     <string name="upload_notice_configurarion_title">Subir Noticias</string>
     <string name="close_session_configurarion_title">Cerrar Sesión</string>
 
+    <string name="name_data">Nombre</string>
+    <string name="assistance_data">Asistencia</string>
+    <string name="offering_data">Ofrenda</string>
+    <string name="date_data">Fecha</string>
+    <string name="btn_send">Enviar</string>
+
+    <string name="subred_title_data">Subred</string>
+    <string name="celula_title_data">Celula</string>
+    <string name="host_name_data">Nombre Anfitrión</string>
+    <string name="guest_data">Invitados</string>
+    <string name="child_data">Niños</string>
+
+
+    <string-array name="decimals">
+        <item>.00</item>
+        <item>.50</item>
+    </string-array>
+
     <string name="dat_user">Datos de Usuario</string>
     <string name="btnRed">Red</string>
     <string name="btnSubRed">SubRed</string>
@@ -42,13 +60,10 @@
     <string name="btnVer">Ver</string>
     <string name="btnBibilia">Biblia</string>
     <string name="btnInformacion">Acerca De</string>
-    <string name="btnEnviar">Enviar</string>
-    <string name="txtAsistencia">Asistencia</string>
     <string name="txtAnfitrion">Nombre Anfitrion</string>
     <string name="txtDirreccion">Dirección</string>
     <string name="txtInvitados">Invitados</string>
     <string name="txtNiños">Niños</string>
-    <string name="txtOfrenda">Ofrenda</string>
     <string name="txtOtroCelula">Si no aparece tú subred, presione aquí</string>
     <string name="txtRegistro">Introduce los datos</string>
 
@@ -69,7 +84,6 @@
     <string name="btn_ver_registro">Ver registro</string>
     <string name="title_activity_login">Registrate</string>
     <string name="nombres">Nombre(s)</string>
-    <string name="nombre">Nombre</string>
     <string name="apellido_paterno">Apellido Paterno</string>
     <string name="apellido_materno">Apellido Materno</string>
     <string name="domicilio">Domicilio</string>

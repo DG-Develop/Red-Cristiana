@@ -23,6 +23,13 @@
         <!--item name="android:popupBackground">#DFFFFFFF</item>-->
     </style>
 
+    <style name="spinner_style_decimals">
+        <item name="android:entries">@array/decimals</item>
+        <item name="android:textColor">@color/Gray</item>
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textSize">@dimen/Normal</item>
+    </style>
+
     <!-- Estilo de la etiqueta para menu de botones emergentes-->
     <style name="etiquetaFloatingButton">
         <item name="android:background">@drawable/fondo_eti_fab</item>

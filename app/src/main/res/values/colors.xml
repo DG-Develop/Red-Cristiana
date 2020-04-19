@@ -12,6 +12,7 @@
     <color name="GraySecondary">#C6C6C7</color>
 
     <color name="colorSecondary">#40A7EC</color>
+    <color name="Negative">#0BA119</color>
 
     <color name="secondaryPrimary">#3E4C4C</color>
     <color name="secondaryPrimaryDark">#253435</color>

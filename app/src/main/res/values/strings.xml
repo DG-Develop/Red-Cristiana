@@ -47,6 +47,26 @@
     <string name="guest_data">Invitados</string>
     <string name="child_data">Niños</string>
 
+    <string name="your_data_title_configuration">Tus Datos</string>
+    <string name="telephone">Teléfono</string>
+    <string name="address">Dirección</string>
+    <string name="edit_profile">Editar Perfil</string>
+    <string name="save_profile">Guardar</string>
+
+    <string name="notice_title">Título</string>
+    <string name="upload_notice">Subir noticia</string>
+    <string name="upload_image">Sube una imagen</string>
+    <string name="description_notice">Descripción</string>
+
+    <string name="title_manage_user">Tipos de usuarios</string>
+    <string name="normal_user">Normal</string>
+    <string name="celula_leader_user">Lideres Celula</string>
+    <string name="subred_user">Subred</string>
+    <string name="red_user">Red</string>
+    <string name="n">N</string>
+    <string name="lc">LC</string>
+    <string name="s">S</string>
+    <string name="r">R</string>
 
     <string-array name="decimals">
         <item>.00</item>
@@ -60,10 +80,6 @@
     <string name="btnVer">Ver</string>
     <string name="btnBibilia">Biblia</string>
     <string name="btnInformacion">Acerca De</string>
-    <string name="txtAnfitrion">Nombre Anfitrion</string>
-    <string name="txtDirreccion">Dirección</string>
-    <string name="txtInvitados">Invitados</string>
-    <string name="txtNiños">Niños</string>
     <string name="txtOtroCelula">Si no aparece tú subred, presione aquí</string>
     <string name="txtRegistro">Introduce los datos</string>
 
@@ -73,10 +89,6 @@
     <string name="txtregistrar">Registrar</string>
 
     <string name="txtNombreRed">Nombre de Red</string>
-    <string name="descripcion">Descripcion</string>
-    <string name="formato_fecha">dd/mm/yyyy</string>
-    <string name="select_fecha">Seleccione una fecha: </string>
-    <string name="fecha">Fecha </string>
     <string name="fecha_semanal_celula">Fecha Semanal Celula</string>
     <string name="select_subred">Seleccione a la subred que perteneces</string>
     <string name="select_subred_reg">Seleccione una subred</string>
@@ -98,7 +110,6 @@
     <string name="codg_pos">Código Postal</string>
 
 
-    <string name="telefono">Telefono</string>
     <string name="list_user">Lista de Usuarios: </string>
 
 

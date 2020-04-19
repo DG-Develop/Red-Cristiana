@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+android:layout_height="wrap_content"
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tool="http://schemas.android.com/tools"
+android:layout_margin="@dimen/Small"
+app:cardElevation="@dimen/Diminute"
+app:cardCornerRadius="@dimen/VerySmall">
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:background="@drawable/view_solid_history" />
+
+        <TextView
+            android:id="@+id/tvNameWeekItemHistoryDaily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/VeryBig"
+            android:layout_marginBottom="@dimen/VeryBig"
+            android:layout_alignTop="@+id/tvTitleItemHistoryWeekly"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/Title"
+            android:textAlignment="center"
+            android:lines="2"
+            tool:text="Miercoles, 24 de Septiembre de 1999" />
+
+        <TextView
+            android:id="@+id/tvTitleItemHistoryWeekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/Small"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/Subtitle"
+            tool:text="Resultados totales durante la semana de:"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/Small"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/Normal"
+            tool:text="Total asistencia: 56" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/Small"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/Normal"
+            tool:text="Total invitados: 25" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/Small">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/Small"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/Normal"
+            tool:text="Total niños: 36" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/Small"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/Black"
+            android:textSize="@dimen/Normal"
+            tool:text="Total ofrenda: 23" />
+    </LinearLayout>
+
+</LinearLayout>
+
+</androidx.cardview.widget.CardView>

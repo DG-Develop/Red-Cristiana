@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Toolbar
-            android:id="@+id/toolbarBackRegister"
+            android:id="@+id/toolbarBackHistoryDaily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/GrayBlue"
+    tools:context=".ui.fragments.UploadNoticeConfigurationDialogFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Toolbar
+            android:id="@+id/toolbarBackUploadNoticeConfiguration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/Medium"
+                android:src="@drawable/ic_arrow_back"/>
+        </Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"
+                app:cardCornerRadius="@dimen/VerySmall"
+                app:cardElevation="@dimen/Diminute">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="@string/notice_title"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="@dimen/Title"
+                            android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/btnEditProfileConfigurationDialog"
+                                android:layout_width="120dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="@dimen/Small"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="20dp"
+                                android:padding="5dp"
+                                android:text="@string/upload_notice"
+                                android:textAllCaps="false"
+                                android:textColor="@color/colorPrimary"
+                                android:background="@drawable/button_solid_save"/>
+
+                    </RelativeLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        app:hintEnabled="false"
+                        android:textColorHint="@android:color/background_dark">
+
+                        <EditText
+                            android:id="@+id/etNameConfigurationDialogFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/VeryBig"
+                            android:drawablePadding="@dimen/Diminute"
+                            tools:hint="Titulo noticia"
+                            android:padding="@dimen/VerySmall"
+                            android:fontFamily="@font/roboto"
+                            android:textColorHint="@color/Gray"
+                            android:textSize="@dimen/Normal"
+                            android:inputType="textPersonName"
+                            android:background="@drawable/shape_tvgeneral"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/upload_image"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/Subtitle"/>
+
+                   <ImageButton
+                       android:id="@+id/ibUploadNoticeConfigurationDialogFragment"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="@dimen/Big"
+                       android:layout_gravity="center_horizontal"
+                       android:src="@drawable/ic_add_notice"
+                       android:background="@android:color/transparent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/Small"
+                        android:fontFamily="@font/roboto_bold"
+                        android:layout_marginStart="20dp"
+                        android:text="@string/description_notice"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/Subtitle"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        app:hintEnabled="false"
+                        android:textColorHint="@android:color/background_dark">
+
+                        <EditText
+                            android:id="@+id/etLastNamesConfigurationDialogFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/Small"
+                            android:drawablePadding="@dimen/Diminute"
+                            android:padding="@dimen/VerySmall"
+                            android:fontFamily="@font/roboto"
+                            android:textColorHint="@color/Gray"
+                            android:textSize="@dimen/Normal"
+                            android:inputType="textMultiLine"
+                            android:lines="10"
+                            android:background="@drawable/shape_tvgeneral"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

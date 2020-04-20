@@ -68,6 +68,8 @@
     <string name="s">S</string>
     <string name="r">R</string>
 
+    <string name="search">Buscar</string>
+
     <string-array name="decimals">
         <item>.00</item>
         <item>.50</item>

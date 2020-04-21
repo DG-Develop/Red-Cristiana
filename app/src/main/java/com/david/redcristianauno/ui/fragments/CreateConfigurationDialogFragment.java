@@ -1,4 +1,4 @@
-package com.david.redcristianauno;
+package com.david.redcristianauno.ui.fragments;
 
 
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.david.redcristianauno.Firestore.InsertarDatos;
 import com.david.redcristianauno.POJOs.Celula;
 import com.david.redcristianauno.POJOs.Red;
 import com.david.redcristianauno.POJOs.Subred;
+import com.david.redcristianauno.Preferences;
+import com.david.redcristianauno.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,7 +34,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class SubredFragment extends Fragment {
+public class CreateConfigurationDialogFragment extends Fragment {
 
     private EditText txtCrearSubred, txtCrearCelula, txtCrearRed;
     private Button btnCrearSubred, btnCrearCelula, btnCrearRed, btnCrearTodo;
@@ -54,7 +56,7 @@ public class SubredFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_subred, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_configuration_dialog, container, false);
 
         txtCrearSubred = view.findViewById(R.id.txtCrearSubred);
         txtCrearCelula = view.findViewById(R.id.txtCrearCelula);

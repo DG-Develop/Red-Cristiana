@@ -111,7 +111,6 @@
                             android:id="@+id/etNameDataSubredDialogFragment"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/VeryBig"
-                            android:drawablePadding="@dimen/Diminute"
                             android:hint="@string/host_name_data"
                             android:padding="@dimen/VerySmall"
                             android:fontFamily="@font/roboto"

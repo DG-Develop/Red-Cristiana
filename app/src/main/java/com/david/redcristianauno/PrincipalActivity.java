@@ -32,6 +32,7 @@ import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
+import com.david.redcristianauno.ui.fragments.CreateConfigurationDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -190,7 +191,7 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new PermisosUsuariosFragment()).commit();
         }else if(id == R.id.crear){
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new SubredFragment()).commit();
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new CreateConfigurationDialogFragment()).commit();
         }else if(id == R.id.noticias){
             fragmentManager.beginTransaction().replace(R.id.contenedor, new noticiasFragment()).commit();
         }

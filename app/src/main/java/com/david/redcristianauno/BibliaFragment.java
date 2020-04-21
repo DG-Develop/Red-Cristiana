@@ -23,7 +23,7 @@ public class BibliaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_biblia, container, false);
+        View view = inflater.inflate(R.layout.fragment_biblie, container, false);
         wv1 = view.findViewById(R.id.wv1);
         wv1.setWebViewClient(new WebViewClient());
         wv1.loadUrl("http://www.iglesiabautistarecoleta.cl/Biblia_texto_y_audio/indice_general.htm");

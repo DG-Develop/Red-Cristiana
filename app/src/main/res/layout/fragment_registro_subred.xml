@@ -48,7 +48,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtAsistencia"
                     android:importantForAutofill="no"
                     android:inputType="number" />
 
@@ -60,7 +59,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtOfrenda"
                     android:inputType="number" />
 
                 <Spinner
@@ -86,7 +84,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/formato_fecha"
                     android:inputType="date" />
 
                 <ImageButton
@@ -110,7 +107,6 @@
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="40dp"
                 android:background="#CC92AA"
-                android:text="@string/btnEnviar"
                 android:textColor="@android:color/background_light" />
 
         </LinearLayout>

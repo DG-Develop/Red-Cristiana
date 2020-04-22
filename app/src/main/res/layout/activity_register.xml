@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity"
+    tools:context=".ui.activities.RegisterActivity"
     android:orientation="vertical">
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -183,6 +183,7 @@
                 android:layout_marginStart="46dp"
                 android:layout_marginTop="@dimen/Medium"
                 android:layout_marginEnd="46dp"
+                android:onClick="userRegister"
                 android:fontFamily="@font/roboto"
                 android:text="@string/create_account"
                 android:textAllCaps="false"
@@ -192,4 +193,22 @@
 
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:id="@+id/rlBaseRegister"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:alpha="0.4"/>
+
+        <ProgressBar
+            android:id="@+id/pbRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

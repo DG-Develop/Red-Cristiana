@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navMenuFragment"
-        android:name="com.david.redcristianauno.MenuFragment"
+        android:name="com.david.redcristianauno.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action

@@ -27,7 +27,6 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:layout_marginBottom="10dp"
-                android:text="@string/nombre"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -37,8 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:textAlignment="center"
-                android:textSize="20sp"
-                android:text="@string/txtAnfitrion" />
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,8 +50,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/txtAsistencia" />
+                    android:layout_marginStart="10dp" />
 
                 <TextView
                     android:id="@+id/rc_txt_invitados"
@@ -62,8 +59,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/txtInvitados" />
+                    android:layout_marginStart="10dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,8 +74,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/txtNiños" />
+                    android:layout_marginStart="10dp"/>
 
                 <TextView
                     android:id="@+id/rc_txt_ofrenda"
@@ -88,8 +83,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/txtOfrenda" />
+                    android:layout_marginStart="10dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -104,8 +98,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:text="@string/txtDirreccion" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/rc_txt_subred"

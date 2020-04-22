@@ -63,7 +63,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:ems="10"
-                    android:hint="@string/txtDirreccion"
                     android:inputType="textPersonName"
                     android:visibility="invisible" />
 
@@ -93,7 +92,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="12dp"
                     android:ems="10"
-                    android:hint="@string/txtAnfitrion"
                     android:inputType="textPersonName" />
 
             </LinearLayout>
@@ -111,7 +109,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtAsistencia"
                     android:inputType="number" />
 
                 <EditText
@@ -122,7 +119,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtInvitados"
                     android:inputType="number" />
 
                 <EditText
@@ -133,7 +129,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtNiños"
                     android:inputType="number" />
             </LinearLayout>
 
@@ -150,7 +145,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/txtOfrenda"
                     android:inputType="number" />
 
                 <Spinner
@@ -174,7 +168,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/formato_fecha"
                     android:inputType="date"
                     app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -186,7 +179,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/descripcion"
                     android:ems="10"
                     android:onClick="obtenerFecha"
                     app:srcCompat="@drawable/fecha" />
@@ -203,7 +195,6 @@
                 android:layout_marginEnd="40dp"
                 android:layout_marginBottom="20dp"
                 android:background="#CC92AA"
-                android:text="@string/btnEnviar"
                 android:textColor="@android:color/background_light" />
         </LinearLayout>
     </ScrollView>

@@ -32,6 +32,7 @@ import com.david.redcristianauno.POJOs.HistoricoSemanal;
 import com.david.redcristianauno.POJOs.HistoricoSemanalSubred;
 import com.david.redcristianauno.POJOs.RegistroCelula;
 import com.david.redcristianauno.POJOs.RegistroSubred;
+import com.david.redcristianauno.ui.activities.LoginActivity;
 import com.david.redcristianauno.ui.fragments.CreateConfigurationDialogFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;

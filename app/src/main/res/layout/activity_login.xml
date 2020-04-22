@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".ui.activities.LoginActivity">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,7 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:textColorHint="@color/secondaryPrimaryDark">
 
                 <EditText
-                    android:id="@+id/txtCorreoLogin"
+                    android:id="@+id/etEmailLogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/VeryBig"
                     android:drawableStart="@drawable/profile"
@@ -76,7 +76,7 @@
                 app:passwordToggleTint="@color/Gray">
 
                 <EditText
-                    android:id="@+id/txtPasswordLogin"
+                    android:id="@+id/etPasswordLogin"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/VeryBig"
                     android:drawableStart="@drawable/lock"
@@ -113,7 +113,7 @@
                 android:layout_marginTop="@dimen/Medium"
                 android:layout_marginEnd="46dp"
                 android:fontFamily="@font/roboto"
-                android:onClick="ingresar"
+                android:onClick="enterokayMain"
                 android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@color/colorSecondary"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:onClick="registrar"
+                    android:onClick="actionRegister"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/title_activity_login"
                     android:textAllCaps="false"
@@ -153,5 +153,23 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlBaseLogin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:alpha="0.4"/>
+
+        <ProgressBar
+            android:id="@+id/pbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

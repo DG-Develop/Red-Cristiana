@@ -19,6 +19,7 @@ import com.david.redcristianauno.Firestore.LeerDatos;
 import com.david.redcristianauno.POJOs.Municipio;
 import com.david.redcristianauno.POJOs.Subred;
 import com.david.redcristianauno.POJOs.Usuarios;
+import com.david.redcristianauno.ui.activities.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity2 extends AppCompatActivity {
     private EditText txtNombre, txtApellidoPaterno, txtApellidoMaterno,
             txtCorreo, txtContraseña,txtColonia,txtCalle,txtNum_ext,txtCodigo_postal, txtTelefono;
     private Spinner spEstado, spMunicipio, spSubred;
@@ -71,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         txtNombre = (EditText) findViewById(R.id.etNamesResgisterActivity);
         txtApellidoPaterno = (EditText) findViewById(R.id.etLastNamesRegisterActivity);
-        txtCorreo = (EditText) findViewById(R.id.txtCorreo);
+        /*txtCorreo = (EditText) findViewById(R.id.txtCorreo);
         txtContraseña = (EditText) findViewById(R.id.txtContraseña);
         spEstado = (Spinner) findViewById(R.id.spEstado);
         spMunicipio = (Spinner) findViewById(R.id.spMunicipio);
@@ -80,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtNum_ext = (EditText) findViewById(R.id.txtnum_ext);
         txtCodigo_postal = (EditText) findViewById(R.id.txtCodigo_postal);
         txtTelefono = (EditText) findViewById(R.id.txtTelefono);
-        spSubred = (Spinner) findViewById(R.id.spSubred);
+        spSubred = (Spinner) findViewById(R.id.spSubred);*/
 
         /*String[] Estados = {"Aguascalientes","Baja California","Baja California Sur","Campeche","Chiapas","Chihuahua"
         ,"Ciudad de México","Coahuila","Colima","Durango","Guanajuato","Guerrero","Hidalgo","Jalisco","Michoacán"
@@ -88,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
         ,"Sonora","Tabasco","Tamaulipas","Tlaxcala","Veracruz","Yucatán","Zacatecas"};*/
 
         //listarEstados();
-        l.leerColeccionEstados(spEstado, RegisterActivity.this);
+        l.leerColeccionEstados(spEstado, RegisterActivity2.this);
 
         spEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -96,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String nombre_estado = spEstado.getSelectedItem().toString();
 
                 //verEstados(nombre_estado);
-                l.leerEstados(nombre_estado,spMunicipio, RegisterActivity.this);
+                l.leerEstados(nombre_estado,spMunicipio, RegisterActivity2.this);
             }
 
             @Override
@@ -242,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
                     String nombre_subred = s.getNombre_subred();
                     listaSubred.add(nombre_subred);
 
-                    arrayAdapterSubred = new ArrayAdapter<String>(RegisterActivity.this, R.layout.spinner_item_david,listaSubred);
+                    arrayAdapterSubred = new ArrayAdapter<String>(RegisterActivity2.this, R.layout.spinner_item_david,listaSubred);
                     spSubred.setAdapter(arrayAdapterSubred);
 
                 }
@@ -376,7 +377,7 @@ public class RegisterActivity extends AppCompatActivity {
                             //crearUsuario();
                             crear();
                         }else{
-                            Toast.makeText(RegisterActivity.this, "No se pudo crear usuarioprivado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity2.this, "No se pudo crear usuarioprivado", Toast.LENGTH_SHORT).show();
                         }
 
                         progressDialog.dismiss();
@@ -385,9 +386,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         if (e instanceof FirebaseAuthUserCollisionException){
-                            Toast.makeText(RegisterActivity.this, "Este correo ya esta en uso", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity2.this, "Este correo ya esta en uso", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(RegisterActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity2.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

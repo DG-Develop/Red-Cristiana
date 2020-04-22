@@ -29,8 +29,7 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
-                android:textSize="30sp"
-                android:text="@string/select_fecha" />
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +44,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="@string/formato_fecha"
                     android:inputType="date" />
 
                 <ImageButton
@@ -56,7 +54,6 @@
                     android:layout_marginTop="28dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/descripcion"
                     android:ems="10"
                     app:srcCompat="@drawable/fecha" />
             </LinearLayout>

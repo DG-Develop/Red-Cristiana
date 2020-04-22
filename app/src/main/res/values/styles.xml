@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="transparente">
@@ -44,11 +47,7 @@
     </style>
 
     <!--Otros estilos para el navdrawer-->
-        <style name="AppTheme.NoActionBar">
-            <item name="windowActionBar">false</item>
-            <item name="windowNoTitle">true</item>
-            <item name="android:statusBarColor">@android:color/transparent</item>
-        </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

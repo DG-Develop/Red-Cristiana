@@ -37,9 +37,9 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        vfliper = view.findViewById(R.id.slideNoticias);
+        /*vfliper = view.findViewById(R.id.slideNoticias);
         ibizq = view.findViewById(R.id.ibizq);
-        ibder = view.findViewById(R.id.ibder);
+        ibder = view.findViewById(R.id.ibder);*/
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 

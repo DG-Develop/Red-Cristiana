@@ -11,11 +11,11 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/red"
-            android:title="@string/menu_gallery" />
+            android:title="Datos" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ver"
-            android:title="@string/menu_slideshow" />
+            android:title="Historico" />
         <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"

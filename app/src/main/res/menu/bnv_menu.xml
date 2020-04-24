@@ -9,7 +9,7 @@
         android:title="Registros"
         android:icon="@drawable/ic_register"/>
     <item
-        android:id="@+id/navHistoryFragment"
+        android:id="@+id/navHistoricalFragment"
         android:title="Historicos"
         android:icon="@drawable/ic_history"/>
     <item

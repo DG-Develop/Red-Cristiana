@@ -7,32 +7,31 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.david.redcristianauno.R
 import com.david.redcristianauno.model.User
 import com.david.redcristianauno.network.FirebaseService
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity: AppCompatActivity() {
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var dbReference: DatabaseReference
-    private lateinit var database: FirebaseDatabase
     private  var firebaseService = FirebaseService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_register)
-
-        database = FirebaseDatabase.getInstance()
-        firebaseAuth = FirebaseAuth.getInstance()
-
         //dbReference=database.reference.child("usuarios")
-        dbReference = database.reference
+        toolbarBackRegister.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back)
+        toolbarBackRegister.setNavigationOnClickListener {
+            finish()
+        }
     }
+
     fun userRegister(view: View?){
         val names = etNamesResgisterActivity.text.toString().trim{it <= ' '}
         val last_name = etLastNamesRegisterActivity.text.toString().trim{it <= ' '}
@@ -48,18 +47,28 @@ class RegisterActivity: AppCompatActivity() {
             if (password == confirm_password){
                 rlBaseRegister.visibility = View.VISIBLE
 
-                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                firebaseService.firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this){task ->
 
                         if(task.isComplete){
-                            val user: FirebaseUser? = firebaseAuth.currentUser
+                            val user: FirebaseUser? = firebaseService.firebaseAuth.currentUser
                             verifyEmail(user)
 
                             createAccount(names, last_name, email, password)
                             actionLogin()
                         }
 
-                    }
+                    }.addOnFailureListener(OnFailureListener { e ->
+                        if(e is FirebaseAuthUserCollisionException){
+                            Toast.makeText(this, "Este correo ya esta en uso", Toast.LENGTH_SHORT)
+                                .show()
+                            rlBaseRegister.visibility = View.INVISIBLE
+                        }else{
+                            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT)
+                                .show()
+                            rlBaseRegister.visibility = View.INVISIBLE
+                        }
+                    })
             }
         }
 
@@ -71,7 +80,6 @@ class RegisterActivity: AppCompatActivity() {
     }
 
     fun createAccount(names: String, last_names: String, email: String, password: String){
-
         var user = User()
         user.names = names
         user.last_names = last_names
@@ -80,19 +88,16 @@ class RegisterActivity: AppCompatActivity() {
         user.permission = "Normal"
 
         firebaseService.firebaseFirestore.collection("usuarios").document().set(user)
-
     }
 
     private fun verifyEmail(user: FirebaseUser?){
         user?.sendEmailVerification()
             ?.addOnCompleteListener(this){task ->
-
                 if(task.isComplete){
                     Toast.makeText(this, "Email enviado", Toast.LENGTH_LONG).show()
                 }else{
                     Toast.makeText(this, "Error al enviar el email", Toast.LENGTH_LONG).show()
                 }
-
             }
     }
 }

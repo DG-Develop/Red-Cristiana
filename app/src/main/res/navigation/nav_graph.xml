@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/navMenuFragment">
+    app:startDestination="@id/navHomeFragment">
 
     <fragment
-        android:id="@+id/navMenuFragment"
+        android:id="@+id/navHomeFragment"
         android:name="com.david.redcristianauno.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/navHistoricalFragment"
-        android:name="com.david.redcristianauno.HistoricoFragment"
+        android:name="com.david.redcristianauno.ui.fragments.HistoricalFragment"
         android:label="fragment_historical"
         tools:layout="@layout/fragment_historical" >
         <action
@@ -46,16 +46,16 @@
     </fragment>
     <fragment
         android:id="@+id/navBiblieFragment"
-        android:name="com.david.redcristianauno.BibliaFragment"
+        android:name="com.david.redcristianauno.ui.fragments.BiblieFragment"
         android:label="fragment_biblie"
         tools:layout="@layout/fragment_biblie" >
         <action
             android:id="@+id/action_bibliaFragment_to_configurationFragment"
-            app:destination="@id/navConfigurationFragment" />
+            app:destination="@id/navSettingFragment" />
     </fragment>
     <fragment
-        android:id="@+id/navConfigurationFragment"
-        android:name="com.david.redcristianauno.ConfigurationFragment"
+        android:id="@+id/navSettingFragment"
+        android:name="com.david.redcristianauno.ui.fragments.ConfigurationFragment"
         android:label="fragment_configuration"
         tools:layout="@layout/fragment_configuration" >
         <action

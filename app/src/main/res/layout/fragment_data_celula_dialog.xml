@@ -73,27 +73,68 @@
                             android:textStyle="bold"
                             android:textSize="@dimen/TitleSecondary"
                             android:textColor="@color/colorAccent"/>
-
-                        <ImageButton
-                            android:id="@+id/ibAddCelulaDialogFragment"
-                            android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginTop="@dimen/Small"
-                            android:background="@android:color/transparent"
-                            android:src="@drawable/ic_add_celula"/>
+                            android:layout_weight="1">
+
+                            <ImageButton
+                                android:id="@+id/ibAddCelulaDialogFragment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/Small"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_add_celula"/>
+
+                            <ImageButton
+                                android:id="@+id/ibCloseCelulaDialogFragment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone"
+                                android:layout_marginTop="@dimen/Small"
+                                android:background="@android:color/transparent"
+                                android:src="@drawable/ic_close"/>
+                        </FrameLayout>
+
 
                     </LinearLayout>
 
-
-                    <Spinner
-                        android:id="@+id/sCelulaDataDialogFragment"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/VeryBig"
-                        android:layout_marginTop="@dimen/VerySmall"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/shape_spinner_general"/>
+                        android:layout_height="wrap_content">
+                        <Spinner
+                            android:id="@+id/sCelulaDataDialogFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/VeryBig"
+                            android:layout_marginTop="@dimen/VerySmall"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:background="@drawable/shape_spinner_general"/>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/VerySmall"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            app:hintEnabled="false"
+                            android:textColorHint="@android:color/background_dark">
+
+                            <EditText
+                                android:id="@+id/etAddressDataSubredDialogFragment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/VeryBig"
+                                android:visibility="gone"
+                                android:hint="@string/address"
+                                android:padding="@dimen/VerySmall"
+                                android:fontFamily="@font/roboto"
+                                android:textColorHint="@color/Gray"
+                                android:textSize="@dimen/Normal"
+                                android:inputType="textPersonName"
+                                android:background="@drawable/shape_tvgeneral"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </FrameLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -105,7 +146,7 @@
                         android:textColorHint="@android:color/background_dark">
 
                         <EditText
-                            android:id="@+id/etNameDataSubredDialogFragment"
+                            android:id="@+id/etHostNameDataSubredDialogFragment"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/VeryBig"
                             android:hint="@string/host_name_data"
@@ -140,7 +181,7 @@
                                 android:background="@drawable/shape_tvgeneral"
                                 android:fontFamily="@font/roboto"
                                 android:hint="@string/assistance_data"
-                                android:inputType="textPersonName"
+                                android:inputType="number"
                                 android:padding="@dimen/VerySmall"
                                 android:textColorHint="@color/Gray"
                                 android:textSize="@dimen/Normal" />
@@ -165,7 +206,7 @@
                                 android:background="@drawable/shape_tvgeneral"
                                 android:fontFamily="@font/roboto"
                                 android:hint="@string/guest_data"
-                                android:inputType="textPersonName"
+                                android:inputType="number"
                                 android:padding="@dimen/VerySmall"
                                 android:textColorHint="@color/Gray"
                                 android:textSize="@dimen/Normal" />
@@ -196,7 +237,7 @@
                                 android:background="@drawable/shape_tvgeneral"
                                 android:fontFamily="@font/roboto"
                                 android:hint="@string/child_data"
-                                android:inputType="textPersonName"
+                                android:inputType="number"
                                 android:padding="@dimen/VerySmall"
                                 android:textColorHint="@color/Gray"
                                 android:textSize="@dimen/Normal" />
@@ -220,7 +261,7 @@
                                 android:drawablePadding="@dimen/Diminute"
                                 android:fontFamily="@font/roboto"
                                 android:hint="@string/offering_data"
-                                android:inputType="textPersonName"
+                                android:inputType="number"
                                 android:padding="@dimen/VerySmall"
                                 android:textColorHint="@color/Gray"
                                 android:textSize="@dimen/Normal" />
@@ -228,7 +269,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <Spinner
-                            android:id="@+id/sDecimalsSubred"
+                            android:id="@+id/sDecimalsCelula"
                             style="@style/spinner_style_decimals"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/VeryBig"
@@ -259,6 +300,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/VeryBig"
                                 android:drawablePadding="@dimen/Diminute"
+                                android:focusable="false"
                                 android:hint="@string/date_data"
                                 android:padding="@dimen/VerySmall"
                                 android:fontFamily="@font/roboto"

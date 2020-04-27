@@ -139,6 +139,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/VeryBig"
                         android:drawablePadding="@dimen/Diminute"
+                        android:focusable="false"
                         android:hint="@string/date_data"
                         android:padding="@dimen/VerySmall"
                         android:fontFamily="@font/roboto"

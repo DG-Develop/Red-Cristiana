@@ -2,18 +2,19 @@ package com.david.redcristianauno.ui.fragments
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 
 import com.david.redcristianauno.R
+import com.david.redcristianauno.model.DataCelula
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -44,17 +45,39 @@ class DataCelulaDialogFragment : DialogFragment() {
             dismiss()
         }
 
-        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
-            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
-                                   dayOfMonth: Int) {
+        ibAddCelulaDialogFragment.setOnClickListener{
+            sCelulaDataDialogFragment.visibility = View.INVISIBLE
+            etAddressDataSubredDialogFragment.visibility = View.VISIBLE
+            ibCloseCelulaDialogFragment.visibility = View.VISIBLE
+            ibAddCelulaDialogFragment.visibility = View.INVISIBLE
+        }
+
+        ibCloseCelulaDialogFragment.setOnClickListener{
+            sCelulaDataDialogFragment.visibility = View.VISIBLE
+            etAddressDataSubredDialogFragment.visibility = View.INVISIBLE
+            ibAddCelulaDialogFragment.visibility = View.VISIBLE
+            ibCloseCelulaDialogFragment.visibility = View.INVISIBLE
+        }
+
+        //Evento del DatePickerDialog
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 cal.set(Calendar.YEAR, year)
                 cal.set(Calendar.MONTH, monthOfYear)
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateDateInView()
+                cal.firstDayOfWeek = Calendar.TUESDAY
+
+                val cal2 = Calendar.getInstance()
+                cal2.firstDayOfWeek = Calendar.TUESDAY
+
+                if(cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]){
+                    updateDateInView()
+                }else{
+                    Toast.makeText(context, "La fecha de la semana no coincide con el de hoy", Toast.LENGTH_LONG).show()
+                }
+
             }
-        }
 
-
+        //Listener del imageButton de la fecha
         ibFechaCelula.setOnClickListener {
             context?.let {
                 DatePickerDialog(
@@ -67,15 +90,62 @@ class DataCelulaDialogFragment : DialogFragment() {
             }
         }
 
+        btnSendDataCelulaDialogFragment.setOnClickListener {
+            val host_name = etHostNameDataSubredDialogFragment.text.toString().trim { it <= ' ' }
+            val assistance = etAssistenceDataCelulaDialog.text.toString().trim { it <= ' ' }
+            val date = etDateDataCelulaDialogFragment.text.toString()
+
+            if(!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date))
+                dataRegisterCelula(host_name,assistance, date)
+            else
+                Toast.makeText(context, "Por favor llenar los campos de asistencia y de fecha", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private fun dataRegisterCelula(host_name : String, assistance : String, date : String) {
+        var guest = 0
+        var child = 0
+        var offering = 0.0
+        var res = ""
+
+        if(etGuestDataCelulaDialog.text.toString().trim{ it <= ' '}.isNotEmpty())
+            guest = etGuestDataCelulaDialog.text.toString().toInt()
+
+        if(etChildDataCelulaDialog.text.toString().trim{it <= ' '}.isNotEmpty())
+            child = etChildDataCelulaDialog.text.toString().toInt()
+
+        if(etOfferingDataCelulaDialog.text.toString().trim{ it <= ' '}.isNotEmpty()) {
+            var integers = etOfferingDataCelulaDialog.text.toString()
+            var decimals = sDecimalsCelula.selectedItem.toString()
+            res = integers + decimals
+        }
+
+        if(assistance.toDouble() < guest || assistance.toDouble() < child ){
+            Toast.makeText(context, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños", Toast.LENGTH_LONG).show()
+        }else{
+            var dataCelula = DataCelula()
+
+            if(etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }.isEmpty())
+                dataCelula.address = sCelulaDataDialogFragment.selectedItem.toString()
+            else
+                dataCelula.address = etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }
+        }
+        cleanFields()
+    }
+
+    private fun cleanFields() {
+        etAddressDataSubredDialogFragment.setText("")
+        etHostNameDataSubredDialogFragment.setText("")
+        etAssistenceDataCelulaDialog.setText("")
+        etGuestDataCelulaDialog.setText("")
+        etChildDataCelulaDialog.setText("")
+        etOfferingDataCelulaDialog.setText("")
+        etDateDataCelulaDialogFragment.setText("")
     }
 
     private fun updateDateInView() {
-        val myFormat = "MM/dd/yyyy" // mention the format you need
-        val sdf = SimpleDateFormat(myFormat, Locale.US)
-        //textview_date!!.text = sdf.format(cal.getTime())
-
-        val currentDateString =
-            DateFormat.getDateInstance(DateFormat.FULL).format(cal.time)
+        val currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(cal.time)
 
         etDateDataCelulaDialogFragment.setText(currentDateString)
     }
@@ -84,5 +154,4 @@ class DataCelulaDialogFragment : DialogFragment() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
-
 }

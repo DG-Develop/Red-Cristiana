@@ -2,6 +2,7 @@
     <string name="app_name">Saintscript</string>
 
     <string name="welcome_login">Bienvenido a</string>
+    <string name="nickname">Nombre de Usuario</string>
     <string name="email">"Correo electrónico"</string>
     <string name="pass">"Contraseña"</string>
     <string name="session_active">No cerrar sesión</string>

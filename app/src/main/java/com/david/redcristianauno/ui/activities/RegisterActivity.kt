@@ -35,7 +35,6 @@ class RegisterActivity: AppCompatActivity() {
         val last_name = etLastNamesRegisterActivity.text.toString().trim{it <= ' '}
         val address = etAddressRegisterActivity.text.toString().trim { it <= ' ' }
         val telephone = etTelephoneRegisterActivity.text.toString().trim { it <= ' '}
-        val nickname = etNicknameRegisterActivity.text.toString().trim{ it <= ' '}
         val email = etEmailResgisterActivity.text.toString().trim{it <= ' '}
         val password = etPassResgisterActivity.text.toString().trim{it <= ' '}
         val confirm_password = etConfirmPassResgisterActivity.text.toString().trim{it <= ' '}
@@ -44,72 +43,54 @@ class RegisterActivity: AppCompatActivity() {
             !TextUtils.isEmpty(last_name) &&
             !TextUtils.isEmpty(address) &&
             !TextUtils.isEmpty(telephone) &&
-            !TextUtils.isEmpty(nickname) &&
             !TextUtils.isEmpty(email) &&
             !TextUtils.isEmpty(password) &&
             !TextUtils.isEmpty(confirm_password)){
             if (password == confirm_password){
                 rlBaseRegister.visibility = View.VISIBLE
 
-                firebaseService.checkNickname(nickname, object: Callback<User>{
-                    override fun OnSucces(result: User?) {
-                        if (result == null){
-                            saveUser(names, last_name, address, telephone, nickname, email, password)
-                        }else{
-                            rlBaseRegister.visibility = View.INVISIBLE
-                            existUser()
+                firebaseService.firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this){task ->
+
+                        if(task.isComplete){
+                            val user: FirebaseUser? = firebaseService.firebaseAuth.currentUser
+                            verifyEmail(user)
+                            val id = firebaseService.firebaseAuth.uid.toString()
+                            createAccount(names, last_name, address, telephone, id, email, password)
                         }
-                    }
 
-                    override fun onFailure(exception: Exception) {
-
-                    }
-
-                })
+                    }.addOnFailureListener(OnFailureListener { e ->
+                        if(e is FirebaseAuthUserCollisionException){
+                            Toast.makeText(this, "Este correo ya esta en uso", Toast.LENGTH_SHORT)
+                                .show()
+                            rlBaseRegister.visibility = View.INVISIBLE
+                        }else{
+                            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT)
+                                .show()
+                            rlBaseRegister.visibility = View.INVISIBLE
+                        }
+                    })
             }
         }
 
     }
-    private fun saveUser(names: String, last_name: String, address: String, telephone: String, nickname: String, email: String, password: String){
-        firebaseService.firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this){task ->
-
-                if(task.isComplete){
-                    val user: FirebaseUser? = firebaseService.firebaseAuth.currentUser
-                    verifyEmail(user)
-                    createAccount(names, last_name, address, telephone, nickname, email, password)
-                }
-
-            }.addOnFailureListener(OnFailureListener { e ->
-                if(e is FirebaseAuthUserCollisionException){
-                    Toast.makeText(this, "Este correo ya esta en uso", Toast.LENGTH_SHORT)
-                        .show()
-                    rlBaseRegister.visibility = View.INVISIBLE
-                }else{
-                    Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
-                    rlBaseRegister.visibility = View.INVISIBLE
-                }
-            })
-    }
-
     private fun actionLogin(){
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 
-    private fun createAccount(names: String, last_names: String, address: String, telephone: String, nickname: String, email: String, password: String){
+    private fun createAccount(names: String, last_names: String, address: String, telephone: String, id: String, email: String, password: String){
         var user = User()
         user.names = names
         user.last_names = last_names
         user.address = address
         user.telephone = telephone
-        user.nickname = nickname
+        user.id = id
         user.email = email
         user.password = password
         user.permission = "Normal"
 
-        firebaseService.setDocumentWithID(user,"users", nickname, object : Callback<Void>{
+        firebaseService.setDocumentWithID(user,"users", id, object : Callback<Void>{
             override fun OnSucces(result: Void?) {
                 actionLogin()
             }
@@ -122,10 +103,6 @@ class RegisterActivity: AppCompatActivity() {
 
     private fun showErrorMessage() {
         Toast.makeText(this, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun existUser(){
-        Toast.makeText(this, "Ya existe este usuario", Toast.LENGTH_SHORT).show()
     }
 
     private fun verifyEmail(user: FirebaseUser?){

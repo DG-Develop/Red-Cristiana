@@ -2,7 +2,6 @@ package com.david.redcristianauno.model
 
 class DataCelula {
     var id_user = ""
-    var user_name = ""
     var host_name = ""
     var address = ""
     var assistance = 0

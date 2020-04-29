@@ -1,7 +1,7 @@
 package com.david.redcristianauno.model
 
 class User {
-    var nickname = ""
+    var id = ""
     var names = ""
     var last_names = ""
     var email = ""

@@ -224,7 +224,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="@dimen/Medium"
-                            android:layout_marginEnd="20dp"
                             android:layout_alignParentStart="true"
                             android:textColorHint="@android:color/background_dark"
                             app:hintEnabled="false">
@@ -248,7 +247,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/Medium"
-                            android:layout_toStartOf="@+id/sDecimalsSubred"
+                            android:layout_toStartOf="@+id/sDecimalsCelula"
                             android:textColorHint="@android:color/background_dark"
                             app:hintEnabled="false">
 

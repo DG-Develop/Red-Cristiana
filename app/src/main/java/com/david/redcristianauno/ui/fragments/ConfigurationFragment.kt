@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.david.redcristianauno.Preferences
 import com.david.redcristianauno.R
+import com.david.redcristianauno.network.FirebaseService
 import com.david.redcristianauno.ui.activities.LoginActivity
 import kotlinx.android.synthetic.main.fragment_configuration.*
 
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_configuration.*
  * A simple [Fragment] subclass.
  */
 class ConfigurationFragment : Fragment() {
+
+    val firebaseService = FirebaseService()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,11 +49,7 @@ class ConfigurationFragment : Fragment() {
                 .setTitle("Cerrar Sesión")
                 .setMessage("¿Estás seguro de cerrar la sesión?")
                 .setPositiveButton("Aceptar") { dialog, which ->
-                    Preferences.savePreferenceBoolean(
-                        context,
-                        false,
-                        Preferences.PREFENCE_ESTADO_BUTTON_SESION
-                    )
+                    firebaseService.firebaseAuth.signOut()
 
                     startActivity(Intent(context, LoginActivity::class.java))
                     activity?.finish()

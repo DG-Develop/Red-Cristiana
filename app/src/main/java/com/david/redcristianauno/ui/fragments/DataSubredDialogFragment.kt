@@ -13,7 +13,10 @@ import androidx.fragment.app.DialogFragment
 
 import com.david.redcristianauno.R
 import com.david.redcristianauno.model.DataSubred
+import com.david.redcristianauno.network.Callback
+import com.david.redcristianauno.network.FirebaseService
 import kotlinx.android.synthetic.main.fragment_data_subred_dialog.*
+import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
 
@@ -22,8 +25,8 @@ import java.util.*
  */
 class DataSubredDialogFragment : DialogFragment() {
 
-    var cal = Calendar.getInstance()
-
+    private var cal = Calendar.getInstance()
+    private val firebaseService = FirebaseService()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
@@ -92,17 +95,34 @@ class DataSubredDialogFragment : DialogFragment() {
         var res = ""
 
         if(etOfferingDataSubredDialog.text.toString().trim{ it <= ' '}.isNotEmpty()) {
-            var integers = etOfferingDataSubredDialog.text.toString()
-            var decimals = sDecimalsSubred.selectedItem.toString()
+            val integers = etOfferingDataSubredDialog.text.toString()
+            val decimals = sDecimalsSubred.selectedItem.toString()
             res = integers + decimals
+            offering = res.toDouble()
         }
 
-        var dataSubred = DataSubred()
+        val dataSubred = DataSubred()
+        dataSubred.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+        dataSubred.host_name = host_name
+        dataSubred.assistance = assistance.toInt()
+        dataSubred.offering = offering
+        dataSubred.date = date
+
+        firebaseService.setDocumentWithOutID(dataSubred, "data subred", object: Callback<Void>{
+            override fun OnSucces(result: Void?) {
+                Toast.makeText(context, "Enviado", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFailure(exception: Exception) {
+                Toast.makeText(context, "No se pudo enviar", Toast.LENGTH_SHORT).show()
+            }
+
+        })
 
         cleanFields()
     }
 
-    fun cleanFields(){
+    private fun cleanFields(){
         etNameDataSubredDialogFragment.setText("")
         etAssistenceDataSubredDialog.setText("")
         etOfferingDataSubredDialog.setText("")

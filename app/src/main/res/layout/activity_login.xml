@@ -91,19 +91,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioButton
-                android:id="@+id/rdSession_loginActivity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="42dp"
-                android:layout_marginTop="@dimen/Medium"
-                android:layout_marginEnd="42dp"
-                android:buttonTint="@color/Gray"
-                android:text="@string/session_active"
-                android:fontFamily="@font/roboto"
-                android:textColor="@color/Gray"
-                android:textSize="@dimen/Normal"
-                android:paddingLeft="@dimen/VerySmall"/>
 
             <Button
                 android:id="@+id/btn_start_session_loginActivity"

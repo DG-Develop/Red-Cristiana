@@ -19,11 +19,8 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
    // private lateinit var etEmail: EditText
-    private lateinit var rbSession: RadioButton
     private  var firebaseService = FirebaseService()
-    private  var isActivatedRadioButton = false
 
-    private val l = LeerDatos()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -36,16 +33,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        rbSession = findViewById(R.id.rdSession_loginActivity)
-
-        isActivatedRadioButton = rbSession!!.isChecked
-        rbSession!!.setOnClickListener {
-            if (isActivatedRadioButton) {
-                rbSession!!.isChecked = false
-            }
-            isActivatedRadioButton = rbSession!!.isChecked
-        }
-        val l = LeerDatos()
     }
 
     fun enterokayMain(view: View?) {
@@ -58,17 +45,6 @@ class LoginActivity : AppCompatActivity() {
             firebaseService.firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        Preferences.savePreferenceBoolean(
-                            this,
-                            rbSession.isChecked,
-                            Preferences.PREFENCE_ESTADO_BUTTON_SESION
-                        )
-                        Preferences.savePreferenceString(
-                            this,
-                            email,
-                            Preferences.PREFERENCES_USUARIO_LOGIN
-                        )
-                        l.preferencesUsuarios(email, this)
                         actionMain()
                     }
                 }.addOnFailureListener(OnFailureListener { e ->
@@ -93,5 +69,15 @@ class LoginActivity : AppCompatActivity() {
     }
     fun actionRegister(view: View?) {
         startActivity(Intent(this, RegisterActivity::class.java))
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (firebaseService.firebaseAuth.currentUser != null){
+            actionMain()
+            finish()
+        }
+
     }
 }

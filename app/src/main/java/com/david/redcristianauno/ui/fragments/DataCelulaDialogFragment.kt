@@ -13,7 +13,10 @@ import androidx.fragment.app.DialogFragment
 
 import com.david.redcristianauno.R
 import com.david.redcristianauno.model.DataCelula
+import com.david.redcristianauno.network.Callback
+import com.david.redcristianauno.network.FirebaseService
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
+import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
 
@@ -22,7 +25,8 @@ import java.util.*
  */
 class DataCelulaDialogFragment : DialogFragment() {
 
-    var cal = Calendar.getInstance()
+    private var cal = Calendar.getInstance()
+    private val firebaseService = FirebaseService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,20 +120,37 @@ class DataCelulaDialogFragment : DialogFragment() {
             child = etChildDataCelulaDialog.text.toString().toInt()
 
         if(etOfferingDataCelulaDialog.text.toString().trim{ it <= ' '}.isNotEmpty()) {
-            var integers = etOfferingDataCelulaDialog.text.toString()
-            var decimals = sDecimalsCelula.selectedItem.toString()
+            val integers = etOfferingDataCelulaDialog.text.toString()
+            val decimals = sDecimalsCelula.selectedItem.toString()
             res = integers + decimals
+            offering = res.toDouble()
         }
 
         if(assistance.toDouble() < guest || assistance.toDouble() < child ){
             Toast.makeText(context, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños", Toast.LENGTH_LONG).show()
         }else{
-            var dataCelula = DataCelula()
-
+            val dataCelula = DataCelula()
+            dataCelula.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+            dataCelula.host_name = host_name
             if(etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }.isEmpty())
                 dataCelula.address = sCelulaDataDialogFragment.selectedItem.toString()
             else
                 dataCelula.address = etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }
+            dataCelula.assistance = assistance.toInt()
+            dataCelula.guest = guest
+            dataCelula.child = child
+            dataCelula.offering = offering
+            dataCelula.date = date
+
+            firebaseService.setDocumentWithOutID(dataCelula,"data celula", object : Callback<Void> {
+                override fun OnSucces(result: Void?) {
+                    Toast.makeText(context, "Enviado", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onFailure(exception: Exception) {
+                    Toast.makeText(context, "No se pudo enviar", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
         cleanFields()
     }

@@ -3,6 +3,7 @@ package com.david.redcristianauno.ui.fragments
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 
 import com.david.redcristianauno.R
+import com.david.redcristianauno.domain.DataCelulaUseCaseImpl
 import com.david.redcristianauno.model.DataSubred
-import com.david.redcristianauno.network.Callback
-import com.david.redcristianauno.network.FirebaseService
+import com.david.redcristianauno.model.network.Callback
+import com.david.redcristianauno.model.network.FirebaseService
+import com.david.redcristianauno.model.network.UserRepositoryImpl
+import com.david.redcristianauno.viewmodel.DataCelulaViewModel
+import com.david.redcristianauno.viewmodel.DataCelulaViewModelFactory
+import com.david.redcristianauno.vo.Resource
 import kotlinx.android.synthetic.main.fragment_data_subred_dialog.*
 import java.lang.Exception
 import java.text.DateFormat
@@ -27,6 +35,16 @@ class DataSubredDialogFragment : DialogFragment() {
 
     private var cal = Calendar.getInstance()
     private val firebaseService = FirebaseService()
+
+    private var username: String = ""
+
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            DataCelulaViewModelFactory(DataCelulaUseCaseImpl(UserRepositoryImpl()))
+        ).get(DataCelulaViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
@@ -47,6 +65,8 @@ class DataSubredDialogFragment : DialogFragment() {
         toolbarBackRegisterSubred.setNavigationOnClickListener {
             dismiss()
         }
+
+        observeData()
 
         val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)
@@ -103,6 +123,8 @@ class DataSubredDialogFragment : DialogFragment() {
 
         val dataSubred = DataSubred()
         dataSubred.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+        dataSubred.user_name = username
+        dataSubred.email_user = firebaseService.firebaseAuth.currentUser?.email.toString()
         dataSubred.host_name = host_name
         dataSubred.assistance = assistance.toInt()
         dataSubred.offering = offering
@@ -138,5 +160,23 @@ class DataSubredDialogFragment : DialogFragment() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
+
+    private fun observeData(){
+        viewModel.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+        viewModel.fetchNameUser.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading ->{
+
+                }
+                is Resource.Success->{
+                    username = result.data
+                }
+                is Resource.Failure->{
+                    Log.e("ERROR:", "${result.exception.message}")
+                }
+            }
+        })
+    }
+
 
 }

@@ -76,8 +76,6 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item_david,centavos);
         sp2.setAdapter(adapter);
 
-        correo_usuario = Preferences.obtenerPreferencesString(getActivity(), Preferences.PREFERENCES_USUARIO_LOGIN);
-
         inicializarFirebase();
         listarSubred();
         verUsuario(correo_usuario);
@@ -118,12 +116,11 @@ public class RegistroSubredFragment extends Fragment implements DatePickerDialog
         String fecha = etFecha.getText().toString();
 
         RegistroSubred rs = new RegistroSubred();
-        rs.setId_usuario(Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
+
         rs.setAsistencia_subred(asistencia);
         rs.setOfrenda_subred(ofrenda);
         rs.setFecha_subred(fecha);
 
-        l.leerUsuarioRegistroSubred(rs, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
 
         Toast.makeText(getActivity(), "Registrado Correctamente", Toast.LENGTH_SHORT).show();
         limpiarCampos();

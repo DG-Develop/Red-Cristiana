@@ -1,7 +1,11 @@
 package com.david.redcristianauno.model
 
-class DataCelula {
+import java.io.Serializable
+
+class DataCelula: Serializable {
     var id_user = ""
+    var user_name = ""
+    var email_user = ""
     var host_name = ""
     var address = ""
     var assistance = 0

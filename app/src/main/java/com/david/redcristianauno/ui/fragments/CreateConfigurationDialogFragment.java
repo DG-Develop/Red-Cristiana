@@ -71,7 +71,6 @@ public class CreateConfigurationDialogFragment extends Fragment {
 
         listarSubred();
 
-        correo_usuario = Preferences.obtenerPreferencesString(getActivity(), Preferences.PREFERENCES_USUARIO_LOGIN);
 
 
         btnCrearRed.setOnClickListener(new View.OnClickListener() {
@@ -86,9 +85,7 @@ public class CreateConfigurationDialogFragment extends Fragment {
                     c.get(Calendar.YEAR);
                     String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-                    Red r = new Red(txtCrearRed.getText().toString().trim(), 10, fecha,
-                            Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
-                    inda.existeRed(r,txtCrearRed.getText().toString().trim(),getContext());
+
                 }
             }
         });
@@ -105,10 +102,7 @@ public class CreateConfigurationDialogFragment extends Fragment {
                     c.get(Calendar.YEAR);
                     String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-                    Subred sb = new Subred(txtCrearSubred.getText().toString().trim(), "Vida de Jesus", 20,
-                            Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO),
-                            fecha);
-                    inda.existeSubred(sb,txtCrearRed.getText().toString().trim(),getContext());
+
                 }
 
             }
@@ -130,10 +124,7 @@ public class CreateConfigurationDialogFragment extends Fragment {
                     c.get(Calendar.YEAR);
                     String fecha = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
 
-                    Celula celula = new Celula(txtCrearCelula.getText().toString().trim(), "Vida de Jesus",
-                            Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO),
-                            fecha);
-                    inda.existeCelula(celula,txtCrearRed.getText().toString().trim(),getContext());
+
                 }
 
             }

@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.david.redcristianauno.R
 import com.david.redcristianauno.model.User
-import com.david.redcristianauno.network.Callback
-import com.david.redcristianauno.network.FirebaseService
+import com.david.redcristianauno.model.network.Callback
+import com.david.redcristianauno.model.network.FirebaseService
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser

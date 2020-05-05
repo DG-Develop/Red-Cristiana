@@ -3,6 +3,7 @@ package com.david.redcristianauno.ui.fragments
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,11 +11,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 
 import com.david.redcristianauno.R
+import com.david.redcristianauno.domain.DataCelulaUseCaseImpl
 import com.david.redcristianauno.model.DataCelula
-import com.david.redcristianauno.network.Callback
-import com.david.redcristianauno.network.FirebaseService
+import com.david.redcristianauno.model.network.Callback
+import com.david.redcristianauno.model.network.FirebaseService
+import com.david.redcristianauno.model.network.UserRepositoryImpl
+import com.david.redcristianauno.viewmodel.DataCelulaViewModel
+import com.david.redcristianauno.viewmodel.DataCelulaViewModelFactory
+import com.david.redcristianauno.vo.Resource
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.lang.Exception
 import java.text.DateFormat
@@ -27,6 +35,14 @@ class DataCelulaDialogFragment : DialogFragment() {
 
     private var cal = Calendar.getInstance()
     private val firebaseService = FirebaseService()
+    private var username: String = ""
+
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            DataCelulaViewModelFactory(DataCelulaUseCaseImpl(UserRepositoryImpl()))
+        ).get(DataCelulaViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +64,8 @@ class DataCelulaDialogFragment : DialogFragment() {
         toolbarBackRegisterCelula.setNavigationOnClickListener {
             dismiss()
         }
+
+        observeData()
 
         ibAddCelulaDialogFragment.setOnClickListener{
             sCelulaDataDialogFragment.visibility = View.INVISIBLE
@@ -129,8 +147,11 @@ class DataCelulaDialogFragment : DialogFragment() {
         if(assistance.toDouble() < guest || assistance.toDouble() < child ){
             Toast.makeText(context, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños", Toast.LENGTH_LONG).show()
         }else{
+            Log.i("InfoUserName:", username)
             val dataCelula = DataCelula()
             dataCelula.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+            dataCelula.email_user = firebaseService.firebaseAuth.currentUser?.email.toString()
+            dataCelula.user_name = username
             dataCelula.host_name = host_name
             if(etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }.isEmpty())
                 dataCelula.address = sCelulaDataDialogFragment.selectedItem.toString()
@@ -174,5 +195,22 @@ class DataCelulaDialogFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    private fun observeData(){
+        viewModel.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
+        viewModel.fetchNameUser.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading ->{
+
+                }
+                is Resource.Success->{
+                    username = result.data
+                }
+                is Resource.Failure->{
+                    Log.e("ERROR:", "${result.exception.message}")
+                }
+            }
+        })
     }
 }

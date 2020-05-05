@@ -1,4 +1,4 @@
-package com.david.redcristianauno.network
+package com.david.redcristianauno.model.network
 
 import java.lang.Exception
 

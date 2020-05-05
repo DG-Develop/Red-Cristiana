@@ -72,11 +72,6 @@ class PrincipalActivity : AppCompatActivity(),
 
         //checar(fecha);
         inda.leerHistorico(fecha)
-        correo_usuario =
-            Preferences.obtenerPreferencesString(
-                this,
-                Preferences.PREFERENCES_USUARIO_LOGIN
-            )
         tv_correo_usuario!!.text = correo_usuario
         l.datosSesion(
             tv_nombre_usuario,
@@ -103,11 +98,6 @@ class PrincipalActivity : AppCompatActivity(),
                 .setTitle("Cerrar Sesión")
                 .setMessage("¿Estás seguro de cerrar la sesión?")
                 .setPositiveButton("Aceptar") { dialog, which ->
-                    Preferences.savePreferenceBoolean(
-                        this@PrincipalActivity,
-                        false,
-                        Preferences.PREFENCE_ESTADO_BUTTON_SESION
-                    )
                     val i = Intent(this@PrincipalActivity, LoginActivity::class.java)
                     startActivity(i)
                     finish()

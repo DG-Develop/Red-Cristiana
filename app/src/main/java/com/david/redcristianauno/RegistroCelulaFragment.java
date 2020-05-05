@@ -92,8 +92,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
         sp3.setAdapter(adapter);
 
 
-        correo_usuario = Preferences.obtenerPreferencesString(getActivity(), Preferences.PREFERENCES_USUARIO_LOGIN);
-
         inicializarFirebase();
         listarSubred();
 
@@ -182,7 +180,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             Toast.makeText(getContext(), "No se registraron los datos", Toast.LENGTH_SHORT).show();
         }else {
             RegistroCelula rc = new RegistroCelula();
-            rc.setId_usuario(Preferences.obtenerPreferencesString(getContext(), Preferences.PREFERENCES_ID_USUARIO));
             rc.setNombre_anfitrion(etAnfitrion.getText().toString().trim());
             if(pusoDireccion()){
                 rc.setDomicilio(etDireccion.getText().toString().trim());
@@ -195,7 +192,6 @@ public class RegistroCelulaFragment extends Fragment implements DatePickerDialog
             rc.setOfrenda_celula(ofrenda);
             rc.setFecha_celula(etFecha.getText().toString().trim());
 
-            l.leerUsuarioRegistroCelula(rc, Preferences.obtenerPreferencesString(getContext(),Preferences.PREFERENCES_ID_USUARIO));
 
             Toast.makeText(getContext(), "Regitrado Correctamente", Toast.LENGTH_SHORT).show();
         }

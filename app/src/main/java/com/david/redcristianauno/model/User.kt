@@ -1,6 +1,8 @@
 package com.david.redcristianauno.model
 
-class User {
+import java.io.Serializable
+
+class User: Serializable {
     var id = ""
     var names = ""
     var last_names = ""

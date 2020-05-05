@@ -200,7 +200,6 @@ public class LeerDatos {
                                 Usuarios u = document.toObject(Usuarios.class);
                                 if(email.equals(u.getCorreo())){
                                     Log.d("Result", document.getId());
-                                    Preferences.savePreferenceString(context, document.getId(), Preferences.PREFERENCES_ID_USUARIO);
                                 }
                             }
                         }

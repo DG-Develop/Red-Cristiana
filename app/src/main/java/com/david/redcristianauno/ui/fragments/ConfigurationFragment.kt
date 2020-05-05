@@ -8,9 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.david.redcristianauno.Preferences
 import com.david.redcristianauno.R
-import com.david.redcristianauno.network.FirebaseService
+import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.ui.activities.LoginActivity
 import kotlinx.android.synthetic.main.fragment_configuration.*
 

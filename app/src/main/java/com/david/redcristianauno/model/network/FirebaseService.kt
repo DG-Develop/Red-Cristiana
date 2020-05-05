@@ -1,4 +1,4 @@
-package com.david.redcristianauno.network
+package com.david.redcristianauno.model.network
 
 import com.david.redcristianauno.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +31,17 @@ class FirebaseService {
                 }else
                     callback.OnSucces(null)
             }.addOnFailureListener{ exception -> callback.onFailure(exception)}
+    }
+
+    fun findUserName(id: String, callback: Callback<User>){
+        firebaseFirestore.collection(USERS).document(id)
+            .get()
+            .addOnSuccessListener {result ->
+                if(result.data != null)
+                    callback.OnSucces(result.toObject(User::class.java))
+                else
+                    callback.OnSucces(null)
+            }.addOnFailureListener{ exception -> callback.onFailure(exception) }
     }
 
    fun setDocumentWithID(data: Any, collectionName: String, id: String, callback: Callback<Void>){

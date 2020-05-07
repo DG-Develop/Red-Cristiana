@@ -36,6 +36,7 @@
             tool:text="David Antonio" />
 
         <TextView
+            android:id="@+id/tvEmailItemHistoryDaily"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/Small"
@@ -44,16 +45,16 @@
             android:fontFamily="@font/roboto"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/Subtitle"
-            tool:text="Anfitrión: David"/>
+            tool:text="dgdband@gmail.com"/>
     </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvHostNameItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/Small"
@@ -61,10 +62,11 @@
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Asistencia: 56" />
+                tool:text="@string/HostNameAdapter"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvCelulaItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="@dimen/Small"
@@ -72,7 +74,8 @@
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Invitados: 25" />
+                tool:text="@string/CelulaNameAdapter" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -81,26 +84,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvAssistanceItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/Small"
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Niños: 36" />
+                tool:text="@string/AssistanceAdapter" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvGuestItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/Small"
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Ofrenda: 23" />
+                tool:text="@string/GuestAdapter" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,26 +113,26 @@
             android:layout_marginBottom="@dimen/Small">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvChildItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/Small"
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Celula: 36" />
+                tool:text="@string/ChildAdapter" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tvOfferingItemHistoryDaily"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginTop="@dimen/Small"
                 android:gravity="center_horizontal"
                 android:fontFamily="@font/roboto"
                 android:textColor="@color/Black"
                 android:textSize="@dimen/Normal"
-                tool:text="Subred: 23" />
+                tool:text="@string/OfferingAdapter" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,8 +1,10 @@
 package com.david.redcristianauno.domain
 
-import com.david.redcristianauno.model.network.UserRepository
-import com.david.redcristianauno.vo.Resource
+import com.david.redcristianauno.model.DataCelula
+import com.david.redcristianauno.model.network.Callback
+import com.david.redcristianauno.model.network.DataCelulaRepository
 
-class DataCelulaUseCaseImpl(private val userRepo: UserRepository): DataCelulaUseCase {
-    override suspend fun getNamesUsers(id_user: String): Resource<String> = userRepo.getNamesUsers(id_user)
+
+class DataCelulaUseCaseImpl(private val dataCelula: DataCelulaRepository): DataCelulaUseCase {
+    override fun getDataCelulaWithDate(dateSelected: String, callback: Callback<List<DataCelula>>) = dataCelula.getDataCelulaWithDate(dateSelected, callback)
 }

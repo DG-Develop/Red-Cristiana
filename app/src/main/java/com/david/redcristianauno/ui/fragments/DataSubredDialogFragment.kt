@@ -15,13 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 
 import com.david.redcristianauno.R
-import com.david.redcristianauno.domain.DataCelulaUseCaseImpl
+import com.david.redcristianauno.domain.UserUseCaseImpl
 import com.david.redcristianauno.model.DataSubred
 import com.david.redcristianauno.model.network.Callback
 import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.model.network.UserRepositoryImpl
-import com.david.redcristianauno.viewmodel.DataCelulaViewModel
-import com.david.redcristianauno.viewmodel.DataCelulaViewModelFactory
+import com.david.redcristianauno.viewmodel.UserViewModel
+import com.david.redcristianauno.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
 import kotlinx.android.synthetic.main.fragment_data_subred_dialog.*
 import java.lang.Exception
@@ -41,8 +41,8 @@ class DataSubredDialogFragment : DialogFragment() {
     private val viewModel by lazy {
         ViewModelProvider(
             this,
-            DataCelulaViewModelFactory(DataCelulaUseCaseImpl(UserRepositoryImpl()))
-        ).get(DataCelulaViewModel::class.java)
+            UserViewModelFactory(UserUseCaseImpl(UserRepositoryImpl()))
+        ).get(UserViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

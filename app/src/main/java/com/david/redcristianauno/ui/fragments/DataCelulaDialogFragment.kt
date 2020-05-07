@@ -15,13 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 
 import com.david.redcristianauno.R
-import com.david.redcristianauno.domain.DataCelulaUseCaseImpl
+import com.david.redcristianauno.domain.UserUseCaseImpl
 import com.david.redcristianauno.model.DataCelula
 import com.david.redcristianauno.model.network.Callback
 import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.model.network.UserRepositoryImpl
-import com.david.redcristianauno.viewmodel.DataCelulaViewModel
-import com.david.redcristianauno.viewmodel.DataCelulaViewModelFactory
+import com.david.redcristianauno.viewmodel.UserViewModel
+import com.david.redcristianauno.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.lang.Exception
@@ -40,8 +40,8 @@ class DataCelulaDialogFragment : DialogFragment() {
     private val viewModel by lazy {
         ViewModelProvider(
             this,
-            DataCelulaViewModelFactory(DataCelulaUseCaseImpl(UserRepositoryImpl()))
-        ).get(DataCelulaViewModel::class.java)
+            UserViewModelFactory(UserUseCaseImpl(UserRepositoryImpl()))
+        ).get(UserViewModel::class.java)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +49,7 @@ class DataCelulaDialogFragment : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data_celula_dialog, container, false)
     }

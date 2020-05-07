@@ -1,26 +1,36 @@
 package com.david.redcristianauno.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.david.redcristianauno.domain.DataCelulaUseCase
-import com.david.redcristianauno.model.network.FirebaseService
-import com.david.redcristianauno.vo.Resource
-import kotlinx.coroutines.Dispatchers
+import com.david.redcristianauno.model.DataCelula
+import com.david.redcristianauno.model.network.Callback
 import java.lang.Exception
 
+
 class DataCelulaViewModel(dataCelulaUseCase: DataCelulaUseCase): ViewModel() {
-    lateinit var id_user:String
-    val firebaseService = FirebaseService()
+    val dataCelula = dataCelulaUseCase
+    var listSchedule: MutableLiveData<List<DataCelula>> = MutableLiveData()
+    var isLoading = MutableLiveData<Boolean>()
 
-    val fetchNameUser = liveData(Dispatchers.IO) {
-        emit(Resource.Loading())
+    fun refresh(dateSelected: String){
+        getDataCelulaFromFirebase(dateSelected)
+    }
 
-        try {
-            val userName = dataCelulaUseCase.getNamesUsers(id_user)
-            emit(userName)
-        }catch (e: Exception){
-            emit(Resource.Failure(e))
-        }
+    private fun getDataCelulaFromFirebase(dateSelected: String){
+        dataCelula.getDataCelulaWithDate(dateSelected, object: Callback<List<DataCelula>>{
+            override fun OnSucces(result: List<DataCelula>?) {
+                listSchedule.postValue(result)
+                processFinished()
+            }
+
+            override fun onFailure(exception: Exception) {
+                processFinished()
+            }
+        })
+    }
+
+    private fun processFinished() {
+        isLoading.value = true
     }
 
 }

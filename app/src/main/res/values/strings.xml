@@ -70,6 +70,13 @@
     <string name="r">R</string>
 
     <string name="search">Buscar</string>
+    
+    <string name="HostNameAdapter">Anfitrión: %s</string>
+    <string name="CelulaNameAdapter">Celula: %s</string>
+    <string name="AssistanceAdapter">Asistencia: %s</string>
+    <string name="GuestAdapter">Invitados: %s</string>
+    <string name="ChildAdapter">Niños: %s</string>
+    <string name="OfferingAdapter">Ofrenda: %s</string>
 
     <string-array name="decimals">
         <item>.00</item>

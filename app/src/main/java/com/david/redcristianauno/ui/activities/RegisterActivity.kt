@@ -80,7 +80,7 @@ class RegisterActivity: AppCompatActivity() {
     }
 
     private fun createAccount(names: String, last_names: String, address: String, telephone: String, id: String, email: String, password: String){
-        var user = User()
+        val user = User()
         user.names = names
         user.last_names = last_names
         user.address = address

@@ -2,13 +2,10 @@ package com.david.redcristianauno
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.david.redcristianauno.domain.HistoricalWeeklyUseCase
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
-import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.model.network.HistoricalWeeklyRepositoryImpl
 import com.david.redcristianauno.viewmodel.MainViewModel
 import com.david.redcristianauno.viewmodel.MainViewModelFactory
@@ -31,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         setActionBar(findViewById(R.id.toolbarMain))
         configNav()
         observedDayOfWeek()
+
     }
 
     private fun configNav(){

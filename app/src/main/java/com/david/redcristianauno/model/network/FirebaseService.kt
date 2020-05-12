@@ -40,5 +40,7 @@ class FirebaseService {
         const val USER_COLLECTION_NAME = "users"
         const val DATA_CELULA_COLLECTION_NAME = "data celula"
         const val HISTORICAL_WEEKLY_COLLECTION_NAME = "historical weekly"
+        const val REDES_COLLECTION_NAME = "redes"
+        const val SUBREDES_COLLECTION_NAME = "Subred"
     }
 }

@@ -20,7 +20,6 @@ class MainViewModel(historicalWeeklyUseCase: HistoricalWeeklyUseCase): ViewModel
             override fun OnSucces(result: Boolean?) {
                 if(result == false){
                     findAllDataCelula(date)
-                }else{
                 }
             }
 

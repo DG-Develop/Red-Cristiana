@@ -39,7 +39,7 @@
             </LinearLayout>
 
             <CheckBox
-                android:id="@+id/cbItemListUSer"
+                android:id="@+id/cbItemListUser"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/Small"

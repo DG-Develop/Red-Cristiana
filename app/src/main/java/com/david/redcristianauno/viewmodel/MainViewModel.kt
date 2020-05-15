@@ -2,18 +2,33 @@ package com.david.redcristianauno.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCase
 import com.david.redcristianauno.model.DataCelula
 import com.david.redcristianauno.model.HistoricalWeekly
 import com.david.redcristianauno.model.network.Callback
 import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.model.network.FirebaseService.Companion.HISTORICAL_WEEKLY_COLLECTION_NAME
+import com.david.redcristianauno.vo.Resource
+import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
 
 class MainViewModel(historicalWeeklyUseCase: HistoricalWeeklyUseCase): ViewModel() {
     private val historicalWeekly = historicalWeeklyUseCase
+    lateinit var id_user:String
+
+    val fetchPermission = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+
+        try {
+            val permission = historicalWeekly.getPermission(id_user)
+            emit(permission)
+        }catch (e: Exception){
+            emit(Resource.Failure(e))
+        }
+    }
 
     fun getDataHistoryWeekly(date: String){
         historicalWeekly.getHistoricalWeeklyWithDate(date, object : Callback<Boolean> {

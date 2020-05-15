@@ -1,0 +1,63 @@
+package com.david.redcristianauno.viewmodel
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.david.redcristianauno.domain.ConfigurationUseCase
+import com.david.redcristianauno.model.User
+import com.david.redcristianauno.model.network.Callback
+import java.lang.Exception
+
+class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
+    private val users = configUseCase
+    var listUser: MutableLiveData<List<User>> = MutableLiveData()
+    var isLoading = MutableLiveData<Boolean>()
+
+    fun refresh(type: String){
+        getUsersFromFirebase(type)
+    }
+    fun search(name: String){
+        searchUserFromFirebase(name)
+    }
+
+    private fun getUsersFromFirebase(type: String){
+        users.getTypeUsers(type, object : Callback<List<User>>{
+            override fun OnSucces(result: List<User>?) {
+                listUser.postValue(result)
+                processFinished()
+                if (result.isNullOrEmpty()){
+                    processFinished()
+                }
+            }
+
+            override fun onFailure(exception: Exception) {
+
+            }
+        })
+    }
+
+    fun updateUserFromFirebase(id: String, permissionType: String){
+        users.updateUser(id, permissionType)
+    }
+
+    fun deleteUserFromFirebase(id: String){
+        users.deleteUser(id)
+    }
+
+    private fun searchUserFromFirebase(name: String){
+        users.searchUser(name, object: Callback<List<User>>{
+            override fun OnSucces(result: List<User>?) {
+                listUser.postValue(result)
+                processFinished()
+            }
+
+            override fun onFailure(exception: Exception) {
+
+            }
+        })
+    }
+
+    private fun processFinished() {
+        isLoading.value = true
+    }
+
+}

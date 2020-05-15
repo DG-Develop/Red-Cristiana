@@ -4,6 +4,9 @@ import android.util.Log
 import com.david.redcristianauno.model.DataCelula
 import com.david.redcristianauno.model.HistoricalWeekly
 import com.david.redcristianauno.model.network.FirebaseService.Companion.HISTORICAL_WEEKLY_COLLECTION_NAME
+import com.david.redcristianauno.model.network.FirebaseService.Companion.USER_COLLECTION_NAME
+import com.david.redcristianauno.vo.Resource
+import kotlinx.coroutines.tasks.await
 
 class HistoricalWeeklyRepositoryImpl : HistoricalWeeklyRepository {
     private val firebaseService = FirebaseService()
@@ -37,4 +40,17 @@ class HistoricalWeeklyRepositoryImpl : HistoricalWeeklyRepository {
                 }
             }
     }
+
+    override suspend fun getPermission(id_user: String): Resource<String> {
+        val resultData = firebaseService.firebaseFirestore
+            .collection(USER_COLLECTION_NAME)
+            .document(id_user)
+            .get()
+            .await()
+
+        val permissionUser = resultData.getString("permission")
+
+        return Resource.Success(permissionUser!!)
+    }
+
 }

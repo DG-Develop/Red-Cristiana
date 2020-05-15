@@ -16,19 +16,15 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
+                android:visibility="visible"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/Medium"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_arrow_back"/>
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="7">
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiSearchConfiguration"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
                         android:layout_marginStart="20dp"
@@ -38,7 +34,7 @@
                         android:textColorHint="@color/secondaryPrimaryDark">
 
                         <EditText
-                            android:id="@+id/txtCorreoLogin"
+                            android:id="@+id/etSearch"
                             android:layout_width="match_parent"
                             android:layout_height="34dp"
                             android:drawableStart="@drawable/ic_search"
@@ -48,39 +44,38 @@
                             android:fontFamily="@font/roboto_bold"
                             android:textColorHint="@color/colorAccent"
                             android:textSize="@dimen/Subtitle"
-                            android:inputType="textEmailAddress"
-                            android:background="@drawable/search_list_user"/>
+                            android:inputType="textAutoComplete"
+                            android:background="@drawable/search_list_user"
+                            android:imeOptions="actionSearch"/>
                     </com.google.android.material.textfield.TextInputLayout>
                     <LinearLayout
+                        android:id="@+id/llCrudConfiguration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         android:layout_marginEnd="@dimen/Medium"
                         android:layout_marginTop="@dimen/Diminute"
                         android:gravity="end">
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/ibDeleteUserConfigurationDialog"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/Medium"
-                            android:src="@drawable/ic_delete"
-                            android:background="@android:color/transparent"/>
+                            android:src="@drawable/ic_delete"/>
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/ibMoveUserConfigurationDialog"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/Medium"
-                            android:src="@drawable/ic_move"
-                            android:background="@android:color/transparent"/>
+                            android:src="@drawable/ic_move"/>
 
-                        <ImageButton
+                        <ImageView
                             android:id="@+id/ibCopyUserConfigurationDialog"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_copy"
-                            android:background="@android:color/transparent"/>
+                            android:src="@drawable/ic_copy"/>
                     </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
@@ -96,9 +91,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListUser"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlBaseListUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:alpha="0.4"/>
+
+        <ProgressBar
+            android:id="@+id/pbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

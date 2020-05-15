@@ -55,6 +55,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvAddSubredCelula"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="@dimen/Medium"
@@ -221,5 +222,21 @@
             
         </LinearLayout>
     </ScrollView>
+    <RelativeLayout
+        android:id="@+id/rlBaseConfiguration"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+
+        <ProgressBar
+            android:id="@+id/pbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </FrameLayout>

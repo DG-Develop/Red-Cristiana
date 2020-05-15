@@ -39,7 +39,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <androidx.cardview.widget.CardView android:layout_width="0dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvNormalUser"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="@dimen/Small"
@@ -90,7 +92,9 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView android:layout_width="0dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvLeaderCelulaUser"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="@dimen/Small"
@@ -145,7 +149,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <androidx.cardview.widget.CardView android:layout_width="0dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvSubredUser"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="@dimen/Small"
@@ -196,7 +202,9 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
-                <androidx.cardview.widget.CardView android:layout_width="0dp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvRedUser"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="@dimen/Small"

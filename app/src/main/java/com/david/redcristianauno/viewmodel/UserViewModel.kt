@@ -2,7 +2,6 @@ package com.david.redcristianauno.viewmodel
 
 import android.content.Context
 import android.widget.Spinner
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.david.redcristianauno.domain.UserUseCase
@@ -13,8 +12,6 @@ import java.lang.Exception
 class UserViewModel(userUseCase: UserUseCase): ViewModel() {
     lateinit var id_user:String
     private val type = userUseCase
-    var listSchedule: MutableLiveData<MutableList<String>> = MutableLiveData()
-    val listSubred: MutableList<String> = mutableListOf()
 
     val fetchNameUser = liveData(Dispatchers.IO) {
         emit(Resource.Loading())

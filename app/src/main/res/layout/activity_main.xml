@@ -57,4 +57,21 @@
             app:menu="@menu/bnv_menu"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/rlBaseMain"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+
+        <ProgressBar
+            android:id="@+id/pbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

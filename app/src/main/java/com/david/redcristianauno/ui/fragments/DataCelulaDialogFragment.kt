@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -19,16 +18,13 @@ import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.UserUseCaseImpl
 import com.david.redcristianauno.model.DataCelula
-import com.david.redcristianauno.model.Subred
 import com.david.redcristianauno.model.network.Callback
 import com.david.redcristianauno.model.network.FirebaseService
 import com.david.redcristianauno.model.network.UserRepositoryImpl
 import com.david.redcristianauno.viewmodel.UserViewModel
 import com.david.redcristianauno.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
-import com.google.android.gms.tasks.Task
 
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.lang.Exception
 import java.text.DateFormat
@@ -42,7 +38,6 @@ class DataCelulaDialogFragment : DialogFragment() {
     private var cal = Calendar.getInstance()
     private val firebaseService = FirebaseService()
     private var username: String = ""
-    private var adapterSubred: ArrayAdapter<String>? = null
     val list: MutableList<String> = mutableListOf()
 
     private val viewModel by lazy {

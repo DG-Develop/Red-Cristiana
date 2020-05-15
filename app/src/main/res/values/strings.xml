@@ -83,6 +83,13 @@
         <item>.50</item>
     </string-array>
 
+    <string-array name="permissions">
+        <item>Normal</item>
+        <item>Lider Celula</item>
+        <item>Subred</item>
+        <item>Red</item>
+    </string-array>
+
     <string name="dat_user">Datos de Usuario</string>
     <string name="btnRed">Red</string>
     <string name="btnSubRed">SubRed</string>

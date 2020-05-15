@@ -57,6 +57,7 @@
     <string name="notice_title">Título</string>
     <string name="upload_notice">Subir noticia</string>
     <string name="upload_image">Sube una imagen</string>
+    <string name="load_gallery">Abrir galeria</string>
     <string name="description_notice">Descripción</string>
 
     <string name="title_manage_user">Tipos de usuarios</string>

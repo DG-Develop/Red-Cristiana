@@ -102,14 +102,13 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/Subtitle"/>
 
-                   <ImageButton
-                       android:id="@+id/ibUploadNoticeConfigurationDialogFragment"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
+                   <ImageView
+                       android:id="@+id/ivUploadNoticeConfigurationDialogFragment"
+                       android:layout_width="300dp"
+                       android:layout_height="200dp"
                        android:layout_marginTop="@dimen/Big"
-                       android:layout_gravity="center_horizontal"
-                       android:src="@drawable/ic_add_notice"
-                       android:background="@android:color/transparent"/>
+                       android:layout_gravity="center"
+                       android:src="@drawable/ic_add_notice"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,6 +134,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/Small"
+                            android:gravity="top|start"
                             android:drawablePadding="@dimen/Diminute"
                             android:padding="@dimen/VerySmall"
                             android:fontFamily="@font/roboto"
@@ -149,5 +149,24 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlBaseNotice"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.9">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+
+        <ProgressBar
+            android:id="@+id/pbLoadImage"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

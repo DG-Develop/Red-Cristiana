@@ -5,18 +5,22 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class FirebaseService {
     val firebaseFirestore = FirebaseFirestore.getInstance()
     val firebaseAuth = FirebaseAuth.getInstance()
     val database = FirebaseDatabase.getInstance()
     private var dbReference : DatabaseReference
+    var mStorage: StorageReference
 
     val settings = FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
 
     init {
         firebaseFirestore.firestoreSettings = settings
         dbReference = database.reference
+        mStorage = FirebaseStorage.getInstance().reference
     }
 
 

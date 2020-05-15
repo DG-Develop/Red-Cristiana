@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import com.david.redcristianauno.model.News
+import com.david.redcristianauno.model.network.FirebaseService.Companion.NEWS_COLLECTION_NAME
 
 class NoticeRepositoryImpl : NoticeRepository {
     val firebaseService = FirebaseService()
@@ -46,5 +47,23 @@ class NoticeRepositoryImpl : NoticeRepository {
                     }
             }
         }
+    }
+
+    override fun getNews(callback: Callback<List<News>>) {
+        firebaseService.firebaseFirestore.collection(NEWS_COLLECTION_NAME)
+            .get()
+            .addOnSuccessListener {result ->
+                lateinit var list: List<News>
+                if (!result.isEmpty){
+                    for (doc in result){
+                        list = result.toObjects(News::class.java)
+                        callback.OnSucces(list)
+                        break
+                    }
+                }else{
+                    list = result.toObjects(News::class.java)
+                    callback.OnSucces(list)
+                }
+            }
     }
 }

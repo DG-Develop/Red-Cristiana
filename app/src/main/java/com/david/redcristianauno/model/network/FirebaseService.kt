@@ -46,5 +46,6 @@ class FirebaseService {
         const val HISTORICAL_WEEKLY_COLLECTION_NAME = "historical weekly"
         const val REDES_COLLECTION_NAME = "redes"
         const val SUBREDES_COLLECTION_NAME = "Subred"
+        const val NEWS_COLLECTION_NAME = "news"
     }
 }

@@ -24,8 +24,26 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWeeklyItemHistoryWeekly"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/rlBaseHistoryWeekly"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"/>
+
+        <ProgressBar
+            android:id="@+id/pbLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

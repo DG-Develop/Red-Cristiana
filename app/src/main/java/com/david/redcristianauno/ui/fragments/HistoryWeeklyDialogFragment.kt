@@ -7,14 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 
 import com.david.redcristianauno.R
+import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
+import com.david.redcristianauno.model.network.HistoricalWeeklyRepositoryImpl
+import com.david.redcristianauno.ui.adapters.HistoricalWeeklyAdapter
+import com.david.redcristianauno.viewmodel.HistoryWeeklyViewModel
+import com.david.redcristianauno.viewmodel.HistoryWeeklyViewModelFactory
 import kotlinx.android.synthetic.main.fragment_history_weekly_dialog.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class HistoryWeeklyDialogFragment : DialogFragment() {
+
+    private lateinit var historicalWeeklyAdapter: HistoricalWeeklyAdapter
+
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            HistoryWeeklyViewModelFactory(HistoricalWeeklyUseCaseImpl(HistoricalWeeklyRepositoryImpl()))
+        ).get(HistoryWeeklyViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +52,25 @@ class HistoryWeeklyDialogFragment : DialogFragment() {
         toolbarBackHistoryWeekly.setNavigationOnClickListener {
             dismiss()
         }
-
+        historicalWeeklyAdapter = HistoricalWeeklyAdapter()
+        rvWeeklyItemHistoryWeekly.adapter = historicalWeeklyAdapter
+        viewModel.refresh()
+        observedViewModel()
     }
 
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    private fun observedViewModel(){
+        viewModel.listHistorical.observe(viewLifecycleOwner, Observer { result ->
+            historicalWeeklyAdapter.updateData(result)
+        })
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                rlBaseHistoryWeekly.visibility = View.GONE
+            }
+        })
     }
 }

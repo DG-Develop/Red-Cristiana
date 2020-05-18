@@ -27,7 +27,7 @@ class ConfigurationRepositoryImpl : ConfigurationRepository {
             }
     }
 
-    override fun updateUser(id: String, permissionType: String) {
+    override fun updateUserFromPermission(id: String, permissionType: String) {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
             .document(id)
             .update("permission", permissionType)

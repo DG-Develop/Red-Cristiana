@@ -9,4 +9,5 @@ interface HistoricalWeeklyUseCase {
     fun getHistoricalWeeklyWithDate(dateSelected: String, callback: Callback<Boolean>)
     fun getDataCelula(callback: Callback<List<DataCelula>>)
     suspend fun getPermission(id_user: String): Resource<String>
+    fun getAllHistoricalWeekly(callback: Callback<List<HistoricalWeekly>>)
 }

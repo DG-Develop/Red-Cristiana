@@ -79,6 +79,11 @@
     <string name="ChildAdapter">Niños: %s</string>
     <string name="OfferingAdapter">Ofrenda: %s</string>
 
+    <string name="AssistanceTotalAdapter">Total asistencia: %s</string>
+    <string name="GuestTotalAdapter">Total invitados: %s</string>
+    <string name="ChildTotalAdapter">Total niños: %s</string>
+    <string name="OfferingTotalAdapter">Total ofrenda: %s</string>
+
     <string-array name="decimals">
         <item>.00</item>
         <item>.50</item>

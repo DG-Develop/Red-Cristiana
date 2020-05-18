@@ -1,9 +1,11 @@
 package com.david.redcristianauno.model.network
 
 import android.content.Context
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.david.redcristianauno.model.Subred
+import com.david.redcristianauno.model.User
 import com.david.redcristianauno.model.network.FirebaseService.Companion.USER_COLLECTION_NAME
 import com.david.redcristianauno.vo.Resource
 import kotlinx.coroutines.tasks.await
@@ -61,4 +63,26 @@ class UserRepositoryImpl: UserRepository{
             }
     }
 
+    override fun getDataUser(callback: Callback<User>) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+            .get()
+            .addOnSuccessListener { result ->
+                val foundUser = result.toObject(User::class.java)
+                callback.OnSucces(foundUser)
+            }
+    }
+
+    override fun updateDataUser(names: String, last_names: String, telephone: String, address: String) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+            .update(mapOf(
+                "names" to names,
+                "last_names" to last_names,
+                "telephone" to telephone,
+                "address" to address
+            ))
+            .addOnSuccessListener { Log.i("UserInfo", "Update Success") }
+            .addOnFailureListener{e -> Log.i("UserInfo", "Error updating document", e)}
+    }
 }

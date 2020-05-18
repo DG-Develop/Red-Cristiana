@@ -8,4 +8,5 @@ class HistoricalWeekly: Serializable {
     var child_total = 0
     var offering_total = 0.0
     var historical_type = ""
+    var date = ""
 }

@@ -83,6 +83,7 @@ class MainViewModel(historicalWeeklyUseCase: HistoricalWeeklyUseCase): ViewModel
         historicalWeekly.child_total = childTotal
         historicalWeekly.offering_total = offeringTotal
         historicalWeekly.historical_type = "Celula"
+        historicalWeekly.date = date
 
         firebaseService.setDocumentWithID(historicalWeekly,HISTORICAL_WEEKLY_COLLECTION_NAME,date)
     }

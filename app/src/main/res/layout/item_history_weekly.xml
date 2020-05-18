@@ -57,6 +57,7 @@ app:cardCornerRadius="@dimen/VerySmall">
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tvAssistanceTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -68,6 +69,7 @@ app:cardCornerRadius="@dimen/VerySmall">
             tool:text="Total asistencia: 56" />
 
         <TextView
+            android:id="@+id/tvGuestTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -86,6 +88,7 @@ app:cardCornerRadius="@dimen/VerySmall">
         android:layout_marginBottom="@dimen/Small">
 
         <TextView
+            android:id="@+id/tvChildTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -97,6 +100,7 @@ app:cardCornerRadius="@dimen/VerySmall">
             tool:text="Total niños: 36" />
 
         <TextView
+            android:id="@+id/tvOfferingTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

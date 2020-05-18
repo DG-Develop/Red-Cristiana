@@ -53,4 +53,15 @@ class HistoricalWeeklyRepositoryImpl : HistoricalWeeklyRepository {
         return Resource.Success(permissionUser!!)
     }
 
+    override fun getAllHistoricalWeekly(callback: Callback<List<HistoricalWeekly>>) {
+        firebaseService.firebaseFirestore.collection(HISTORICAL_WEEKLY_COLLECTION_NAME)
+            .get()
+            .addOnSuccessListener { result ->
+                for (doc in result){
+                    val list = result.toObjects(HistoricalWeekly::class.java)
+                    callback.OnSucces(list)
+                    break
+                }
+            }
+    }
 }

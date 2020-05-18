@@ -8,6 +8,7 @@
     <string name="session_active">No cerrar sesión</string>
     <string name="sign_in">Iniciar Sesión</string>
     <string name="register">"¿Aún no tienes una cuenta? "</string>
+    <string name="title_activity_login">Registrate</string>
 
     <string name="lets_start">¡Vamos A Comenzar!</string>
     <string name="msg_create_account">Crea tu cuenta para unirte con nosotros</string>
@@ -95,73 +96,5 @@
         <item>Subred</item>
         <item>Red</item>
     </string-array>
-
-    <string name="dat_user">Datos de Usuario</string>
-    <string name="btnRed">Red</string>
-    <string name="btnSubRed">SubRed</string>
-    <string name="btnCedulas">Celulas</string>
-    <string name="btnVer">Ver</string>
-    <string name="btnBibilia">Biblia</string>
-    <string name="btnInformacion">Acerca De</string>
-    <string name="txtOtroCelula">Si no aparece tú subred, presione aquí</string>
-    <string name="txtRegistro">Introduce los datos</string>
-
-    <string name="txtTotalOfrenda">Total de Ofrenda</string>
-    <string name="txtNombreCedula">Nombre de subred</string>
-    <string name="txtNombreSubred">Nombre de Subred</string>
-    <string name="txtregistrar">Registrar</string>
-
-    <string name="txtNombreRed">Nombre de Red</string>
-    <string name="fecha_semanal_celula">Fecha Semanal Celula</string>
-    <string name="select_subred">Seleccione a la subred que perteneces</string>
-    <string name="select_subred_reg">Seleccione una subred</string>
-    <string name="btn_buscar">Buscar </string>
-    <string name="btn_ver_registro">Ver registro</string>
-    <string name="title_activity_login">Registrate</string>
-    <string name="nombres">Nombre(s)</string>
-    <string name="apellido_paterno">Apellido Paterno</string>
-    <string name="apellido_materno">Apellido Materno</string>
-    <string name="domicilio">Domicilio</string>
-    <string name="dtSubred">Datos subred</string>
-
-    <string name="direccion">Ubicación y Contactos</string>
-    <string name="estado">Estado</string>
-    <string name="municipio">Municipio</string>
-    <string name="colonia">Colonia</string>
-    <string name="calle">Calle</string>
-    <string name="num_ext">Numero Exterior</string>
-    <string name="codg_pos">Código Postal</string>
-
-
-    <string name="list_user">Lista de Usuarios: </string>
-
-
-    <string name="crear">Crear Subred/Celula</string>
-    <string name="noticia">Subir Noticias</string>
-
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="login_sign_in">Ver</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="sesionInactiva">Cerrar sesión</string>
-
-    <string name="menu_home">Incio</string>
-    <string name="menu_tools">Historico</string>
-    <string name="menu_biblia">Biblia</string>
-    <string name="menu_share">Permisos de usuario</string>
-    <string name="menu_send">Send</string>
-    <string name="title_activity_principal">Red Cristiana</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

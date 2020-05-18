@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/GrayBlue"
-    tools:context=".ui.fragments.CreateConfigurationDialogFragment">
+    tools:context=".presentation.ui.fragments.CreateConfigurationDialogFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -53,7 +53,6 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:layout_marginBottom="16dp"
-                        android:text="@string/txtNombreRed"
                         android:textSize="25sp"
                         android:textColor="@color/Black" />
 
@@ -74,7 +73,6 @@
                         android:id="@+id/btncrearRed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txtregistrar"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
@@ -106,7 +104,6 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:text="@string/txtNombreSubred"
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="@color/Black" />
@@ -129,7 +126,6 @@
                     android:id="@+id/btncrearSubred"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/txtregistrar"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="16dp"
@@ -160,7 +156,6 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:layout_marginBottom="16dp"
-                        android:text="@string/txtNombreCedula"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         android:textColor="@color/Black" />
@@ -170,7 +165,6 @@
                         android:id="@+id/textView9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="@string/select_subred_reg"
                         android:textColor="@color/Black" />
 
                     <Spinner
@@ -196,7 +190,6 @@
                         android:id="@+id/btncrearCelula"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/txtregistrar"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
@@ -211,7 +204,6 @@
                 android:id="@+id/btnCrearTodo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/txtregistrar"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="16dp"

@@ -1,8 +1,8 @@
 package com.david.redcristianauno.domain
 
-import com.david.redcristianauno.model.User
-import com.david.redcristianauno.model.network.Callback
-import com.david.redcristianauno.model.network.UserRepository
+import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.data.network.Callback
+import com.david.redcristianauno.data.network.UserRepository
 
 class ProfileUseCaseImpl(private val userRepo: UserRepository) : ProfileUseCase{
     override fun getDataUser(callback: Callback<User>) = userRepo.getDataUser(callback)

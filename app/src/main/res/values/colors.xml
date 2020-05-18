@@ -22,8 +22,4 @@
     <color name="statusBar">#E1E9EA</color>
     <color name="titleBar">#BCDBDD</color>
 
-    <color name="buttonIngresarFirstColor">#A7D2D6</color>
-    <color name="buttonIngresarSecondColor">#CC92AA</color>
-    <color name="buttonRegistrar">#CEC689</color>
-
 </resources>

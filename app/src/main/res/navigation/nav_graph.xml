@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navHomeFragment"
-        android:name="com.david.redcristianauno.ui.fragments.HomeFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/navDataFragment"
-        android:name="com.david.redcristianauno.ui.fragments.DataFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.DataFragment"
         android:label="fragment_data"
         tools:layout="@layout/fragment_data" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/navHistoricalFragment"
-        android:name="com.david.redcristianauno.ui.fragments.HistoricalFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.HistoricalFragment"
         android:label="fragment_historical"
         tools:layout="@layout/fragment_historical" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/navBiblieFragment"
-        android:name="com.david.redcristianauno.ui.fragments.BiblieFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.BiblieFragment"
         android:label="fragment_biblie"
         tools:layout="@layout/fragment_biblie" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/navSettingFragment"
-        android:name="com.david.redcristianauno.ui.fragments.ConfigurationFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.ConfigurationFragment"
         android:label="fragment_configuration"
         tools:layout="@layout/fragment_configuration" >
         <action
@@ -73,37 +73,37 @@
     </fragment>
     <dialog
         android:id="@+id/dataCelulaFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.DataCelulaDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.DataCelulaDialogFragment"
         android:label="DataCelulaFragmentDialog"
         tools:layout="@layout/fragment_data_celula_dialog"/>
     <dialog
         android:id="@+id/dataSubredFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.DataSubredDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.DataSubredDialogFragment"
         android:label="DataSubredFragmentDialog"
         tools:layout="@layout/fragment_data_subred_dialog"/>
     <dialog
         android:id="@+id/historyDailyFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.HistoryDailyDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.HistoryDailyDialogFragment"
         android:label="HistoryDailyFragmentDialog"
         tools:layout="@layout/fragment_history_daily_dialog"/>
     <dialog
         android:id="@+id/historyWeeklyFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.HistoryWeeklyDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.HistoryWeeklyDialogFragment"
         android:label="HistoryWeeklyFragmentDialog"
         tools:layout="@layout/fragment_history_weekly_dialog"/>
     <dialog
         android:id="@+id/profileConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.ProfileConfigurationDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.ProfileConfigurationDialogFragment"
         android:label="ProfileConfigurationFragmentDialog"
         tools:layout="@layout/fragment_profile_configuration_dialog"/>
     <dialog
         android:id="@+id/createConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.CreateConfigurationDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.CreateConfigurationDialogFragment"
         android:label="CreateConfigurationFragmentDialog"
         tools:layout="@layout/fragment_create_configuration_dialog"/>
     <dialog
         android:id="@+id/manageUserConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.ManageUserConfigurationDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.ManageUserConfigurationDialogFragment"
         android:label="ManageUserConfigurationFragmentDialog"
         tools:layout="@layout/fragment_manage_user_configuration_dialog">
         <action
@@ -112,12 +112,12 @@
     </dialog>
     <dialog
         android:id="@+id/uploadNoticeConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.UploadNoticeConfigurationDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.UploadNoticeConfigurationDialogFragment"
         android:label="UploadNoticeConfigurationFragmentDialog"
         tools:layout="@layout/fragment_upload_notice_configuration_dialog"/>
     <dialog
         android:id="@+id/listUserConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.ui.fragments.ListUserConfigurationDialogFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.ListUserConfigurationDialogFragment"
         android:label="ListUserConfigurationFragmentDialog"
         tools:layout="@layout/fragment_list_user_configuration_dialog"/>
 </navigation>

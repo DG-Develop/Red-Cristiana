@@ -1,7 +1,7 @@
 package com.david.redcristianauno.domain
 
-import com.david.redcristianauno.model.User
-import com.david.redcristianauno.model.network.Callback
+import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.data.network.Callback
 
 interface ConfigurationUseCase {
     fun getTypeUsers(type: String, callback: Callback<List<User>>)

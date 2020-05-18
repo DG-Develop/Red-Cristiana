@@ -30,7 +30,7 @@
     </style>
 
 
-    <!--Estilo para los spinners-->
+    <!--Estilo para los spinners
     <style name="spinner_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -38,8 +38,8 @@
         <item name="android:layout_margin">10dp</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">20dp</item>
-        <!--item name="android:popupBackground">#DFFFFFFF</item>-->
-    </style>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+    </style>-->
 
     <style name="spinner_style_decimals">
         <item name="android:entries">@array/decimals</item>
@@ -47,27 +47,5 @@
         <item name="fontFamily">@font/roboto</item>
         <item name="android:textSize">@dimen/Normal</item>
     </style>
-
-    <!-- Estilo de la etiqueta para menu de botones emergentes-->
-    <style name="etiquetaFloatingButton">
-        <item name="android:background">@drawable/fondo_eti_fab</item>
-        <item name="android:textColor">#fff</item>
-    </style>
-
-    <!--Estilo del menu emergente pop up-->
-    <style name="AppTheme.PopupTema" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>
-
-    <!--Otros estilos para el navdrawer-->
-
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
 
 </resources>

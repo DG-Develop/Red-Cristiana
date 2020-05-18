@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.ui.activities.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,12 +23,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/VerySmall"
+                android:paddingEnd="@dimen/VerySmall"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/app_name"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorAccent"/>
-
         </Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

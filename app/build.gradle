@@ -39,21 +39,13 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-auth:19.3.1'
-    implementation 'com.google.firebase:firebase-core:17.4.0'
+    implementation 'com.google.firebase:firebase-core:17.4.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-firestore:21.4.3'
 
-    //conexion a base de datos
-    implementation 'com.android.volley:volley:1.1.0'
-
-    //menu para los actionbuttons flotantes
-    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     //vista de los alertDialogos
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
-
-    //Se agrega picasso para cargar imagenes del url;
-    implementation 'com.squareup.picasso:picasso:2.71828'
 
     //Material Design
     implementation 'com.google.android.material:material:1.1.0'

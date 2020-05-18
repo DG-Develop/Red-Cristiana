@@ -2,7 +2,7 @@ package com.david.redcristianauno.domain
 
 import android.content.Context
 import android.widget.Spinner
-import com.david.redcristianauno.model.network.UserRepository
+import com.david.redcristianauno.data.network.UserRepository
 import com.david.redcristianauno.vo.Resource
 
 class UserUseCaseImpl(private val userRepo: UserRepository): UserUseCase {

@@ -25,14 +25,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/VeryBig"
                 android:layout_marginStart="@dimen/Small"
                 android:layout_marginEnd="@dimen/Small"
+                android:layout_marginBottom="@dimen/VerySmall"
                 app:cardCornerRadius="@dimen/VerySmall"
                 app:cardElevation="@dimen/Diminute">
                 <LinearLayout
@@ -58,7 +59,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="@dimen/Medium">
+                            android:paddingTop="20dp">
                             <Button
                                 android:id="@+id/btnEditProfileConfigurationDialog"
                                 android:layout_width="120dp"

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.NoticeUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.NoticeRepositoryImpl
+import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.NoticeViewModel
 import com.david.redcristianauno.presentation.viewmodel.NoticeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_upload_notice_configuration_dialog.*
@@ -72,9 +74,14 @@ class UploadNoticeConfigurationDialogFragment : DialogFragment() {
     private fun uploadImage() {
         val title = etNameConfigurationDialogFragment.text.toString().trim()
         val description = etLastNamesConfigurationDialogFragment.text.toString().trim()
-        rlBaseNotice.visibility = View.VISIBLE
-        viewModel.compressImage(path!!, title, description, ivUploadNoticeConfigurationDialogFragment,pbLoadImage, rlBaseNotice)
-        cleanField()
+        if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(description)){
+            rlBaseNotice.visibility = View.VISIBLE
+            viewModel.compressImage(path!!, title, description, ivUploadNoticeConfigurationDialogFragment,pbLoadImage, rlBaseNotice)
+            cleanField()
+        }else{
+            val snack = SnackBarMD.getSBIndefinite(requireView(), "Ponga un titulo y una descripcion porfavor")
+            SnackBarMD.showSBWithMargin(snack, 32, 32)
+        }
     }
 
     private fun cleanField() {

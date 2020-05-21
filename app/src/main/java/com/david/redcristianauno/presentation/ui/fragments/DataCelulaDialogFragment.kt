@@ -21,6 +21,7 @@ import com.david.redcristianauno.data.model.DataCelula
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
+import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.UserViewModel
 import com.david.redcristianauno.presentation.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
@@ -57,7 +58,6 @@ class DataCelulaDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data_celula_dialog, container, false)
     }
 
@@ -118,11 +118,8 @@ class DataCelulaDialogFragment : DialogFragment() {
                 if (cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]) {
                     updateDateInView()
                 } else {
-                    Toast.makeText(
-                        context,
-                        "La fecha de la semana no coincide con el de hoy",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    val snack = SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
+                    SnackBarMD.showSBWithMargin(snack, 32, 32)
                 }
 
             }
@@ -146,22 +143,17 @@ class DataCelulaDialogFragment : DialogFragment() {
             val assistance = etAssistenceDataCelulaDialog.text.toString().trim { it <= ' ' }
             val date = etDateDataCelulaDialogFragment.text.toString()
 
-            if (!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(
-                    date
-                )
-            )
-                dataRegisterCelula(host_name, assistance, date)
-            else
-                Toast.makeText(
-                    context,
-                    "Por favor llenar los campos de asistencia y de fecha",
-                    Toast.LENGTH_SHORT
-                ).show();
+            if (!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date)){
+                dataRegisterCelula(it, host_name, assistance, date)
+            } else{
+                val snack = SnackBarMD.getSBIndefinite(it, "Por favor llenar los campos de asistencia y de fecha")
+                SnackBarMD.showSBWithMargin(snack, 32, 32)
+            }
         }
 
     }
 
-    private fun dataRegisterCelula(host_name: String, assistance: String, date: String) {
+    private fun dataRegisterCelula(view: View,host_name: String, assistance: String, date: String) {
         var guest = 0
         var child = 0
         var offering = 0.0
@@ -181,13 +173,9 @@ class DataCelulaDialogFragment : DialogFragment() {
         }
 
         if (assistance.toDouble() < guest || assistance.toDouble() < child) {
-            Toast.makeText(
-                context,
-                "El valor de la asistencia no debe de ser menor que el de invitado o el de niños",
-                Toast.LENGTH_LONG
-            ).show()
+            val snack = SnackBarMD.getSBIndefinite(view, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños")
+            SnackBarMD.showSBWithMargin(snack, 32, 32)
         } else {
-            Log.i("InfoUserName:", username)
             val dataCelula = DataCelula()
             dataCelula.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
             dataCelula.email_user = firebaseService.firebaseAuth.currentUser?.email.toString()
@@ -204,18 +192,17 @@ class DataCelulaDialogFragment : DialogFragment() {
             dataCelula.offering = offering
             dataCelula.date = date
 
-            firebaseService.setDocumentWithOutID(
-                dataCelula,
-                "data celula",
-                object : Callback<Void> {
-                    override fun OnSucces(result: Void?) {
-                        Toast.makeText(context, "Enviado", Toast.LENGTH_SHORT).show()
-                    }
+            firebaseService.setDocumentWithOutID(dataCelula, "data celula", object : Callback<Void> {
+                override fun OnSucces(result: Void?) {
+                    val snack = SnackBarMD.getSBIndefinite(view, "Enviado")
+                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                }
 
-                    override fun onFailure(exception: Exception) {
-                        Toast.makeText(context, "No se pudo enviar", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                override fun onFailure(exception: Exception) {
+                    val snack = SnackBarMD.getSBIndefinite(view, "No se pudo enviar")
+                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                }
+            })
         }
         cleanFields()
     }

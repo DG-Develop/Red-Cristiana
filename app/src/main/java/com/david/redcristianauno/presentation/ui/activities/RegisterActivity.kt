@@ -11,7 +11,9 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
+import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_register.*
@@ -23,7 +25,6 @@ class RegisterActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        //dbReference=database.reference.child("usuarios")
         toolbarBackRegister.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back)
         toolbarBackRegister.setNavigationOnClickListener {
             finish()
@@ -61,8 +62,8 @@ class RegisterActivity: AppCompatActivity() {
 
                     }.addOnFailureListener(OnFailureListener { e ->
                         if(e is FirebaseAuthUserCollisionException){
-                            Toast.makeText(this, "Este correo ya esta en uso", Toast.LENGTH_SHORT)
-                                .show()
+                            val snack = SnackBarMD.getSBIndefinite(view!!, "Este correo ya esta en uso")
+                            SnackBarMD.showSBWithMargin(snack, 32, 32)
                             rlBaseRegister.visibility = View.INVISIBLE
                         }else{
                             Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT)
@@ -71,6 +72,9 @@ class RegisterActivity: AppCompatActivity() {
                         }
                     })
             }
+        }else{
+            val snack = SnackBarMD.getSBIndefinite(view!!, "No deje ningun campo vacío")
+            SnackBarMD.showSBWithMargin(snack, 32, 32)
         }
 
     }
@@ -102,16 +106,19 @@ class RegisterActivity: AppCompatActivity() {
     }
 
     private fun showErrorMessage() {
-        Toast.makeText(this, "Error al crear el usuario", Toast.LENGTH_SHORT).show()
+        val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al crear el usuario")
+        SnackBarMD.showSBWithMargin(snack, 32, 32)
     }
 
     private fun verifyEmail(user: FirebaseUser?){
         user?.sendEmailVerification()
             ?.addOnCompleteListener(this){task ->
                 if(task.isComplete){
-                    Toast.makeText(this, "Email enviado", Toast.LENGTH_LONG).show()
+                    val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Email enviado")
+                    SnackBarMD.showSBWithMargin(snack, 32, 32)
                 }else{
-                    Toast.makeText(this, "Error al enviar el email", Toast.LENGTH_LONG).show()
+                    val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al enviar el email")
+                    SnackBarMD.showSBWithMargin(snack, 32, 32)
                 }
             }
     }

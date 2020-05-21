@@ -79,6 +79,7 @@
             android:layout_marginStart="@dimen/Small"
             android:layout_marginEnd="@dimen/Small"
             android:layout_marginTop="@dimen/Big"
+            android:layout_marginBottom="@dimen/Big"
             app:cardCornerRadius="@dimen/VerySmall"
             app:cardElevation="@dimen/Diminute">
 

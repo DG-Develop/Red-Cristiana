@@ -20,16 +20,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="7">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/tiSearchConfiguration"
                         android:layout_width="match_parent"
                         android:layout_height="34dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="@dimen/VerySmall"
                         android:visibility="visible"
-                        android:layout_marginEnd="45dp"
+                        android:layout_marginEnd="@dimen/VeryBig"
                         app:hintEnabled="false"
                         android:textColorHint="@color/secondaryPrimaryDark">
 
@@ -38,13 +37,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="34dp"
                             android:drawableStart="@drawable/ic_search"
-                            android:drawablePadding="@dimen/Diminute"
+                            android:drawablePadding="@dimen/Small"
                             android:hint="@string/search"
                             android:padding="@dimen/VerySmall"
                             android:fontFamily="@font/roboto_bold"
                             android:textColorHint="@color/colorAccent"
                             android:textSize="@dimen/Subtitle"
-                            android:inputType="textAutoComplete"
+                            android:inputType="textPersonName"
                             android:background="@drawable/search_list_user"
                             android:imeOptions="actionSearch"/>
                     </com.google.android.material.textfield.TextInputLayout>

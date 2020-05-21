@@ -20,6 +20,7 @@ import com.david.redcristianauno.data.model.DataSubred
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
+import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.UserViewModel
 import com.david.redcristianauno.presentation.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
@@ -80,7 +81,8 @@ class DataSubredDialogFragment : DialogFragment() {
             if(cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]){
                 updateDateInView()
             }else{
-                Toast.makeText(context, "La fecha de la semana no coincide con el de hoy", Toast.LENGTH_LONG).show()
+                val snack = SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
+                SnackBarMD.showSBWithMargin(snack, 32, 32)
             }
 
         }
@@ -102,10 +104,12 @@ class DataSubredDialogFragment : DialogFragment() {
             val assistance = etAssistenceDataSubredDialog.text.toString().trim { it <= ' ' }
             val date = etDateDataSubredDialogFragment.text.toString().trim { it <= ' ' }
 
-            if(!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date))
+            if(!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date)) {
                 dataRegisterSubred(host_name, assistance, date)
-            else
-                Toast.makeText(context, "Por favor llenar los campos de asistencia y de fecha", Toast.LENGTH_SHORT).show()
+            } else{
+                val snack = SnackBarMD.getSBIndefinite(view, "Por favor llenar los campos de asistencia y de fecha")
+                SnackBarMD.showSBWithMargin(snack, 32, 32)
+            }
         }
 
     }
@@ -132,11 +136,13 @@ class DataSubredDialogFragment : DialogFragment() {
 
         firebaseService.setDocumentWithOutID(dataSubred, "data subred", object: Callback<Void>{
             override fun OnSucces(result: Void?) {
-                Toast.makeText(context, "Enviado", Toast.LENGTH_SHORT).show()
+                val snack = SnackBarMD.getSBIndefinite(view!!, "Enviado")
+                SnackBarMD.showSBWithMargin(snack, 32, 32)
             }
 
             override fun onFailure(exception: Exception) {
-                Toast.makeText(context, "No se pudo enviar", Toast.LENGTH_SHORT).show()
+                val snack = SnackBarMD.getSBIndefinite(view!!, "No se pudo enviar")
+                SnackBarMD.showSBWithMargin(snack, 32, 32)
             }
 
         })

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.david.redcristianauno.*
 import com.david.redcristianauno.data.network.FirebaseService
+import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_login.*
@@ -33,17 +34,18 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }.addOnFailureListener{ e ->
                     if (e is FirebaseAuthInvalidUserException) {
-                        Toast.makeText(this, "Usuario Invalido", Toast.LENGTH_SHORT)
-                            .show()
+                        val snack = SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
+                        SnackBarMD.showSBWithMargin(snack, 32, 32)
                         rlBaseLogin.visibility = View.INVISIBLE
                     } else if (e is FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(this, "Contraseña invalida", Toast.LENGTH_SHORT)
-                            .show()
+                        val snack = SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
+                        SnackBarMD.showSBWithMargin(snack, 32, 32)
                         rlBaseLogin.visibility = View.INVISIBLE
                     }
                 }
         }else{
-            Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            val snack = SnackBarMD.getSBIndefinite(view!!, "Completa todos los campos")
+            SnackBarMD.showSBWithMargin(snack, 32, 32)
         }
     }
 

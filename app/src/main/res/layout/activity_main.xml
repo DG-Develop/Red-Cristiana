@@ -53,7 +53,7 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimary"
             app:itemIconTint="@drawable/bottom_navigation_selector"
-            app:itemTextColor="@color/colorAccent"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
             app:menu="@menu/bnv_menu"/>
     </RelativeLayout>
 

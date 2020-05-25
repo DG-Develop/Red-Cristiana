@@ -58,6 +58,7 @@
                 android:id="@+id/cvAddSubredCelula"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/Medium"
                 android:elevation="@dimen/Diminute">
 

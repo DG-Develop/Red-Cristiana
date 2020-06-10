@@ -19,6 +19,7 @@ import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModel
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModelFactory
 import com.david.redcristianauno.vo.Resource
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_configuration.*
 
 /**
@@ -61,8 +62,11 @@ class ConfigurationFragment : Fragment() {
             findNavController().navigate(R.id.uploadNoticeConfigurationFragmentDialog)
         }
 
-        cvCloseSession.setOnClickListener{
-            AlertDialog.Builder(context)
+        cvCloseSession.setOnClickListener {
+            MaterialAlertDialogBuilder(
+                context,
+                R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
+            )
                 .setTitle("Cerrar Sesión")
                 .setMessage("¿Estás seguro de cerrar la sesión?")
                 .setPositiveButton("Aceptar") { dialog, which ->
@@ -71,7 +75,9 @@ class ConfigurationFragment : Fragment() {
                     startActivity(Intent(context, LoginActivity::class.java))
                     activity?.finish()
                 }
-                .setNegativeButton("Cancelar") { dialog, which -> dialog.cancel() }.show()
+                .setNegativeButton("Cancelar") { dialog, which ->
+                    dialog.cancel()
+                }.show()
         }
 
     }

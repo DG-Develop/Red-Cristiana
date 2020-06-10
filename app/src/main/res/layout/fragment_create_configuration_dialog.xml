@@ -76,7 +76,6 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/button_solid_save"
                         android:textColor="@android:color/background_light"/>
 
 
@@ -129,7 +128,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/button_solid_save"
                     android:textColor="@android:color/background_light"/>
 
             </LinearLayout>
@@ -193,7 +191,6 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/button_solid_save"
                         android:textColor="@android:color/background_light"/>
 
                 </LinearLayout>
@@ -208,7 +205,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="30dp"
-                android:background="@drawable/button_solid_save"
                 android:textColor="@android:color/background_light"/>
         </LinearLayout>
     </ScrollView>

@@ -54,20 +54,21 @@
 
                     <Button
                         android:id="@+id/btnSeeDataHistoricalDaily"
-                        android:layout_width="@dimen/width_btn_small"
-                        android:layout_height="@dimen/height_btn_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_marginTop="46dp"
                         android:layout_marginBottom="@dimen/Small"
-                        android:layout_marginEnd="@dimen/Medium"
-                        android:paddingEnd="@dimen/VerySmall"
-                        android:paddingStart="@dimen/VerySmall"
+                        android:layout_marginEnd="@dimen/Small"
+                        app:backgroundTint="@color/colorAccent"
+                        app:icon="@drawable/ic_arrow_white"
+                        app:iconGravity="end"
+                        app:cornerRadius="@dimen/Small"
+                        android:letterSpacing="0"
                         android:layout_gravity="end"
                         android:text="@string/btn_see_data"
                         android:textColor="@color/colorPrimary"
                         android:textAllCaps="false"
-                        android:drawableEnd="@drawable/ic_arrow_white"
-                        android:drawablePadding="2dp"
-                        android:background="@drawable/button_solid_enteroky"/>
+                        style="@style/Widget.MaterialComponents.Button.Icon"/>
 
                 </LinearLayout>
 
@@ -115,20 +116,21 @@
 
                     <Button
                         android:id="@+id/btnSeeDataHistoricalWeekly"
-                        android:layout_width="@dimen/width_btn_small"
-                        android:layout_height="@dimen/height_btn_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
                         android:layout_marginTop="46dp"
                         android:layout_marginBottom="@dimen/Small"
-                        android:layout_marginEnd="@dimen/Medium"
-                        android:paddingEnd="@dimen/VerySmall"
-                        android:paddingStart="@dimen/VerySmall"
+                        android:layout_marginEnd="@dimen/Small"
+                        app:backgroundTint="@color/colorAccent"
+                        app:icon="@drawable/ic_arrow_white"
+                        app:iconGravity="end"
+                        app:cornerRadius="@dimen/Small"
+                        android:letterSpacing="0"
                         android:layout_gravity="end"
                         android:text="@string/btn_see_data"
                         android:textColor="@color/colorPrimary"
                         android:textAllCaps="false"
-                        android:drawableEnd="@drawable/ic_arrow_white"
-                        android:drawablePadding="2dp"
-                        android:background="@drawable/button_solid_enteroky"/>
+                        style="@style/Widget.MaterialComponents.Button.Icon"/>
 
                 </LinearLayout>
 

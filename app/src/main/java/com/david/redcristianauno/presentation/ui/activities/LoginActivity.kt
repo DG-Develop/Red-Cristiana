@@ -34,18 +34,15 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }.addOnFailureListener{ e ->
                     if (e is FirebaseAuthInvalidUserException) {
-                        val snack = SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
-                        SnackBarMD.showSBWithMargin(snack, 32, 32)
+                       SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
                         rlBaseLogin.visibility = View.INVISIBLE
                     } else if (e is FirebaseAuthInvalidCredentialsException) {
-                        val snack = SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
-                        SnackBarMD.showSBWithMargin(snack, 32, 32)
+                       SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
                         rlBaseLogin.visibility = View.INVISIBLE
                     }
                 }
         }else{
-            val snack = SnackBarMD.getSBIndefinite(view!!, "Completa todos los campos")
-            SnackBarMD.showSBWithMargin(snack, 32, 32)
+          SnackBarMD.getSBIndefinite(view!!, "Completa todos los campos")
         }
     }
 
@@ -55,6 +52,10 @@ class LoginActivity : AppCompatActivity() {
     }
     fun actionRegister(view: View?) {
         startActivity(Intent(this, RegisterActivity::class.java))
+    }
+
+    fun actionForgotPassword(view: View?) {
+        startActivity(Intent(this, ForgotPasswordActivity::class.java))
     }
 
     override fun onStart() {

@@ -8,6 +8,7 @@
     <string name="session_active">No cerrar sesión</string>
     <string name="sign_in">Iniciar Sesión</string>
     <string name="register">"¿Aún no tienes una cuenta? "</string>
+    <string name="forgot_password"><u>¿Olvidaste tu contraseña?</u></string>
     <string name="title_activity_login">Registrate</string>
 
     <string name="lets_start">¡Vamos A Comenzar!</string>
@@ -16,6 +17,11 @@
     <string name="last_names">Apellidos</string>
     <string name="confirmPass">Confirmar contraseña</string>
     <string name="create_account">Crear cuenta</string>
+
+    <string name="title_activity_forgot_password">Recupera tu contraseña</string>
+    <string name="description_activity_forgot_password">Ingrese su email para recibir las instrucciones 
+    de restablecimiento de su contraseña</string>
+    <string name="recover_password">Recuperar Contraseña</string>
 
     <string name="title_home">Descubre lo que está pasando</string>
 
@@ -72,7 +78,7 @@
     <string name="r">R</string>
 
     <string name="search">Buscar</string>
-    
+
     <string name="HostNameAdapter">Anfitrión: %s</string>
     <string name="CelulaNameAdapter">Celula: %s</string>
     <string name="AssistanceAdapter">Asistencia: %s</string>
@@ -96,5 +102,6 @@
         <item>Subred</item>
         <item>Red</item>
     </string-array>
+
 
 </resources>

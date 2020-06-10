@@ -79,8 +79,7 @@ class UploadNoticeConfigurationDialogFragment : DialogFragment() {
             viewModel.compressImage(path!!, title, description, ivUploadNoticeConfigurationDialogFragment,pbLoadImage, rlBaseNotice)
             cleanField()
         }else{
-            val snack = SnackBarMD.getSBIndefinite(requireView(), "Ponga un titulo y una descripcion porfavor")
-            SnackBarMD.showSBWithMargin(snack, 32, 32)
+            SnackBarMD.getSBIndefinite(requireView(), "Ponga un titulo y una descripcion porfavor")
         }
     }
 

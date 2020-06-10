@@ -5,6 +5,7 @@
     <dimen name="TitleSecondary">18sp</dimen>
     <dimen name="Subtitle">16sp</dimen>
     <dimen name="Normal">14sp</dimen>
+    <dimen name="Little">12sp</dimen>
 
     <!--Standar Size-->
     <dimen name="VeryBig">40dp</dimen>

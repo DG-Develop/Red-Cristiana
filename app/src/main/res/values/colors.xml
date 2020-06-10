@@ -4,6 +4,9 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#545659</color>
     <color name="colorAccent">#EC407A</color>
+
+    <!-- Accents Colors-->
+    <color name="AccentLow">#F6A1BE</color>
     
     <!--Colors Gray-->
     <color name="Black">#111317</color>

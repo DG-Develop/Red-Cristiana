@@ -62,8 +62,7 @@ class RegisterActivity: AppCompatActivity() {
 
                     }.addOnFailureListener(OnFailureListener { e ->
                         if(e is FirebaseAuthUserCollisionException){
-                            val snack = SnackBarMD.getSBIndefinite(view!!, "Este correo ya esta en uso")
-                            SnackBarMD.showSBWithMargin(snack, 32, 32)
+                            SnackBarMD.getSBIndefinite(view!!, "Este correo ya esta en uso")
                             rlBaseRegister.visibility = View.INVISIBLE
                         }else{
                             Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT)
@@ -73,8 +72,7 @@ class RegisterActivity: AppCompatActivity() {
                     })
             }
         }else{
-            val snack = SnackBarMD.getSBIndefinite(view!!, "No deje ningun campo vacío")
-            SnackBarMD.showSBWithMargin(snack, 32, 32)
+            SnackBarMD.getSBIndefinite(view!!, "No deje ningun campo vacío")
         }
 
     }
@@ -106,19 +104,16 @@ class RegisterActivity: AppCompatActivity() {
     }
 
     private fun showErrorMessage() {
-        val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al crear el usuario")
-        SnackBarMD.showSBWithMargin(snack, 32, 32)
+        SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al crear el usuario")
     }
 
     private fun verifyEmail(user: FirebaseUser?){
         user?.sendEmailVerification()
             ?.addOnCompleteListener(this){task ->
                 if(task.isComplete){
-                    val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Email enviado")
-                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                    SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Email enviado")
                 }else{
-                    val snack = SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al enviar el email")
-                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                    SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al enviar el email")
                 }
             }
     }

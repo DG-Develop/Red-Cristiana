@@ -18,6 +18,7 @@ import com.david.redcristianauno.data.network.ConfigurationRepositoryImpl
 import com.david.redcristianauno.presentation.ui.adapters.ListUserConfigurationAdapter
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModel
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModelFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_list_user_configuration_dialog.*
 
 /**
@@ -64,7 +65,10 @@ class ListUserConfigurationDialogFragment : DialogFragment() {
         ibMoveUserConfigurationDialog.setOnClickListener {
             if (listUserAdapter.userChecked.size > 0) {
                 context?.let {
-                    AlertDialog.Builder(it)
+                    MaterialAlertDialogBuilder(
+                        context,
+                        R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
+                    )
                         .setTitle("Elija un permiso")
                         .setItems(R.array.permissions) { _, which ->
                             val array = resources.getStringArray(R.array.permissions)
@@ -77,34 +81,32 @@ class ListUserConfigurationDialogFragment : DialogFragment() {
                             listUserAdapter.userChecked.clear()
                             tiSearchConfiguration.visibility = View.VISIBLE
                             llCrudConfiguration.visibility = View.GONE
-                        }
-                        .show()
+                        }.show()
                 }
             }
         }
 
         ibDeleteUserConfigurationDialog.setOnClickListener {
             if (listUserAdapter.userChecked.size > 0) {
-                context?.let { it1 ->
-                    AlertDialog.Builder(it1)
-                        .setTitle("Eliminar")
-                        .setMessage("¿Estás seguro que quieres eliminar?")
-                        .setPositiveButton("Aceptar") { _, _ ->
-                            rlBaseListUser.visibility = View.VISIBLE
-                            //Log.i("UserInfo", "El tamaño de los datos checkeados es: ${listUserAdapter.userChecked.size}")
-                            for (userChecked in listUserAdapter.userChecked) {
-                                viewModel.deleteUserFromFirebase(userChecked.id)
-                            }
-                            viewModel.refresh(user)
-                            listUserAdapter.userChecked.clear()
-                            tiSearchConfiguration.visibility = View.VISIBLE
-                            llCrudConfiguration.visibility = View.GONE
+                MaterialAlertDialogBuilder(
+                    context,
+                    R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
+                )
+                    .setTitle("Eliminar")
+                    .setMessage("¿Estás seguro que quieres eliminar?")
+                    .setPositiveButton("Aceptar") { _, _ ->
+                        rlBaseListUser.visibility = View.VISIBLE
+                        for (userChecked in listUserAdapter.userChecked) {
+                            viewModel.deleteUserFromFirebase(userChecked.id)
                         }
-                        .setNegativeButton("Cancelar") { dialog, _ ->
-                            dialog.cancel()
-                        }.show()
-                }
-
+                        viewModel.refresh(user)
+                        listUserAdapter.userChecked.clear()
+                        tiSearchConfiguration.visibility = View.VISIBLE
+                        llCrudConfiguration.visibility = View.GONE
+                    }
+                    .setNegativeButton("Cancelar") { dialog, _ ->
+                        dialog.cancel()
+                    }.show()
             }
         }
 

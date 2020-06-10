@@ -3,7 +3,9 @@ package com.david.redcristianauno.data.network
 import android.content.Context
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Spinner
+import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
@@ -25,7 +27,8 @@ class UserRepositoryImpl: UserRepository{
         return Resource.Success(nameUser!!)
     }
 
-    override fun getSubredesForFillSpinner(context: Context, spinner: Spinner) {
+
+    override fun getSubredesForFillTil(callback: Callback<MutableList<String>>) {
         firebaseService.firebaseFirestore.collection(FirebaseService.REDES_COLLECTION_NAME)
             .document("Vida de Jesús")
             .collection(FirebaseService.SUBREDES_COLLECTION_NAME)
@@ -34,15 +37,13 @@ class UserRepositoryImpl: UserRepository{
                 val spinnerSubred: MutableList<String> = mutableListOf()
                 val list = result.toObjects(Subred::class.java)
                 for (name in list){
-                   spinnerSubred.add(name.name)
+                    spinnerSubred.add(name.name)
                 }
-                val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerSubred)
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = spinnerAdapter
+               callback.OnSucces(spinnerSubred)
             }
     }
 
-    override fun getCelulasForFillSpinner(context: Context, spinner: Spinner, subred: String) {
+    override fun getCelulasForFillTil(subred: String, callback: Callback<MutableList<String>>) {
         firebaseService.firebaseFirestore.collection(FirebaseService.REDES_COLLECTION_NAME)
             .document("Vida de Jesús")
             .collection(FirebaseService.SUBREDES_COLLECTION_NAME)
@@ -57,9 +58,7 @@ class UserRepositoryImpl: UserRepository{
                         spinnerCelula.add(name)
                     }
                 }
-                val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, spinnerCelula)
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner.adapter = spinnerAdapter
+                callback.OnSucces(spinnerCelula)
             }
     }
 

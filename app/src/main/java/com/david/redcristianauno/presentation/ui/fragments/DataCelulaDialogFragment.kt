@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -25,11 +25,14 @@ import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.UserViewModel
 import com.david.redcristianauno.presentation.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
+import com.google.android.material.datepicker.MaterialDatePicker
 
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.lang.Exception
 import java.text.DateFormat
+import java.time.Instant
 import java.util.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -71,71 +74,31 @@ class DataCelulaDialogFragment : DialogFragment() {
         }
 
         observeData()
-        context?.let { viewModel.fillSpinnerSubred(it, sSubredDataDialogFragment) }
+        viewModel.fillTilSubred()
+        fillDecimals()
 
-        sSubredDataDialogFragment.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
-                }
-
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    context?.let {
-                        viewModel.fillSpinnerCelula(
-                            it,
-                            sCelulaDataDialogFragment,
-                            sSubredDataDialogFragment.selectedItem.toString()
-                        )
-                    }
-                }
+        filled_exposed_dropdown_Subred.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, _, _ ->
+                viewModel.fillTilCelula(filled_exposed_dropdown_Subred.text.toString())
             }
 
         ibAddCelulaDialogFragment.setOnClickListener {
-            sCelulaDataDialogFragment.visibility = View.INVISIBLE
-            etAddressDataSubredDialogFragment.visibility = View.VISIBLE
+            tilSubredDataDialogFragment.visibility = View.INVISIBLE
+            tilAddress.visibility = View.VISIBLE
             ibCloseCelulaDialogFragment.visibility = View.VISIBLE
             ibAddCelulaDialogFragment.visibility = View.INVISIBLE
         }
 
         ibCloseCelulaDialogFragment.setOnClickListener {
-            sCelulaDataDialogFragment.visibility = View.VISIBLE
-            etAddressDataSubredDialogFragment.visibility = View.INVISIBLE
+            tilSubredDataDialogFragment.visibility = View.VISIBLE
+            tilAddress.visibility = View.INVISIBLE
             ibAddCelulaDialogFragment.visibility = View.VISIBLE
             ibCloseCelulaDialogFragment.visibility = View.INVISIBLE
         }
 
-        //Evento del DatePickerDialog
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                cal.firstDayOfWeek = Calendar.TUESDAY
-
-                val cal2 = Calendar.getInstance()
-                cal2.firstDayOfWeek = Calendar.TUESDAY
-
-                if (cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]) {
-                    updateDateInView()
-                } else {
-                    val snack = SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
-                    SnackBarMD.showSBWithMargin(snack, 32, 32)
-                }
-
-            }
-
         //Listener del imageButton de la fecha
         ibFechaCelula.setOnClickListener {
-            context?.let {
-                DatePickerDialog(
-                    it,
-                    dateSetListener,
-                    // set DatePickerDialog to point to today's date when it loads up
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)
-                ).show()
-            }
+            showDatePicker(it)
         }
 
         btnSendDataCelulaDialogFragment.setOnClickListener {
@@ -146,14 +109,41 @@ class DataCelulaDialogFragment : DialogFragment() {
             if (!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date)){
                 dataRegisterCelula(it, host_name, assistance, date)
             } else{
-                val snack = SnackBarMD.getSBIndefinite(it, "Por favor llenar los campos de asistencia y de fecha")
-                SnackBarMD.showSBWithMargin(snack, 32, 32)
+                SnackBarMD.getSBIndefinite(it, "Por favor llenar los campos de asistencia y de fecha")
             }
         }
-
     }
 
-    private fun dataRegisterCelula(view: View,host_name: String, assistance: String, date: String) {
+    private fun showDatePicker(view: View){
+        val builder: MaterialDatePicker.Builder<Long> = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Selecciona una fecha")
+        builder.setTheme(R.style.DialogTheme)
+        val currentTimeInMillis = Calendar.getInstance().timeInMillis
+        builder.setSelection(currentTimeInMillis)
+        val picker = builder.build()
+        activity?.supportFragmentManager?.let { picker.show(it, picker.toString()) }
+
+
+        picker.addOnPositiveButtonClickListener {
+            cal.timeInMillis = it
+            cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
+            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1)
+
+            cal.firstDayOfWeek = Calendar.TUESDAY
+
+            val cal2 = Calendar.getInstance()
+            cal2.firstDayOfWeek = Calendar.TUESDAY
+
+            if (cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]) {
+                updateDateInView()
+            } else {
+                SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
+            }
+        }
+    }
+
+    private fun dataRegisterCelula(view: View, host_name: String, assistance: String, date: String) {
         var guest = 0
         var child = 0
         var offering = 0.0
@@ -167,14 +157,13 @@ class DataCelulaDialogFragment : DialogFragment() {
 
         if (etOfferingDataCelulaDialog.text.toString().trim { it <= ' ' }.isNotEmpty()) {
             val integers = etOfferingDataCelulaDialog.text.toString()
-            val decimals = sDecimalsCelula.selectedItem.toString()
+            val decimals = filled_exposed_dropdown_decimals.text
             res = integers + decimals
             offering = res.toDouble()
         }
 
         if (assistance.toDouble() < guest || assistance.toDouble() < child) {
-            val snack = SnackBarMD.getSBIndefinite(view, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños")
-            SnackBarMD.showSBWithMargin(snack, 32, 32)
+           SnackBarMD.getSBIndefinite(view, "El valor de la asistencia no debe de ser menor que el de invitado o el de niños")
         } else {
             val dataCelula = DataCelula()
             dataCelula.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
@@ -182,7 +171,7 @@ class DataCelulaDialogFragment : DialogFragment() {
             dataCelula.user_name = username
             dataCelula.host_name = host_name
             if (etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }.isEmpty())
-                dataCelula.address = sCelulaDataDialogFragment.selectedItem.toString()
+               dataCelula.address = filled_exposed_dropdown.text.toString()
             else
                 dataCelula.address =
                     etAddressDataSubredDialogFragment.text.toString().trim { it <= ' ' }
@@ -194,13 +183,11 @@ class DataCelulaDialogFragment : DialogFragment() {
 
             firebaseService.setDocumentWithOutID(dataCelula, "data celula", object : Callback<Void> {
                 override fun OnSucces(result: Void?) {
-                    val snack = SnackBarMD.getSBIndefinite(view, "Enviado")
-                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                    SnackBarMD.getSBIndefinite(view, "Enviado")
                 }
 
                 override fun onFailure(exception: Exception) {
-                    val snack = SnackBarMD.getSBIndefinite(view, "No se pudo enviar")
-                    SnackBarMD.showSBWithMargin(snack, 32, 32)
+                    SnackBarMD.getSBIndefinite(view, "No se pudo enviar")
                 }
             })
         }
@@ -219,7 +206,6 @@ class DataCelulaDialogFragment : DialogFragment() {
 
     private fun updateDateInView() {
         val currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(cal.time)
-
         etDateDataCelulaDialogFragment.setText(currentDateString)
     }
 
@@ -229,6 +215,16 @@ class DataCelulaDialogFragment : DialogFragment() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
+    }
+
+    private fun fillDecimals(){
+        val array = resources.getStringArray(R.array.decimals)
+        val adapter = context?.let { ArrayAdapter(it,
+            R.layout.dropdown_menu_popup_item,
+            array)
+        }
+        filled_exposed_dropdown_decimals.setText(array[0])
+        filled_exposed_dropdown_decimals.setAdapter(adapter)
     }
 
     private fun observeData() {
@@ -245,6 +241,24 @@ class DataCelulaDialogFragment : DialogFragment() {
                     Log.e("ERROR:", "${result.exception.message}")
                 }
             }
+        })
+        viewModel.subredes.observe(viewLifecycleOwner, Observer { listSubred ->
+            val adapter = context?.let { ArrayAdapter(it,
+                    R.layout.dropdown_menu_popup_item,
+                    listSubred)
+            }
+            filled_exposed_dropdown_Subred.setText(listSubred[0])
+            viewModel.fillTilCelula(listSubred[0])
+            filled_exposed_dropdown_Subred.setAdapter(adapter)
+        })
+
+        viewModel.celulas.observe(viewLifecycleOwner, Observer { listCelulas ->
+            val adapter = context?.let { ArrayAdapter(it,
+                R.layout.dropdown_menu_popup_item,
+                listCelulas)
+            }
+            filled_exposed_dropdown.setText(listCelulas[0])
+            filled_exposed_dropdown.setAdapter(adapter)
         })
     }
 }

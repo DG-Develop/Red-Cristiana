@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.activities.RegisterActivity"
-    android:orientation="vertical">
+    tools:context=".presentation.ui.activities.RegisterActivity">
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/Small"
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/lets_start"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/Title"
                 android:textStyle="bold"/>
 
@@ -60,21 +60,25 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark">
+                android:hint="@string/names"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNamesResgisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/names"
+                    android:layout_height="45dp"
                     android:padding="@dimen/VerySmall"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
+                    android:textColor="@color/Gray"
                     android:textSize="@dimen/Normal"
-                    android:inputType="textPersonName"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:inputType="textPersonName"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,21 +88,25 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark">
+                android:hint="@string/last_names"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLastNamesRegisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/last_names"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textPersonName"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,21 +116,25 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark">
+                android:hint="@string/address"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAddressRegisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/address"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textPersonName"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,21 +144,25 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark">
+                android:hint="@string/telephone"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etTelephoneRegisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/telephone"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="phone"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,21 +181,25 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark">
+                android:hint="@string/email"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
                 <EditText
                     android:id="@+id/etEmailResgisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/email"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textEmailAddress"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -189,24 +209,28 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark"
+                android:hint="@string/pass"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/Gray">
+                app:passwordToggleTint="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
 
                 <EditText
                     android:id="@+id/etPassResgisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/pass"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textPassword"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -216,24 +240,28 @@
                 android:layout_marginTop="@dimen/Small"
                 android:layout_marginStart="36dp"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@android:color/background_dark"
+                android:hint="@string/confirmPass"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/Gray">
+                app:passwordToggleTint="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
 
                 <EditText
                     android:id="@+id/etConfirmPassResgisterActivity"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/confirmPass"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
-                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:inputType="textPassword"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:textSize="@dimen/Normal"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <View
@@ -245,21 +273,25 @@
                 android:background="@color/colorPrimaryDark"
                 android:alpha="0.5"/>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_create_account_registerActivity"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/VeryBig"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="46dp"
                 android:layout_marginTop="@dimen/Medium"
                 android:layout_marginEnd="46dp"
                 android:layout_marginBottom="@dimen/Small"
+                app:backgroundTint="@color/AccentLow"
+                app:cornerRadius="@dimen/VerySmall"
+                app:rippleColor="@color/colorAccent"
+                app:elevation="@dimen/Diminute"
+                android:letterSpacing="0"
                 android:onClick="userRegister"
                 android:fontFamily="@font/roboto"
                 android:text="@string/create_account"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/Normal"
-                android:background="@drawable/button_solid_resgister"/>
+                android:textSize="@dimen/Normal"/>
 
         </LinearLayout>
     </ScrollView>

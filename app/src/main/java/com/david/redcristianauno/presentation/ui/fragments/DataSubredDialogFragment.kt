@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -24,7 +25,10 @@ import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.UserViewModel
 import com.david.redcristianauno.presentation.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
+import com.google.android.material.datepicker.MaterialDatePicker
+import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import kotlinx.android.synthetic.main.fragment_data_subred_dialog.*
+import kotlinx.android.synthetic.main.fragment_data_subred_dialog.filled_exposed_dropdown_decimals
 import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
@@ -68,36 +72,12 @@ class DataSubredDialogFragment : DialogFragment() {
         }
 
         observeData()
-
-        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            cal.firstDayOfWeek = Calendar.TUESDAY
-
-            val cal2 = Calendar.getInstance()
-            cal2.firstDayOfWeek = Calendar.TUESDAY
-
-            if(cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]){
-                updateDateInView()
-            }else{
-                val snack = SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
-                SnackBarMD.showSBWithMargin(snack, 32, 32)
-            }
-
-        }
+        fillDecimals()
 
         ibFechaSubred.setOnClickListener {
-            context?.let {
-                DatePickerDialog(
-                    it,
-                    dateSetListener,
-                    // set DatePickerDialog to point to today's date when it loads up
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH),
-                    cal.get(Calendar.DAY_OF_MONTH)).show()
-            }
+            showDatePicker(it)
         }
+
 
         btnSendDataSubredDialogFragment.setOnClickListener {
             val host_name = etNameDataSubredDialogFragment.text.toString().trim { it <= ' ' }
@@ -107,11 +87,49 @@ class DataSubredDialogFragment : DialogFragment() {
             if(!TextUtils.isEmpty(host_name) && !TextUtils.isEmpty(assistance) && !TextUtils.isEmpty(date)) {
                 dataRegisterSubred(host_name, assistance, date)
             } else{
-                val snack = SnackBarMD.getSBIndefinite(view, "Por favor llenar los campos de asistencia y de fecha")
-                SnackBarMD.showSBWithMargin(snack, 32, 32)
+                SnackBarMD.getSBIndefinite(view, "Por favor llenar los campos de asistencia y de fecha")
             }
         }
 
+    }
+
+    private fun showDatePicker(view: View){
+        val builder: MaterialDatePicker.Builder<Long> = MaterialDatePicker.Builder.datePicker()
+        builder.setTitleText("Selecciona una fecha")
+        builder.setTheme(R.style.DialogTheme)
+        val currentTimeInMillis = Calendar.getInstance().timeInMillis
+        builder.setSelection(currentTimeInMillis)
+        val picker = builder.build()
+        activity?.supportFragmentManager?.let { picker.show(it, picker.toString()) }
+
+
+        picker.addOnPositiveButtonClickListener {
+            cal.timeInMillis = it
+            cal.set(Calendar.YEAR, cal.get(Calendar.YEAR))
+            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH) + 1)
+
+            cal.firstDayOfWeek = Calendar.TUESDAY
+
+            val cal2 = Calendar.getInstance()
+            cal2.firstDayOfWeek = Calendar.TUESDAY
+
+            if (cal[Calendar.WEEK_OF_YEAR] == cal2[Calendar.WEEK_OF_YEAR]) {
+                updateDateInView()
+            } else {
+                SnackBarMD.getSBIndefinite(view, "La fecha de la semana no coincide con el de hoy")
+            }
+        }
+    }
+
+    private fun fillDecimals(){
+        val array = resources.getStringArray(R.array.decimals)
+        val adapter = context?.let { ArrayAdapter(it,
+            R.layout.dropdown_menu_popup_item,
+            array)
+        }
+        filled_exposed_dropdown_decimals.setText(array[0])
+        filled_exposed_dropdown_decimals.setAdapter(adapter)
     }
 
     private fun dataRegisterSubred(host_name : String, assistance : String, date : String) {
@@ -120,7 +138,7 @@ class DataSubredDialogFragment : DialogFragment() {
 
         if(etOfferingDataSubredDialog.text.toString().trim{ it <= ' '}.isNotEmpty()) {
             val integers = etOfferingDataSubredDialog.text.toString()
-            val decimals = sDecimalsSubred.selectedItem.toString()
+            val decimals = filled_exposed_dropdown_decimals.text.toString()
             res = integers + decimals
             offering = res.toDouble()
         }
@@ -136,13 +154,11 @@ class DataSubredDialogFragment : DialogFragment() {
 
         firebaseService.setDocumentWithOutID(dataSubred, "data subred", object: Callback<Void>{
             override fun OnSucces(result: Void?) {
-                val snack = SnackBarMD.getSBIndefinite(view!!, "Enviado")
-                SnackBarMD.showSBWithMargin(snack, 32, 32)
+                SnackBarMD.getSBIndefinite(view!!, "Enviado")
             }
 
             override fun onFailure(exception: Exception) {
-                val snack = SnackBarMD.getSBIndefinite(view!!, "No se pudo enviar")
-                SnackBarMD.showSBWithMargin(snack, 32, 32)
+                SnackBarMD.getSBIndefinite(view!!, "No se pudo enviar")
             }
 
         })

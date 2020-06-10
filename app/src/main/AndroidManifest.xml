@@ -16,18 +16,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:configChanges="orientation|screenSize"
-        android:name=".presentation.ui.activities.MainActivity"/>
+        <activity android:name=".presentation.ui.activities.ForgotPasswordActivity"></activity>
         <activity
-            android:name="com.david.redcristianauno.presentation.ui.activities.LoginActivity">
+            android:name=".presentation.ui.activities.MainActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".presentation.ui.activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.david.redcristianauno.presentation.ui.activities.RegisterActivity" />
+        <activity android:name=".presentation.ui.activities.RegisterActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

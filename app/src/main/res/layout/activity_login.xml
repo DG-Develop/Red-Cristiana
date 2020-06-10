@@ -46,72 +46,100 @@
                 android:layout_marginStart="36dp"
                 android:layout_marginTop="@dimen/Big"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@color/secondaryPrimaryDark">
+                android:hint="@string/email"
+                android:textColorHint="@color/Gray"
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
+                app:startIconDrawable="@drawable/ic_email"
+                app:startIconTint="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmailLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawableStart="@drawable/profile"
-                    android:drawablePadding="@dimen/Diminute"
-                    android:hint="@string/email"
-                    android:padding="@dimen/VerySmall"
+                    android:layout_height="45dp"
                     android:fontFamily="@font/roboto"
-                    android:textColorHint="@color/Gray"
+                    android:textColor="@color/Gray"
+                    android:padding="@dimen/VerySmall"
                     android:textSize="@dimen/Normal"
-                    android:inputType="textEmailAddress"
-                    android:background="@drawable/shape_tvgeneral"/>
+                    android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
-                android:layout_marginTop="@dimen/Medium"
+                android:layout_marginTop="@dimen/VerySmall"
                 android:layout_marginEnd="36dp"
-                app:hintEnabled="false"
-                android:textColorHint="@color/secondaryPrimaryDark"
+                android:hint="@string/pass"
+                android:textColorHint="@color/Gray"
+                app:boxStrokeColor="@color/Gray"
+                app:hintTextColor="@color/Gray"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/Gray">
+                app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                app:passwordToggleTint="@color/Gray"
+                app:startIconDrawable="@drawable/lock"
+                app:startIconTint="@color/Gray"
+                style="@style/TextInputLayoutStyle">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPasswordLogin"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/VeryBig"
-                    android:drawableStart="@drawable/lock"
-                    android:hint="@string/pass"
-                    android:drawablePadding="@dimen/Diminute"
+                    android:layout_height="45dp"
                     android:padding="@dimen/VerySmall"
                     android:inputType="textPassword"
-                    android:background="@drawable/shape_tvgeneral"
-                    android:textColorHint="@color/Gray"
                     android:fontFamily="@font/roboto"
+                    android:textColor="@color/Gray"
                     android:textSize="@dimen/Normal"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tvForgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
+                android:layout_gravity="end"
+                android:letterSpacing="0"
+                android:onClick="actionForgotPassword"
+                android:fontFamily="@font/roboto"
+                android:text="@string/forgot_password"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/Little"
+                android:textAllCaps="false"
+                app:rippleColor="@color/Gray"
+                style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
-            <Button
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_start_session_loginActivity"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/VeryBig"
-                android:layout_marginStart="46dp"
-                android:layout_marginTop="@dimen/Medium"
-                android:layout_marginEnd="46dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginEnd="36dp"
+                app:backgroundTint="@color/AccentLow"
+                app:cornerRadius="@dimen/VerySmall"
+                app:rippleColor="@color/colorAccent"
+                app:elevation="@dimen/Diminute"
+                android:letterSpacing="0"
                 android:fontFamily="@font/roboto"
                 android:onClick="enterokayMain"
                 android:text="@string/sign_in"
                 android:textAllCaps="false"
-                android:textColor="@color/colorSecondary"
-                android:textSize="@dimen/Normal"
-                android:background="@drawable/button_start_sesion"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/Normal"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/Medium"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
@@ -119,23 +147,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/register"
-                    android:textSize="@dimen/Normal"
+                    android:textSize="@dimen/Little"
                     android:textColor="@color/Gray"
                     android:fontFamily="@font/roboto"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_register_loginActivity"
-                    style="@style/transparente"
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:background="?selectableItemBackgroundBorderless"
                     android:onClick="actionRegister"
+                    app:rippleColor="@color/Gray"
+                    android:letterSpacing="0"
                     android:fontFamily="@font/roboto_bold"
                     android:text="@string/title_activity_login"
                     android:textAllCaps="false"
-                    android:textColor="@color/Black"
-                    android:textStyle="bold" />
+                    android:textColor="@color/colorAccent"
+                    android:textAlignment="textStart"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/Little"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
             </LinearLayout>
         </LinearLayout>

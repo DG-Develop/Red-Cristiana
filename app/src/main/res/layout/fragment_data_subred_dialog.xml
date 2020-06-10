@@ -44,94 +44,111 @@
                         android:layout_marginTop="@dimen/Medium"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
-                        app:hintEnabled="false"
-                        android:textColorHint="@android:color/background_dark">
+                        android:hint="@string/name_data"
+                        android:textColorHint="@color/Gray"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                        app:boxStrokeColor="@color/Gray"
+                        app:hintTextColor="@color/Gray"
+                        style="@style/TextInputLayoutStyle">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etNameDataSubredDialogFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/VeryBig"
-                            android:drawablePadding="@dimen/Diminute"
-                            android:hint="@string/name_data"
+                            android:layout_height="45dp"
                             android:padding="@dimen/VerySmall"
                             android:fontFamily="@font/roboto"
-                            android:textColorHint="@color/Gray"
+                            android:textColor="@color/Gray"
                             android:textSize="@dimen/Normal"
-                            android:inputType="textPersonName"
-                            android:background="@drawable/shape_tvgeneral"/>
+                            android:inputType="textPersonName"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
                         <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="@dimen/Medium"
                             android:layout_marginEnd="20dp"
-                            android:layout_alignParentStart="true"
-                            android:textColorHint="@android:color/background_dark"
-                            app:hintEnabled="false">
+                            android:hint="@string/assistance_data"
+                            android:textColorHint="@color/Gray"
+                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                            app:boxStrokeColor="@color/Gray"
+                            app:hintTextColor="@color/Gray"
+                            style="@style/TextInputLayoutStyle">
 
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etAssistenceDataSubredDialog"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/VeryBig"
-                                android:paddingStart="@dimen/VerySmall"
-                                android:paddingEnd="@dimen/VeryBig"
-                                android:background="@drawable/shape_tvgeneral"
-                                android:drawablePadding="@dimen/Diminute"
-                                android:fontFamily="@font/roboto"
-                                android:hint="@string/assistance_data"
-                                android:inputType="number"
+                                android:layout_height="45dp"
                                 android:padding="@dimen/VerySmall"
-                                android:textColorHint="@color/Gray"
-                                android:textSize="@dimen/Normal" />
+                                android:fontFamily="@font/roboto"
+                                android:textColor="@color/Gray"
+                                android:textSize="@dimen/Normal"
+                                android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:layout_marginTop="@dimen/Medium"
-                            android:layout_toStartOf="@+id/sDecimalsSubred"
-                            android:textColorHint="@android:color/background_dark"
-                            app:hintEnabled="false">
+                            android:hint="@string/offering_data"
+                            android:textColorHint="@color/Gray"
+                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomEnd="0dp"
+                            app:boxCornerRadiusTopEnd="0dp"
+                            app:boxStrokeColor="@color/Gray"
+                            app:hintTextColor="@color/Gray"
+                            style="@style/TextInputLayoutStyle">
 
-                            <EditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etOfferingDataSubredDialog"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/VeryBig"
-                                android:paddingStart="@dimen/VerySmall"
-                                android:paddingEnd="@dimen/VeryBig"
-                                android:background="@drawable/shape_tvleft"
-                                android:drawablePadding="@dimen/Diminute"
-                                android:fontFamily="@font/roboto"
-                                android:hint="@string/offering_data"
-                                android:inputType="number"
+                                android:layout_height="45dp"
                                 android:padding="@dimen/VerySmall"
-                                android:textColorHint="@color/Gray"
-                                android:textSize="@dimen/Normal" />
+                                android:fontFamily="@font/roboto"
+                                android:textColor="@color/Gray"
+                                android:textSize="@dimen/Normal"
+                                android:inputType="number"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <Spinner
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/sDecimalsSubred"
-                            style="@style/spinner_style_decimals"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/VeryBig"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
                             android:layout_marginTop="@dimen/Medium"
                             android:layout_marginEnd="20dp"
-                            android:layout_alignParentEnd="true"
-                            android:paddingStart="@dimen/VerySmall"
-                            android:paddingEnd="@dimen/Medium"
-                            android:background="@drawable/shape_tvright"
-                            android:entries="@array/decimals"/>
+                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomStart="0dp"
+                            app:boxCornerRadiusTopStart="0dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                            <AutoCompleteTextView
+                                android:id="@+id/filled_exposed_dropdown_decimals"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:entries="@array/decimals"
+                                android:focusable="false"/>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                    </RelativeLayout>
+
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -143,22 +160,26 @@
                             android:layout_marginTop="@dimen/Medium"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            app:hintEnabled="false"
-                            android:textColorHint="@android:color/background_dark">
+                            android:hint="@string/date_data"
+                            android:textColorHint="@color/Gray"
+                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                            app:boxStrokeColor="@color/Gray"
+                            app:hintTextColor="@color/Gray"
+                            style="@style/TextInputLayoutStyle">
 
                             <EditText
                                 android:id="@+id/etDateDataSubredDialogFragment"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/VeryBig"
-                                android:drawablePadding="@dimen/Diminute"
+                                android:layout_height="45dp"
                                 android:focusable="false"
-                                android:hint="@string/date_data"
                                 android:padding="@dimen/VerySmall"
                                 android:fontFamily="@font/roboto"
-                                android:textColorHint="@color/Gray"
+                                android:textColor="@color/Gray"
                                 android:textSize="@dimen/Normal"
-                                android:inputType="date"
-                                android:background="@drawable/shape_tvgeneral"/>
+                                android:inputType="date" />
 
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,26 +187,29 @@
                             android:id="@+id/ibFechaSubred"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="@dimen/Medium"
+                            android:layout_height="45dp"
+                            android:layout_marginTop="28dp"
                             android:layout_marginEnd="@dimen/Diminute"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/ic_date" />
+                            app:srcCompat="@drawable/ic_date"/>
                     </LinearLayout>
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSendDataSubredDialogFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/VeryBig"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="30dp"
                         android:layout_marginTop="@dimen/Medium"
                         android:layout_marginEnd="30dp"
                         android:layout_marginBottom="@dimen/Medium"
+                        app:backgroundTint="@color/colorSecondary"
+                        app:cornerRadius="@dimen/VerySmall"
+                        app:elevation="@dimen/Diminute"
+                        android:letterSpacing="0"
                         android:fontFamily="@font/roboto"
                         android:text="@string/btn_send"
                         android:textAllCaps="false"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/Normal"
-                        android:background="@drawable/button_solid_data_send"/>
+                        android:textSize="@dimen/Normal" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

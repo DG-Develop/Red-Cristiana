@@ -55,12 +55,11 @@ class RegisterActivity: AppCompatActivity() {
 
                         if(task.isComplete){
                             val user: FirebaseUser? = firebaseService.firebaseAuth.currentUser
-                            verifyEmail(user)
                             val id = firebaseService.firebaseAuth.uid.toString()
                             createAccount(names, last_name, address, telephone, id, email, password)
                         }
 
-                    }.addOnFailureListener(OnFailureListener { e ->
+                    }.addOnFailureListener { e ->
                         if(e is FirebaseAuthUserCollisionException){
                             SnackBarMD.getSBIndefinite(view!!, "Este correo ya esta en uso")
                             rlBaseRegister.visibility = View.INVISIBLE
@@ -69,7 +68,7 @@ class RegisterActivity: AppCompatActivity() {
                                 .show()
                             rlBaseRegister.visibility = View.INVISIBLE
                         }
-                    })
+                    }
             }
         }else{
             SnackBarMD.getSBIndefinite(view!!, "No deje ningun campo vacío")
@@ -89,7 +88,6 @@ class RegisterActivity: AppCompatActivity() {
         user.telephone = telephone
         user.id = id
         user.email = email
-        user.password = password
         user.permission = "Normal"
 
         firebaseService.setDocumentWithID(user,"users", id, object : Callback<Void>{
@@ -107,14 +105,4 @@ class RegisterActivity: AppCompatActivity() {
         SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al crear el usuario")
     }
 
-    private fun verifyEmail(user: FirebaseUser?){
-        user?.sendEmailVerification()
-            ?.addOnCompleteListener(this){task ->
-                if(task.isComplete){
-                    SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Email enviado")
-                }else{
-                    SnackBarMD.getSBIndefinite(findViewById(android.R.id.content), "Error al enviar el email")
-                }
-            }
-    }
 }

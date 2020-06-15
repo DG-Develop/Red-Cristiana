@@ -65,6 +65,7 @@
                             android:id="@+id/ibDeleteUserConfigurationDialog"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:layout_marginEnd="@dimen/Medium"
                             android:src="@drawable/ic_delete"/>
 
@@ -78,6 +79,7 @@
                         <ImageView
                             android:id="@+id/ibCopyUserConfigurationDialog"
                             android:layout_width="wrap_content"
+                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_copy"/>
                     </LinearLayout>

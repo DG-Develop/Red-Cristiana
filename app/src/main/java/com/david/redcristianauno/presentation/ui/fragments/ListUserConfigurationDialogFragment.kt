@@ -15,18 +15,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.ConfigurationUseCaseImpl
 import com.david.redcristianauno.data.network.ConfigurationRepositoryImpl
+import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.presentation.ui.adapters.ListUserConfigurationAdapter
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModel
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModelFactory
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_list_user_configuration_dialog.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class ListUserConfigurationDialogFragment : DialogFragment() {
 
+
     private lateinit var listUserAdapter: ListUserConfigurationAdapter
+
     private val viewModel by lazy {
         ViewModelProvider(
             this,
@@ -39,12 +39,7 @@ class ListUserConfigurationDialogFragment : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list_user_configuration_dialog, container, false)
     }
 
@@ -94,7 +89,7 @@ class ListUserConfigurationDialogFragment : DialogFragment() {
                 )
                     .setTitle("Eliminar")
                     .setMessage("¿Estás seguro que quieres eliminar?")
-                    .setPositiveButton("Aceptar") { _, _ ->
+                    .setPositiveButton("Eliminar") { _, _ ->
                         rlBaseListUser.visibility = View.VISIBLE
                         for (userChecked in listUserAdapter.userChecked) {
                             viewModel.deleteUserFromFirebase(userChecked.id)

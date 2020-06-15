@@ -1,6 +1,5 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -69,13 +68,13 @@ class ConfigurationFragment : Fragment() {
             )
                 .setTitle("Cerrar Sesión")
                 .setMessage("¿Estás seguro de cerrar la sesión?")
-                .setPositiveButton("Aceptar") { dialog, which ->
+                .setPositiveButton("Aceptar") { _, _ ->
                     firebaseService.firebaseAuth.signOut()
 
                     startActivity(Intent(context, LoginActivity::class.java))
                     activity?.finish()
                 }
-                .setNegativeButton("Cancelar") { dialog, which ->
+                .setNegativeButton("Cancelar") { dialog, _ ->
                     dialog.cancel()
                 }.show()
         }

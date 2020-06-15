@@ -7,7 +7,6 @@ class User: Serializable {
     var names = ""
     var last_names = ""
     var email = ""
-    var password = ""
     var address = ""
     var telephone = ""
     var permission = ""

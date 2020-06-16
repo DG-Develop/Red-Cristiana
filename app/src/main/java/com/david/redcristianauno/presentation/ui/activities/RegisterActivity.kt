@@ -36,8 +36,8 @@ class RegisterActivity: AppCompatActivity() {
         val last_name = etLastNamesRegisterActivity.text.toString().trim{it <= ' '}
         val address = etAddressRegisterActivity.text.toString().trim { it <= ' ' }
         val telephone = etTelephoneRegisterActivity.text.toString().trim { it <= ' '}
-        val email = etEmailResgisterActivity.text.toString().trim{it <= ' '}
-        val password = etPassResgisterActivity.text.toString().trim{it <= ' '}
+        val email = etEmailResgisterActivity.text.toString().trim()
+        val password = etPassResgisterActivity.text.toString().trim()
         val confirm_password = etConfirmPassResgisterActivity.text.toString().trim{it <= ' '}
 
         if(!TextUtils.isEmpty(names) &&
@@ -54,7 +54,6 @@ class RegisterActivity: AppCompatActivity() {
                     .addOnCompleteListener(this){task ->
 
                         if(task.isComplete){
-                            val user: FirebaseUser? = firebaseService.firebaseAuth.currentUser
                             val id = firebaseService.firebaseAuth.uid.toString()
                             createAccount(names, last_name, address, telephone, id, email, password)
                         }

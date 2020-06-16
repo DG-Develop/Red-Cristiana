@@ -22,8 +22,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun enterokayMain(view: View?) {
-        val email = etEmailLogin.text.toString().trim{ it <= ' '}.toLowerCase()
-        val password = etPasswordLogin.text.toString().trim{it <= ' '}.toLowerCase()
+        val email = etEmailLogin.text.toString().trim()
+        val password = etPasswordLogin.text.toString().trim()
 
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             rlBaseLogin.visibility = View.VISIBLE

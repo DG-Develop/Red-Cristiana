@@ -75,6 +75,7 @@ class RegisterActivity: AppCompatActivity() {
 
     }
     private fun actionLogin(){
+        firebaseService.firebaseAuth.signOut()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }

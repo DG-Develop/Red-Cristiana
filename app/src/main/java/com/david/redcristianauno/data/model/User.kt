@@ -11,4 +11,5 @@ class User: Serializable {
     var telephone = ""
     var permission = ""
     var subred_name = ""
+    var iglesia_references = ""
 }

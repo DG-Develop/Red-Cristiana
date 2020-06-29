@@ -1,11 +1,7 @@
 package com.david.redcristianauno.data.network
 
-import android.content.Context
+
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Spinner
-import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME

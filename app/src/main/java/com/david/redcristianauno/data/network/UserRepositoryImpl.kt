@@ -33,7 +33,7 @@ class UserRepositoryImpl: UserRepository{
                 val spinnerSubred: MutableList<String> = mutableListOf()
                 val list = result.toObjects(Subred::class.java)
                 for (name in list){
-                    spinnerSubred.add(name.name)
+                    spinnerSubred.add(name.id_subred)
                 }
                callback.OnSucces(spinnerSubred)
             }

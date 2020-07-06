@@ -4,11 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.*
 import com.david.redcristianauno.data.network.FirebaseService
+import com.david.redcristianauno.data.network.UserRepositoryImpl
+import com.david.redcristianauno.domain.ProfileUseCaseImpl
 import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
+import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
+import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_login.*
@@ -16,9 +21,17 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
     private  var firebaseService = FirebaseService()
 
+    private val viewModel by lazy {
+        ViewModelProvider(
+            this,
+            ProfileViewModelFactory(ProfileUseCaseImpl(UserRepositoryImpl()))
+        ).get(ProfileViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        observedViewModel()
     }
 
     fun enterokayMain(view: View?) {
@@ -30,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             firebaseService.firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        actionMain()
+                        viewModel.refresh()
                     }
                 }.addOnFailureListener{ e ->
                     if (e is FirebaseAuthInvalidUserException) {
@@ -56,6 +69,21 @@ class LoginActivity : AppCompatActivity() {
 
     fun actionForgotPassword(view: View?) {
         startActivity(Intent(this, ForgotPasswordActivity::class.java))
+    }
+
+    private fun observedViewModel() {
+        viewModel.userData.observe(this, Observer { user ->
+            if (user.iglesia_references != ""){
+                actionMain()
+            }else{
+                actionJoinOrInvite()
+            }
+        })
+    }
+
+    private fun actionJoinOrInvite() {
+        startActivity(Intent(this, JoinOrInviteActivity::class.java))
+        finish()
     }
 
     override fun onStart() {

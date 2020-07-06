@@ -91,6 +91,24 @@
     <string name="ChildTotalAdapter">Total niños: %s</string>
     <string name="OfferingTotalAdapter">Total ofrenda: %s</string>
 
+    <string name="title_join_or_invite">¿Ya participas en una
+    de nuestras iglesias afiliadas?</string>
+    <string name="inside_here">Ingresa aquí</string>
+    <string name="guess_select">Continuar como invitado</string>
+    <string name="info_join_or_invite">En caso de querer ser miembro más
+adelante podrás ingresar a este panel
+en Configuración/Unirme a una iglesia</string>
+
+    <string name="title_join">¿Dónde perteneces?</string>
+    <string name="description_join">Selecciona tus datos de red, subred y celula
+para enviar la petición y posteriormente
+ser aceptado o rechazado por los administradores</string>
+    <string name="select_church">Selecciona el nombre de tu iglesia</string>
+    <string name="select_red">Selecciona una red</string>
+    <string name="select_subred">Selecciona una Subred</string>
+    <string name="select_celula">Selecciona una Celula</string>
+    <string name="send_petition">Enviar petición</string>
+
     <string-array name="decimals">
         <item>.00</item>
         <item>.50</item>

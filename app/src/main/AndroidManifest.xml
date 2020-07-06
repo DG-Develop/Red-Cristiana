@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.ui.activities.ForgotPasswordActivity"></activity>
+        <activity android:name=".presentation.ui.activities.JoinActivity"></activity>
+        <activity android:name=".presentation.ui.activities.JoinOrInviteActivity" />
+        <activity android:name=".presentation.ui.activities.ForgotPasswordActivity" />
         <activity
             android:name=".presentation.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize" />

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.activities.JoinOrInviteActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/Small"
+                android:text="@string/title_join_or_invite"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="@dimen/Title"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnInsideHere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/VeryBig"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="@dimen/Small"
+                android:paddingBottom="@dimen/Small"
+                android:paddingStart="@dimen/Medium"
+                android:paddingEnd="@dimen/VeryBig"
+                app:cornerRadius="@dimen/VerySmall"
+                app:icon="@drawable/ic_afiliacion"
+                app:iconTint="@color/colorSecondary"
+                android:text="@string/inside_here"
+                android:textColor="@color/colorSecondary"
+                android:textAllCaps="false"
+                android:textSize="@dimen/Normal"
+                android:letterSpacing="0"
+                app:strokeColor="@color/colorSecondary"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="@dimen/Small"
+                android:background="@color/GraySecondary"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnIgnore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"
+                android:layout_gravity="center"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="@dimen/Small"
+                android:paddingBottom="@dimen/Small"
+                android:paddingStart="@dimen/Medium"
+                android:paddingEnd="@dimen/VeryBig"
+                app:cornerRadius="@dimen/VerySmall"
+                app:icon="@drawable/ic_guest"
+                app:iconTint="@color/Gray"
+                android:letterSpacing="0"
+                android:text="@string/guess_select"
+                android:textColor="@color/Gray"
+                android:textAllCaps="false"
+                android:textSize="@dimen/Normal"
+                app:strokeColor="@color/Gray"
+                style="?attr/materialButtonOutlinedStyle"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/VeryBig"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_informacion"
+                    android:layout_gravity="center_vertical"
+                    android:tint="@color/colorAccent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Medium"
+                    android:text="@string/info_join_or_invite"
+                    android:fontFamily="@font/roboto"
+                    android:textSize="@dimen/Normal"
+                    android:textColor="@color/Gray"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

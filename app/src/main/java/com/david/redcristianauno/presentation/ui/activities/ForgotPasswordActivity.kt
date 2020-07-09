@@ -9,11 +9,8 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.david.redcristianauno.R
 import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
-import com.google.firebase.auth.FirebaseAuthEmailException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import kotlinx.android.synthetic.main.activity_forgot_password.*
-import kotlinx.android.synthetic.main.item_history_daily.*
 
 
 class ForgotPasswordActivity : AppCompatActivity() {

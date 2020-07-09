@@ -1,5 +1,6 @@
 package com.david.redcristianauno.data.model
 
+import com.google.firebase.firestore.DocumentReference
 import java.io.Serializable
 
 class User: Serializable {
@@ -11,5 +12,5 @@ class User: Serializable {
     var telephone = ""
     var permission = ""
     var subred_name = ""
-    var iglesia_references = ""
+    var iglesia_references: DocumentReference? = null
 }

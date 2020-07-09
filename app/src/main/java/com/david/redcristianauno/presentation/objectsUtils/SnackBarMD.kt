@@ -1,4 +1,4 @@
-package com.david.redcristianauno.presentation.ui.UtilUI
+package com.david.redcristianauno.presentation.objectsUtils
 
 import android.view.View
 import com.google.android.material.snackbar.Snackbar

@@ -17,10 +17,11 @@ import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
 import kotlinx.android.synthetic.main.fragment_profile_configuration_dialog.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class ProfileConfigurationDialogFragment : DialogFragment() {
 
     private val viewModel by lazy {

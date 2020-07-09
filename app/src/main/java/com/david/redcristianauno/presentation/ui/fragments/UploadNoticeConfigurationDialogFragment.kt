@@ -18,7 +18,7 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.NoticeUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.NoticeRepositoryImpl
-import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.NoticeViewModel
 import com.david.redcristianauno.presentation.viewmodel.NoticeViewModelFactory
 import kotlinx.android.synthetic.main.fragment_upload_notice_configuration_dialog.*

@@ -43,7 +43,7 @@ class ManageUserConfigurationDialogFragment : DialogFragment() {
             dismiss()
         }
 
-        cvNormalUser.setOnClickListener {
+        cvMemberUser.setOnClickListener {
             val bundle = bundleOf("user" to "Normal")
             findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
         }

@@ -69,7 +69,8 @@
 
     <string name="title_manage_user">Tipos de usuarios</string>
     <string name="normal_user">Normal</string>
-    <string name="celula_leader_user">Lideres Celula</string>
+    <string name="celula_leader_user">Lideres de Celula</string>
+    <string name="subred_leader_user">Lideres de Subred</string>
     <string name="subred_user">Subred</string>
     <string name="red_user">Red</string>
     <string name="n">N</string>
@@ -108,6 +109,10 @@ ser aceptado o rechazado por los administradores</string>
     <string name="select_subred">Selecciona una Subred</string>
     <string name="select_celula">Selecciona una Celula</string>
     <string name="send_petition">Enviar petición</string>
+
+    <string name="postulates">Postulados</string>
+    <string name="members">Miembros</string>
+    <string name="red_leader_user">Lideres de Red</string>
 
     <string-array name="decimals">
         <item>.00</item>

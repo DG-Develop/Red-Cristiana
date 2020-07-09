@@ -11,7 +11,7 @@ import com.david.redcristianauno.*
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ProfileUseCaseImpl
-import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
     private  var firebaseService = FirebaseService()
-
     private val viewModel by lazy {
         ViewModelProvider(
             this,
@@ -73,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observedViewModel() {
         viewModel.userData.observe(this, Observer { user ->
-            if (user.iglesia_references != ""){
+            if (user.iglesia_references != null){
                 actionMain()
             }else{
                 actionJoinOrInvite()
@@ -92,5 +91,9 @@ class LoginActivity : AppCompatActivity() {
             actionMain()
             finish()
         }
+    }
+
+    companion object{
+        private const val TAG = "LoginInfo"
     }
 }

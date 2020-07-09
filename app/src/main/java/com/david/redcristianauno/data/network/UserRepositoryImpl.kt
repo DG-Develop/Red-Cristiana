@@ -5,10 +5,14 @@ import android.util.Log
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
+import com.david.redcristianauno.presentation.ui.activities.JoinActivity
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.firestore.DocumentReference
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
-class UserRepositoryImpl: UserRepository{
+class UserRepositoryImpl : UserRepository {
     val firebaseService = FirebaseService()
 
     override suspend fun getNamesUsers(id_user: String): Resource<String> {
@@ -32,10 +36,10 @@ class UserRepositoryImpl: UserRepository{
             .addOnSuccessListener { result ->
                 val spinnerSubred: MutableList<String> = mutableListOf()
                 val list = result.toObjects(Subred::class.java)
-                for (name in list){
+                for (name in list) {
                     spinnerSubred.add(name.id_subred)
                 }
-               callback.OnSucces(spinnerSubred)
+                callback.OnSucces(spinnerSubred)
             }
     }
 
@@ -50,7 +54,7 @@ class UserRepositoryImpl: UserRepository{
                 val celula = result.toObject(Subred::class.java)
                 val list = celula?.celulas
                 if (list != null) {
-                    for (name in list){
+                    for (name in list) {
                         spinnerCelula.add(name)
                     }
                 }
@@ -68,16 +72,28 @@ class UserRepositoryImpl: UserRepository{
             }
     }
 
-    override fun updateDataUser(names: String, last_names: String, telephone: String, address: String) {
+    override fun updateDataUser(
+        names: String, last_names: String, telephone: String, address: String
+    ) {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
             .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
-            .update(mapOf(
-                "names" to names,
-                "last_names" to last_names,
-                "telephone" to telephone,
-                "address" to address
-            ))
+            .update(
+                mapOf(
+                    "names" to names,
+                    "last_names" to last_names,
+                    "telephone" to telephone,
+                    "address" to address
+                )
+            )
             .addOnSuccessListener { Log.i("UserInfo", "Update Success") }
-            .addOnFailureListener{e -> Log.i("UserInfo", "Error updating document", e)}
+            .addOnFailureListener { e -> Log.i("UserInfo", "Error updating document", e) }
+    }
+
+    override fun updateDataChurch(iglesia_references: DocumentReference) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+            .update(mapOf("iglesia_references" to iglesia_references))
+            .addOnSuccessListener { Log.i(JoinActivity.TAG, "Update Success") }
+            .addOnFailureListener { e -> Log.i(JoinActivity.TAG, "Error updating document", e) }
     }
 }

@@ -11,11 +11,8 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.material.snackbar.Snackbar
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_register.*
 import java.lang.Exception
 

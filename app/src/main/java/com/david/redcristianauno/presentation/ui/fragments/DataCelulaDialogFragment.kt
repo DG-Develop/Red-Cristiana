@@ -1,6 +1,5 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -21,7 +20,7 @@ import com.david.redcristianauno.data.model.DataCelula
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
-import com.david.redcristianauno.presentation.ui.UtilUI.SnackBarMD
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.UserViewModel
 import com.david.redcristianauno.presentation.viewmodel.UserViewModelFactory
 import com.david.redcristianauno.vo.Resource
@@ -30,7 +29,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import java.lang.Exception
 import java.text.DateFormat
-import java.time.Instant
 import java.util.*
 
 

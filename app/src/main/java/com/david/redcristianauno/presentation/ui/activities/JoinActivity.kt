@@ -1,5 +1,6 @@
 package com.david.redcristianauno.presentation.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,18 +9,24 @@ import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
+import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
+import com.david.redcristianauno.data.network.FirebaseService
+import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.presentation.viewmodel.JoinViewModel
 import com.david.redcristianauno.presentation.viewmodel.JoinViewModelFactory
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_join.*
 
 class JoinActivity : AppCompatActivity() {
+    val firebaseService = FirebaseService()
 
     private val viewModel by lazy {
         ViewModelProvider(
             this,
-            JoinViewModelFactory(ChurchUseCaseImpl(ChurchRepositoryImpl()))
+            JoinViewModelFactory(ChurchUseCaseImpl(ChurchRepositoryImpl(), UserRepositoryImpl()))
         ).get(JoinViewModel::class.java)
     }
 
@@ -50,7 +57,32 @@ class JoinActivity : AppCompatActivity() {
                 )
             }
 
+        btn_start_session_loginActivity.setOnClickListener {
+            getChurchAndUpdate()
+            actionMain()
+        }
+
         observables()
+    }
+
+    private fun actionMain() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun getChurchAndUpdate() {
+        val data = dropdown_church.text.toString().split(": ")
+        val references = firebaseService.firebaseFirestore
+            .collection(FirebaseService.IGLESIA_COLLECTION_NAME)
+            .document(data[1])
+            .collection(FirebaseService.REDES_COLLECTION_NAME)
+            .document(dropdown_red.text.toString())
+            .collection(FirebaseService.SUBREDES_COLLECTION_NAME)
+            .document(dropdown_subred.text.toString())
+            .collection(FirebaseService.CELULA_COLLECTION_NAME)
+            .document(dropdown_celula.text.toString())
+
+        viewModel.updateDataChurchFromFirebase(references)
     }
 
     private fun observables() {
@@ -103,6 +135,6 @@ class JoinActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "JoinInfo"
+         const val TAG = "JoinInfo"
     }
 }

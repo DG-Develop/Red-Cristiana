@@ -17,14 +17,16 @@
         android:paddingBottom="@dimen/VerySmall">
 
         <ImageView
+            android:id="@+id/ivTypeUser"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginTop="@dimen/VerySmall"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_icon_normal"
+            tools:src="@drawable/ic_icon_normal"
             android:layout_margin="@dimen/VerySmall"/>
 
         <TextView
+            android:id="@+id/tvNameUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_bold"
@@ -34,6 +36,7 @@
             android:textColor="@color/colorPrimaryDark"/>
 
         <TextView
+            android:id="@+id/tvEmailUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"

@@ -1,6 +1,9 @@
 package com.david.redcristianauno.presentation.ui.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
 import com.david.redcristianauno.base.BaseViewHolder
 import com.david.redcristianauno.data.model.User
+import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.item_user.view.*
-import java.lang.IllegalArgumentException
 
 class UserAdapter(
     private val context: Context,
-    val listUsers: List<User>
+    private val listUsers: List<User>,
+    private val itemClickListener: OnListUserClickListener
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(){
+
+    interface OnListUserClickListener{
+        fun onItemLongClick(cardView: MaterialCardView, user: User): Boolean
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> =
         UserViewHolder(
@@ -36,9 +44,21 @@ class UserAdapter(
     }
 
     inner class UserViewHolder(itemView: View) : BaseViewHolder<User>(itemView){
+
         override fun bind(item: User, position: Int) {
+            putImage(item)
             itemView.tvNameUser.text = item.names
             itemView.tvEmailUser.text = item.email
+            itemView.mcvUserItem.setOnLongClickListener{
+                itemClickListener.onItemLongClick(itemView.mcvUserItem, item)
+            }
+        }
+
+        private fun putImage(item: User) {
+            when(item.permission){
+                "Postulado" -> itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_normal)
+                "Normal" -> itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_member)
+            }
         }
     }
 }

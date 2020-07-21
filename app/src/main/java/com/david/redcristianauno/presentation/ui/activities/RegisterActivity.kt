@@ -85,7 +85,7 @@ class RegisterActivity: AppCompatActivity() {
         user.telephone = telephone
         user.id = id
         user.email = email
-        user.permission = "Normal"
+        user.permission = "Postulado"
 
         firebaseService.setDocumentWithID(user,"users", id, object : Callback<Void>{
             override fun OnSucces(result: Void?) {

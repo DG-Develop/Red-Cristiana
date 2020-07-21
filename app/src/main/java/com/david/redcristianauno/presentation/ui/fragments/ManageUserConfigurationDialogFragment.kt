@@ -1,7 +1,6 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.david.redcristianauno.R
 import kotlinx.android.synthetic.main.fragment_manage_user_configuration_dialog.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class ManageUserConfigurationDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,28 +39,36 @@ class ManageUserConfigurationDialogFragment : DialogFragment() {
             dismiss()
         }
 
+        cvMemberPostulate.setOnClickListener{
+            goToNavigator("Postulado")
+        }
         cvMemberUser.setOnClickListener {
-            val bundle = bundleOf("user" to "Normal")
-            findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
+            goToNavigator("Normal")
         }
         cvLeaderCelulaUser.setOnClickListener {
-            val bundle = bundleOf("user" to "Lider Celula")
-            findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
+            goToNavigator("Lider Celula")
         }
         cvSubredUser.setOnClickListener {
-            val bundle = bundleOf("user" to "Subred")
-            findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
+            goToNavigator("Subred")
         }
         cvRedUser.setOnClickListener {
-            val bundle = bundleOf("user" to "Red")
-            findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
+            goToNavigator("Red")
         }
 
+    }
+
+    private fun goToNavigator(value: String){
+        val bundle = bundleOf(KEY to value)
+        findNavController().navigate(R.id.listUserConfigurationFragmentDialog, bundle)
     }
 
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+    }
+
+    companion object{
+        private const val KEY = "user"
     }
 
 }

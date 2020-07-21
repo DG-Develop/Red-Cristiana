@@ -72,6 +72,17 @@ class UserRepositoryImpl : UserRepository {
             }
     }
 
+    override suspend fun getDataUserAsync(): Resource<User> {
+        val userFound = firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+            .get()
+            .await()
+
+        val user = userFound.toObject(User::class.java)
+
+        return Resource.Success(user!!)
+    }
+
     override fun updateDataUser(
         names: String, last_names: String, telephone: String, address: String
     ) {

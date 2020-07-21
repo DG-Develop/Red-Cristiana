@@ -8,6 +8,7 @@
     <!-- Accents Colors-->
     <color name="AccentLow">#F6A1BE</color>
     <color name="AccentVeryLow">#FAD2DF</color>
+    <color name="AccentMedium">#F1739E</color>
 
     <!--Colors Gray-->
     <color name="Black">#111317</color>

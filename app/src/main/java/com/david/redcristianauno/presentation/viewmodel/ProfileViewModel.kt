@@ -1,14 +1,14 @@
 package com.david.redcristianauno.presentation.viewmodel
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.david.redcristianauno.domain.ProfileUseCase
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
-import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.david.redcristianauno.vo.Resource
+import kotlinx.coroutines.Dispatchers.IO
 import java.lang.Exception
 
 class ProfileViewModel(profile: ProfileUseCase) : ViewModel() {
@@ -31,6 +31,18 @@ class ProfileViewModel(profile: ProfileUseCase) : ViewModel() {
 
             }
         })
+    }
+
+    fun getDataUserAsyncFromFirebase(): LiveData<Resource<User>> {
+        return liveData(IO){
+            emit(Resource.Loading())
+            try {
+                val userFound = user.getDataUserAsync()
+                emit(userFound)
+            }catch (e: Exception){
+                emit(Resource.Failure(e))
+            }
+        }
     }
 
     fun updateDataUserFromFirebase(

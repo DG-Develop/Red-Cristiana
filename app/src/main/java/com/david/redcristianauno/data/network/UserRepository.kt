@@ -9,6 +9,7 @@ interface UserRepository {
     fun getCelulasForFillTil(subred: String, callback: Callback<MutableList<String>>)
     fun getSubredesForFillTil(callback: Callback<MutableList<String>>)
     fun getDataUser(callback: Callback<User>)
+    suspend fun getDataUserAsync(): Resource<User>
     fun updateDataUser(names: String, last_names: String, telephone: String, address: String)
     fun updateDataChurch(iglesia_references: DocumentReference)
 }

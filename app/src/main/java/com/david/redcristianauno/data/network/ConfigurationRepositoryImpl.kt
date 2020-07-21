@@ -4,14 +4,37 @@ import android.util.Log
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
 import com.google.firebase.auth.AuthCredential
+import com.google.firebase.firestore.DocumentReference
 
 class ConfigurationRepositoryImpl : ConfigurationRepository {
     private val firebaseService = FirebaseService()
 
-    override fun getTypeUsers(type: String, callback: Callback<List<User>>) {
+    override fun getTypeUsers(type: String,callback: Callback<List<User>>) {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
             .whereEqualTo("permission", type)
-            //.orderBy("names")
+            .get()
+            .addOnSuccessListener { result ->
+                lateinit var list: List<User>
+                if (!result.isEmpty) {
+                    for (doc in result) {
+                        list = result.toObjects(User::class.java)
+                        val names = list.sortedBy { it.names  }
+                        callback.OnSucces(names)
+                        break
+                    }
+                }else{
+                    list = result.toObjects(User::class.java)
+                    callback.OnSucces(list)
+                }
+            }
+    }
+
+    override fun getPostulateUsers(
+        type: String, iglesia_references: DocumentReference, callback: Callback<List<User>>
+    ) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .whereEqualTo("permission", type)
+            .whereEqualTo("iglesia_references", iglesia_references)
             .get()
             .addOnSuccessListener { result ->
                 lateinit var list: List<User>
@@ -21,7 +44,7 @@ class ConfigurationRepositoryImpl : ConfigurationRepository {
                         callback.OnSucces(list)
                         break
                     }
-                }else{
+                } else {
                     list = result.toObjects(User::class.java)
                     callback.OnSucces(list)
                 }

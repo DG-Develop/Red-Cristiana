@@ -2,11 +2,19 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:checkable="true"
+    android:focusable="true"
+    android:clickable="true"
+    app:checkedIcon="@drawable/ic_check_circle"
+    app:checkedIconTint="@color/AccentLow"
+    app:rippleColor="@color/AccentLow"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    app:cardBackgroundColor="@color/card_list_user_state"
     app:cardCornerRadius="@dimen/VerySmall"
     app:cardElevation="@dimen/Diminute"
-    android:layout_margin="@dimen/Diminute">
+    android:layout_margin="@dimen/Diminute"
+    android:id="@+id/mcvUserItem">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +31,7 @@
             android:layout_marginTop="@dimen/VerySmall"
             android:layout_gravity="center_horizontal"
             tools:src="@drawable/ic_icon_normal"
+            android:tint="@color/colorAccent"
             android:layout_margin="@dimen/VerySmall"/>
 
         <TextView
@@ -43,7 +52,7 @@
             android:textSize="@dimen/Normal"
             tools:text="dgdband@gmail.com"
             android:gravity="center_horizontal"
-            android:textColor="@color/AccentLow"/>
+            android:textColor="@color/AccentMedium"/>
 
     </LinearLayout>
 

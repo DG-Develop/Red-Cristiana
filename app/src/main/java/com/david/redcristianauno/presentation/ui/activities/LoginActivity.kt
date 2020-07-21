@@ -3,6 +3,7 @@ package com.david.redcristianauno.presentation.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -12,8 +13,10 @@ import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ProfileUseCaseImpl
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
+import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
+import com.david.redcristianauno.vo.Resource
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_login.*
@@ -30,7 +33,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        observedViewModel()
     }
 
     fun enterokayMain(view: View?) {
@@ -42,15 +44,15 @@ class LoginActivity : AppCompatActivity() {
             firebaseService.firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        viewModel.refresh()
+                        userLogin()
                     }
                 }.addOnFailureListener{ e ->
                     if (e is FirebaseAuthInvalidUserException) {
                        SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
-                        rlBaseLogin.visibility = View.INVISIBLE
+                        rlBaseLogin.visibility = View.GONE
                     } else if (e is FirebaseAuthInvalidCredentialsException) {
                        SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
-                        rlBaseLogin.visibility = View.INVISIBLE
+                        rlBaseLogin.visibility = View.GONE
                     }
                 }
         }else{
@@ -70,16 +72,6 @@ class LoginActivity : AppCompatActivity() {
         startActivity(Intent(this, ForgotPasswordActivity::class.java))
     }
 
-    private fun observedViewModel() {
-        viewModel.userData.observe(this, Observer { user ->
-            if (user.iglesia_references != null){
-                actionMain()
-            }else{
-                actionJoinOrInvite()
-            }
-        })
-    }
-
     private fun actionJoinOrInvite() {
         startActivity(Intent(this, JoinOrInviteActivity::class.java))
         finish()
@@ -88,9 +80,32 @@ class LoginActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if (firebaseService.firebaseAuth.currentUser != null){
-            actionMain()
-            finish()
+            userLogin()
         }
+    }
+
+    private fun userLogin(){
+        viewModel.getDataUserAsyncFromFirebase()
+            .observe(this, Observer {result ->
+                when (result) {
+                    is Resource.Loading -> {
+                        rlBaseLogin.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        val data = result.data
+                        UserSingleton.setUser(data)
+                        if (data.iglesia_references != null){
+                            actionMain()
+                        }else{
+                            actionJoinOrInvite()
+                        }
+                    }
+                    is Resource.Failure -> {
+                        Log.e(TAG, "Failure: ${result.exception.message}")
+                        rlBaseLogin.visibility = View.GONE
+                    }
+                }
+            })
     }
 
     companion object{

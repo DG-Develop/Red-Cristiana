@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.david.redcristianauno.domain.ConfigurationUseCase
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
+import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import java.lang.Exception
 
 class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
+    private val userLogin = UserSingleton.getUser()
     private val users = configUseCase
     var listUser: MutableLiveData<List<User>> = MutableLiveData()
     var isLoading = MutableLiveData<Boolean>()
@@ -15,12 +17,33 @@ class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
     fun refresh(type: String){
         getUsersFromFirebase(type)
     }
+
+    fun refreshPostulates(type: String){
+        getUsersPostulatesFromFirebase(type)
+    }
+
     fun search(name: String){
         searchUserFromFirebase(name)
     }
 
     private fun getUsersFromFirebase(type: String){
         users.getTypeUsers(type, object : Callback<List<User>>{
+            override fun OnSucces(result: List<User>?) {
+                listUser.postValue(result)
+                processFinished()
+                if (result.isNullOrEmpty()){
+                    processFinished()
+                }
+            }
+
+            override fun onFailure(exception: Exception) {
+
+            }
+        })
+    }
+
+    private fun getUsersPostulatesFromFirebase(type: String){
+        users.getPostulateUsers(type, userLogin?.iglesia_references!! , object : Callback<List<User>>{
             override fun OnSucces(result: List<User>?) {
                 listUser.postValue(result)
                 processFinished()

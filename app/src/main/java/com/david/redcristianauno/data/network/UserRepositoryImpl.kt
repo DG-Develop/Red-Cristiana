@@ -5,12 +5,11 @@ import android.util.Log
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
+import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.activities.JoinActivity
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
 
 class UserRepositoryImpl : UserRepository {
     val firebaseService = FirebaseService()
@@ -23,7 +22,6 @@ class UserRepositoryImpl : UserRepository {
             .await()
 
         val nameUser = resultData.getString("names")
-
         return Resource.Success(nameUser!!)
     }
 
@@ -79,7 +77,6 @@ class UserRepositoryImpl : UserRepository {
             .await()
 
         val user = userFound.toObject(User::class.java)
-
         return Resource.Success(user!!)
     }
 
@@ -104,7 +101,10 @@ class UserRepositoryImpl : UserRepository {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
             .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
             .update(mapOf("iglesia_references" to iglesia_references))
-            .addOnSuccessListener { Log.i(JoinActivity.TAG, "Update Success") }
+            .addOnSuccessListener {
+                Log.i(JoinActivity.TAG, "Update Success")
+                UserSingleton.updateChurch(iglesia_references)
+            }
             .addOnFailureListener { e -> Log.i(JoinActivity.TAG, "Error updating document", e) }
     }
 }

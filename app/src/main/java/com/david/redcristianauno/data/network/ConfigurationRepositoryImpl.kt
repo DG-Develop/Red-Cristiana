@@ -3,7 +3,6 @@ package com.david.redcristianauno.data.network
 import android.util.Log
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.firestore.DocumentReference
 
 class ConfigurationRepositoryImpl : ConfigurationRepository {

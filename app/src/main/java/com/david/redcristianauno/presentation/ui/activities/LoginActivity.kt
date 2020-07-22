@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-    private  var firebaseService = FirebaseService()
+    private var firebaseService = FirebaseService()
     private val viewModel by lazy {
         ViewModelProvider(
             this,
@@ -46,24 +46,25 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         userLogin()
                     }
-                }.addOnFailureListener{ e ->
+                }.addOnFailureListener { e ->
                     if (e is FirebaseAuthInvalidUserException) {
-                       SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
+                        SnackBarMD.getSBIndefinite(view!!, "Usuario Invalido")
                         rlBaseLogin.visibility = View.GONE
                     } else if (e is FirebaseAuthInvalidCredentialsException) {
-                       SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
+                        SnackBarMD.getSBIndefinite(view!!, "Contraseña invalida")
                         rlBaseLogin.visibility = View.GONE
                     }
                 }
-        }else{
-          SnackBarMD.getSBIndefinite(view!!, "Completa todos los campos")
+        } else {
+            SnackBarMD.getSBIndefinite(view!!, "Completa todos los campos")
         }
     }
 
-    private fun actionMain(){
+    private fun actionMain() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
     fun actionRegister(view: View?) {
         startActivity(Intent(this, RegisterActivity::class.java))
     }
@@ -79,14 +80,14 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (firebaseService.firebaseAuth.currentUser != null){
+        if (firebaseService.firebaseAuth.currentUser != null) {
             userLogin()
         }
     }
 
-    private fun userLogin(){
+    private fun userLogin() {
         viewModel.getDataUserAsyncFromFirebase()
-            .observe(this, Observer {result ->
+            .observe(this, Observer { result ->
                 when (result) {
                     is Resource.Loading -> {
                         rlBaseLogin.visibility = View.VISIBLE
@@ -94,11 +95,7 @@ class LoginActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         val data = result.data
                         UserSingleton.setUser(data)
-                        if (data.iglesia_references != null){
-                            actionMain()
-                        }else{
-                            actionJoinOrInvite()
-                        }
+                        actionMain()
                     }
                     is Resource.Failure -> {
                         Log.e(TAG, "Failure: ${result.exception.message}")
@@ -108,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
-    companion object{
+    companion object {
         private const val TAG = "LoginInfo"
     }
 }

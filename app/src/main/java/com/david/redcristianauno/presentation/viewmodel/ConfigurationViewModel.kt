@@ -43,19 +43,21 @@ class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
     }
 
     private fun getUsersPostulatesFromFirebase(type: String){
-        users.getPostulateUsers(type, userLogin?.iglesia_references!! , object : Callback<List<User>>{
-            override fun OnSucces(result: List<User>?) {
-                listUser.postValue(result)
-                processFinished()
-                if (result.isNullOrEmpty()){
+        userLogin?.iglesia_references?.let {
+            users.getPostulateUsers(type, it, object : Callback<List<User>>{
+                override fun OnSucces(result: List<User>?) {
+                    listUser.postValue(result)
                     processFinished()
+                    if (result.isNullOrEmpty()){
+                        processFinished()
+                    }
                 }
-            }
 
-            override fun onFailure(exception: Exception) {
+                override fun onFailure(exception: Exception) {
 
-            }
-        })
+                }
+            })
+        }
     }
 
     fun updateUserFromFirebase(id: String, permissionType: String){

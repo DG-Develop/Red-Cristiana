@@ -1,6 +1,7 @@
 package com.david.redcristianauno.presentation.objectsUtils
 
 import com.david.redcristianauno.data.model.User
+import com.google.firebase.firestore.DocumentReference
 
 
 object UserSingleton {
@@ -11,4 +12,8 @@ object UserSingleton {
     }
 
     fun getUser(): User? = userLogin
+
+    fun updateChurch(church: DocumentReference){
+        userLogin?.iglesia_references = church
+    }
 }

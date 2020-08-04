@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginTop="@dimen/Small"
+    android:layout_marginBottom="@dimen/Small"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="@dimen/VerySmall"
+    app:cardElevation="@dimen/VerySmall">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/VerySmall">
+
+        <View
+            android:id="@+id/viewGeneral"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/Small"
+            android:layout_marginEnd="@dimen/Small"
+            android:fontFamily="@font/roboto"
+            tools:text="Vida de Jesús"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/Headline"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/viewGeneral"/>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcvIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="@dimen/VerySmall"
+            android:layout_marginTop="@dimen/VerySmall"
+            android:elevation="@dimen/Standar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewGeneral">
+
+            <ImageView
+                android:id="@+id/circleImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="centerCrop"
+                android:tint="@color/colorAccent"
+                tools:src="@drawable/ic_icon_leader_red"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvTitleGeneral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/Standar"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/title_general_list_item"
+            android:textSize="@dimen/TitleSecondary"
+            android:textColor="@color/Black"
+            app:layout_constraintBottom_toTopOf="@+id/tvContentGeneral"
+            app:layout_constraintStart_toEndOf="@+id/mcvIcon"
+            app:layout_constraintTop_toTopOf="@+id/mcvIcon" />
+
+        <TextView
+            android:id="@+id/tvContentGeneral"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/Standar"
+            android:fontFamily="@font/roboto"
+            tools:text="David Antonio Gómez Pacheco"
+            android:textSize="@dimen/Normal"
+            android:textColor="@color/colorPrimaryDark"
+            android:lines="2"
+            app:layout_constraintStart_toEndOf="@+id/mcvIcon"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleGeneral" />
+
+        <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_modify_red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/Small"
+        android:layout_marginTop="@dimen/Medium"
+        app:rippleColor="@color/Gray"
+        android:letterSpacing="0"
+        android:fontFamily="@font/roboto_bold"
+        android:text="@string/modify_button"
+        android:textColor="@color/colorSecondary"
+        android:textAlignment="textStart"
+        android:textStyle="bold"
+        android:textSize="@dimen/Subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/mcvIcon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete_red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/Small"
+            android:layout_marginTop="@dimen/Medium"
+            app:rippleColor="@color/Gray"
+            android:letterSpacing="0"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/delete_button"
+            android:textColor="@color/colorAccent"
+            android:textAlignment="textStart"
+            android:textStyle="bold"
+            android:textSize="@dimen/Subtitle"
+            app:layout_constraintTop_toBottomOf="@+id/mcvIcon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

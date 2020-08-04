@@ -12,6 +12,7 @@
     <dimen name="Big">32dp</dimen>
     <dimen name="Medium">24dp</dimen>
     <dimen name="Small">16dp</dimen>
+    <dimen name="Standar">12dp</dimen>
     <dimen name="VerySmall">8dp</dimen>
     <dimen name="Diminute">4dp</dimen>
 
@@ -20,6 +21,8 @@
     <dimen name="image_notice_size">200dp</dimen>
     <dimen name="width_btn_small">140dp</dimen>
     <dimen name="height_btn_small">30dp</dimen>
+    <dimen name="horinzontal_cardview">20dp</dimen>
+    <dimen name="horinzontal_chips">20dp</dimen>
 
 
 </resources>

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/GrayBlue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.ui.fragments.CaptureUserFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarCreateEntity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                tools:text="Capturar Usuario"
+                android:textSize="@dimen/Title"
+                android:textColor="@color/Gray"
+                android:textAlignment="center"
+                android:layout_gravity="center"/>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/Small"
+            android:layout_marginEnd="@dimen/Small"
+            android:layout_marginTop="@dimen/VerySmall"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="@dimen/VerySmall"
+            app:cardCornerRadius="@dimen/VerySmall">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Medium"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/title_capture"
+                    android:textSize="@dimen/TitleSecondary"
+                    android:textColor="@color/Gray"/>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/names"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNamesCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:padding="@dimen/VerySmall"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:textSize="@dimen/Normal"
+                        android:inputType="textPersonName"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/last_names"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etLastNamesCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/Normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/address"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etAddressCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/Normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/telephone"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTelephoneCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="phone"
+                        android:textSize="@dimen/Normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/email"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+                    <EditText
+                        android:id="@+id/etEmailCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="textEmailAddress"
+                        android:textSize="@dimen/Normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/pass"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+
+                    <EditText
+                        android:id="@+id/etPassCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/Normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:hint="@string/confirmPass"
+                    android:textColorHint="@color/Gray"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    app:boxStrokeColor="@color/Gray"
+                    app:hintTextColor="@color/Gray"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/Gray"
+                    style="@style/TextInputLayoutStyle">
+
+
+                    <EditText
+                        android:id="@+id/etConfirmPassCapture"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:fontFamily="@font/roboto"
+                        android:textColor="@color/Gray"
+                        android:padding="@dimen/VerySmall"
+                        android:inputType="textPassword"
+                        android:textSize="@dimen/Normal"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Medium"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/select_celula"
+                    android:textSize="@dimen/TitleSecondary"
+                    android:textColor="@color/Gray"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCelulaCapture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/horinzontal_cardview"
+                    android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:layout_marginBottom="@dimen/Big"
+                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/filled_exposed_dropdown_capture"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_send_capture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/Small"
+        app:backgroundTint="@color/AccentMedium"
+        app:tint="@color/colorPrimary"
+        app:srcCompat="@drawable/ic_send"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

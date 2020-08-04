@@ -114,6 +114,13 @@ ser aceptado o rechazado por los administradores</string>
     <string name="members">Miembros</string>
     <string name="red_leader_user">Lideres de Red</string>
 
+    <string name="title_general_list_item">Nombre del Líder:</string>
+    <string name="modify_button">Modificar</string>
+    <string name="delete_button">Eliminar</string>
+    <string name="found_by">Buscar por:</string>
+    <string name="find_by_id">ID</string>
+    <string name="find_by_email">Correo</string>
+
     <string-array name="decimals">
         <item>.00</item>
         <item>.50</item>
@@ -125,6 +132,8 @@ ser aceptado o rechazado por los administradores</string>
         <item>Subred</item>
         <item>Red</item>
     </string-array>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_capture">Datos Generales</string>
 
 </resources>

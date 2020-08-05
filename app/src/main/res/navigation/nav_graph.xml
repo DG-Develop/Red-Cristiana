@@ -62,14 +62,14 @@
             android:id="@+id/action_navConfigurationFragment_to_profileConfigurationFragmentDialog"
             app:destination="@id/profileConfigurationFragmentDialog" />
         <action
-            android:id="@+id/action_navConfigurationFragment_to_createConfigurationFragmentDialog"
-            app:destination="@id/createConfigurationFragmentDialog" />
-        <action
             android:id="@+id/action_navConfigurationFragment_to_manageUserConfigurationFragmentDialog"
             app:destination="@id/manageUserConfigurationFragmentDialog" />
         <action
             android:id="@+id/action_navConfigurationFragment_to_uploadNoticeConfigurationFragmentDialog"
             app:destination="@id/uploadNoticeConfigurationFragmentDialog" />
+        <action
+            android:id="@+id/action_navSettingFragment_to_generalListFragment"
+            app:destination="@id/generalListFragment" />
     </fragment>
     <dialog
         android:id="@+id/dataCelulaFragmentDialog"
@@ -97,11 +97,6 @@
         android:label="ProfileConfigurationFragmentDialog"
         tools:layout="@layout/fragment_profile_configuration_dialog"/>
     <dialog
-        android:id="@+id/createConfigurationFragmentDialog"
-        android:name="com.david.redcristianauno.presentation.ui.fragments.CreateConfigurationDialogFragment"
-        android:label="CreateConfigurationFragmentDialog"
-        tools:layout="@layout/fragment_create_configuration_dialog"/>
-    <dialog
         android:id="@+id/manageUserConfigurationFragmentDialog"
         android:name="com.david.redcristianauno.presentation.ui.fragments.ManageUserConfigurationDialogFragment"
         android:label="ManageUserConfigurationFragmentDialog"
@@ -120,4 +115,18 @@
         android:name="com.david.redcristianauno.presentation.ui.fragments.ListUserConfigurationDialogFragment"
         android:label="ListUserConfigurationFragmentDialog"
         tools:layout="@layout/fragment_list_user_configuration_dialog"/>
+    <dialog
+        android:id="@+id/generalListFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.GeneralListFragment"
+        android:label="fragment_general_list"
+        tools:layout="@layout/fragment_general_list" >
+        <action
+            android:id="@+id/action_generalListFragment_to_createEntityFragment"
+            app:destination="@id/createEntityFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/createEntityFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.CreateEntityFragment"
+        android:label="fragment_create_entity"
+        tools:layout="@layout/fragment_create_entity" />
 </navigation>

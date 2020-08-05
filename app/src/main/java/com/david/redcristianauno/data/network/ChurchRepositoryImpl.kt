@@ -1,10 +1,8 @@
 package com.david.redcristianauno.data.network
 
 import android.util.Log
-import com.david.redcristianauno.data.model.Celula
-import com.david.redcristianauno.data.model.Iglesia
-import com.david.redcristianauno.data.model.Red
-import com.david.redcristianauno.data.model.Subred
+import com.david.redcristianauno.data.model.*
+import com.david.redcristianauno.presentation.ui.fragments.GeneralListFragment
 
 class ChurchRepositoryImpl : ChurchRepository {
     val firebaseService = FirebaseService()
@@ -87,6 +85,44 @@ class ChurchRepositoryImpl : ChurchRepository {
 
                 callback.OnSucces(dropdown)
             }
+    }
+
+    override fun getRedObject(name: String, callback: Callback<MutableList<GeneralModel>>) {
+        firebaseService.firebaseFirestore.collection(
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${name}/" +
+                    FirebaseService.REDES_COLLECTION_NAME
+        )
+            .get()
+            .addOnSuccessListener { result ->
+                val list: MutableList<GeneralModel> = mutableListOf()
+                val redesList = result.toObjects(Red::class.java)
+
+                for (red in redesList) {
+                    Log.i(GeneralListFragment.TAG, "name_leader: ${red.name_leader}")
+                    Log.i(GeneralListFragment.TAG, "id: ${red.id_red}")
+                    list.add(GeneralModel(red.id_red, red.name_leader))
+                }
+
+                callback.OnSucces(list)
+            }
+    }
+
+    override fun getSubredObject(
+        iglesia: String,
+        red: String,
+        callback: Callback<MutableList<GeneralModel>>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCelulaObject(
+        iglesia: String,
+        red: String,
+        subred: String,
+        callback: Callback<MutableList<GeneralModel>>
+    ) {
+        TODO("Not yet implemented")
     }
 
     companion object {

@@ -55,10 +55,9 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvAddSubredCelula"
+                android:id="@+id/cvCreate"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/Medium"
                 android:elevation="@dimen/Diminute">
 
@@ -76,13 +75,14 @@
                         android:tint="@color/colorPrimaryDark" />
 
                     <TextView
+                        android:id="@+id/tvCreateConfiguration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/iv_create_configurarion"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="@dimen/Small"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="@string/create_subred_celula_configurarion_title"
+                        tools:text="Crear Red"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/Subtitle"
                         android:textStyle="bold" />

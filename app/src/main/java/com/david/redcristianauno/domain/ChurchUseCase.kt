@@ -1,5 +1,6 @@
 package com.david.redcristianauno.domain
 
+import com.david.redcristianauno.data.model.GeneralModel
 import com.david.redcristianauno.data.model.Iglesia
 import com.david.redcristianauno.data.network.Callback
 import com.google.firebase.firestore.DocumentReference
@@ -10,4 +11,7 @@ interface ChurchUseCase {
     fun getSubredes(iglesia: String, red: String, callback: Callback<MutableList<String>>)
     fun getCelulas(iglesia: String, red: String, subred: String, callback: Callback<MutableList<String>>)
     fun updateDataChurch(iglesia_references: DocumentReference)
+    fun getRedObject(name: String, callback: Callback<MutableList<GeneralModel>>)
+    fun getSubredObject(iglesia: String, red: String, callback: Callback<MutableList<GeneralModel>>)
+    fun getCelulaObject(iglesia: String, red: String, subred: String, callback: Callback<MutableList<GeneralModel>>)
 }

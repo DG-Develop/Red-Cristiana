@@ -17,6 +17,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/rvTitleGeneral"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListUser"
+                android:id="@+id/rvListUserGeneral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

@@ -1,5 +1,6 @@
 package com.david.redcristianauno.domain
 
+import com.david.redcristianauno.data.model.GeneralModel
 import com.david.redcristianauno.data.model.Iglesia
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
@@ -29,4 +30,19 @@ class ChurchUseCaseImpl(
     override fun updateDataChurch(iglesia_references: DocumentReference) =
         userRepository.updateDataChurch(iglesia_references)
 
+    override fun getRedObject(name: String, callback: Callback<MutableList<GeneralModel>>) =
+        churchRepository.getRedObject(name, callback)
+
+    override fun getSubredObject(
+        iglesia: String,
+        red: String,
+        callback: Callback<MutableList<GeneralModel>>
+    ) = churchRepository.getSubredObject(iglesia, red, callback)
+
+    override fun getCelulaObject(
+        iglesia: String,
+        red: String,
+        subred: String,
+        callback: Callback<MutableList<GeneralModel>>
+    ) = churchRepository.getCelulaObject(iglesia, red, subred, callback)
 }

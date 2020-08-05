@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.PermissionUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
+import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModel
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModelFactory
@@ -21,13 +23,11 @@ import com.david.redcristianauno.vo.Resource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.fragment_configuration.*
 
-/**
- * A simple [Fragment] subclass.
- */
 class ConfigurationFragment : Fragment() {
 
     val firebaseService = FirebaseService()
     private var permission: String? = null
+    private val user = UserSingleton.getUser()
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -47,10 +47,17 @@ class ConfigurationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observedPermission()
+        Log.i(TAG, "Permiso: ${user?.permission}")
+
+        //observedPermission()
+        hideMenuUserNormal(user?.permission!!)
 
         cvProfile.setOnClickListener {
             findNavController().navigate(R.id.profileConfigurationFragmentDialog)
+        }
+
+        cvCreate.setOnClickListener {
+            findNavController().navigate(R.id.generalListFragment)
         }
 
         cvManageUser.setOnClickListener{
@@ -102,12 +109,24 @@ class ConfigurationFragment : Fragment() {
     }
 
     private fun hideMenuUserNormal(data: String){
-        if (data == "Normal" || data == "Lider Celula"){
-            cvAddSubredCelula.visibility = View.GONE
-            cvManageUser.visibility = View.GONE
-            cvUploadNotice.visibility = View.GONE
-        }else if(data == "Subred"){
-            cvManageUser.visibility = View.GONE
+        when(data){
+            "Normal", "Lider Celula" -> {
+                cvCreate.visibility = View.GONE
+                cvManageUser.visibility = View.GONE
+                cvUploadNotice.visibility = View.GONE
+                putCreateTitle("Crear Celula")
+            }
+            "AT"-> {
+                putCreateTitle("Crear Red")
+            }
         }
+    }
+
+    private fun putCreateTitle(title: String) {
+        tvCreateConfiguration.text = title
+    }
+
+    companion object{
+        private const val TAG = "ConfigInfo"
     }
 }

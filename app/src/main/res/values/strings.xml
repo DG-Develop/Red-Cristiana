@@ -38,7 +38,6 @@
     <string name="weekly_history_register_description">Checa cuanto se ha recaudado semanalmente por todas las reuniones de celula realizadas en dicha semana.</string>
 
     <string name="profile_configurarion_title">Perfil</string>
-    <string name="create_subred_celula_configurarion_title">Crear Subred / Celula</string>
     <string name="user_managment_configurarion_title">Administrar Usuarios</string>
     <string name="upload_notice_configurarion_title">Subir Noticias</string>
     <string name="close_session_configurarion_title">Cerrar Sesión</string>

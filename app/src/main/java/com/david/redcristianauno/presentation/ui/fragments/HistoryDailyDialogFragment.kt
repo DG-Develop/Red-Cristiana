@@ -20,9 +20,7 @@ import kotlinx.android.synthetic.main.fragment_history_daily_dialog.*
 import java.text.DateFormat
 import java.util.*
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class HistoryDailyDialogFragment : DialogFragment() {
 
     private var cal = Calendar.getInstance()

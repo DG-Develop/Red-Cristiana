@@ -16,6 +16,6 @@ class ConfigurationUseCaseImpl(private val config: ConfigurationRepository) : Co
     override fun updateUser(id: String, permissionType: String)
             = config.updateUserFromPermission(id, permissionType)
     override fun deleteUser(id: String) = config.deleteUser(id)
-    override fun searchUser(name: String, callback: Callback<List<User>>)
-            = config.searchUser(name, callback)
+    override fun searchUser(char: String, key: String, callback: Callback<List<User>>)
+            = config.searchUser(char, key, callback)
 }

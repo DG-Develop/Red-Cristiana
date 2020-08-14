@@ -110,7 +110,7 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
 
         etSearch.setOnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_SEARCH) {
-                viewModel.search(etSearch.text.toString())
+                viewModel.search(etSearch.text.toString(), "names")
                 true
             } else {
                 false

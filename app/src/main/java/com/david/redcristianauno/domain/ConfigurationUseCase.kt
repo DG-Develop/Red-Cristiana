@@ -11,5 +11,5 @@ interface ConfigurationUseCase {
     )
     fun updateUser(id: String, permissionType: String)
     fun deleteUser(id: String)
-    fun searchUser(name: String, callback: Callback<List<User>>)
+    fun searchUser(char: String, key: String, callback: Callback<List<User>>)
 }

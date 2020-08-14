@@ -7,6 +7,7 @@ import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.FirebaseService.Companion.USER_COLLECTION_NAME
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.activities.JoinActivity
+import com.david.redcristianauno.presentation.ui.fragments.CreateEntityFragment
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.tasks.await
@@ -106,5 +107,52 @@ class UserRepositoryImpl : UserRepository {
                 UserSingleton.updateChurch(iglesia_references)
             }
             .addOnFailureListener { e -> Log.i(JoinActivity.TAG, "Error updating document", e) }
+    }
+
+    override fun getListUser(callback: Callback<List<User>>) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .get()
+            .addOnSuccessListener { result ->
+                lateinit var list: List<User>
+                if (!result.isEmpty) {
+                    for (doc in result) {
+                        list = result.toObjects(User::class.java)
+                        val filter =
+                            list.filter { it.permission != "Postulado" && it.permission != "Red" }
+                        val names = filter.sortedBy { it.names }
+                        callback.OnSucces(names)
+                        break
+                    }
+                } else {
+                    list = result.toObjects(User::class.java)
+                    callback.OnSucces(list)
+                }
+            }
+    }
+
+    override fun searchUserWithoutSomeParams(
+        char: String, key: String, callback: Callback<List<User>>
+    ) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .orderBy(key)
+            .startAt(char).endAt(char + "\uf8ff") //"\uf8ff"
+            .get()
+            .addOnSuccessListener { result ->
+                lateinit var list: List<User>
+                if (!result.isEmpty) {
+                    for (doc in result) {
+                        list = result.toObjects(User::class.java)
+                        val filter = list.filter {
+                            it.permission != "Postulado" && it.permission != "Red"
+                        }
+                        val names = filter.sortedBy { it.names }
+                        callback.OnSucces(names)
+                        break
+                    }
+                } else {
+                    list = result.toObjects(User::class.java)
+                    callback.OnSucces(list)
+                }
+            }
     }
 }

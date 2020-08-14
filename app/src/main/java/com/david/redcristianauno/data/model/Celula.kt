@@ -5,6 +5,6 @@ import com.google.firebase.firestore.DocumentReference
 class Celula {
     val created_by: DocumentReference? = null
     var id_celula: String = ""
-    var leader: String = ""
+    var name_leader: String = ""
     //var users : MutableList<DocumentReference> = mutableListOf()
 }

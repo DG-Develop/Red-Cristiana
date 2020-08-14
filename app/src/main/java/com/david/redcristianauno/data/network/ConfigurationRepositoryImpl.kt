@@ -66,10 +66,10 @@ class ConfigurationRepositoryImpl : ConfigurationRepository {
             .addOnFailureListener{e -> Log.i("UserInfo", "Error deleting document", e)}
     }
 
-    override fun searchUser(name: String, callback: Callback<List<User>>) {
+    override fun searchUser(char: String, key: String, callback: Callback<List<User>>) {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
-            .orderBy("names")
-            .startAt(name).endAt(name + "\uf8ff") //"\uf8ff"
+            .orderBy(key)
+            .startAt(char).endAt(char + "\uf8ff") //"\uf8ff"
             .get()
             .addOnSuccessListener { result ->
                 lateinit var list: List<User>

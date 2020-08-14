@@ -109,6 +109,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/cgFilterEntity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:singleSelection="true">
@@ -118,10 +119,10 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/find_by_id"
-                            android:textColor="@color/Gray"
+                            android:textColor="@color/text_chip_color_state"
                             app:textStartPadding="@dimen/Small"
                             app:textEndPadding="@dimen/Small"
-                            app:chipBackgroundColor="@color/GrayBlue"
+                            app:chipBackgroundColor="@color/chip_choice_state"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
                         <com.google.android.material.chip.Chip
@@ -129,11 +130,11 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/find_by_email"
-                            android:textColor="@color/Gray"
+                            android:textColor="@color/text_chip_color_state"
                             android:layout_marginStart="@dimen/VerySmall"
                             app:textStartPadding="@dimen/Small"
                             app:textEndPadding="@dimen/Small"
-                            app:chipBackgroundColor="@color/GrayBlue"
+                            app:chipBackgroundColor="@color/chip_choice_state"
                             style="@style/Widget.MaterialComponents.Chip.Choice"/>
 
                     </com.google.android.material.chip.ChipGroup>
@@ -141,11 +142,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llSearchContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginStart="@dimen/horinzontal_cardview"
                     android:layout_marginEnd="@dimen/horinzontal_cardview"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <com.google.android.material.textfield.TextInputLayout

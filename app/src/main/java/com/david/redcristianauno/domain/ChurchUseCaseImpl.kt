@@ -1,8 +1,6 @@
 package com.david.redcristianauno.domain
 
-import com.david.redcristianauno.data.model.GeneralModel
-import com.david.redcristianauno.data.model.Iglesia
-import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.data.model.*
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.ChurchRepository
 import com.david.redcristianauno.data.network.UserRepository
@@ -30,19 +28,25 @@ class ChurchUseCaseImpl(
     override fun updateDataChurch(iglesia_references: DocumentReference) =
         userRepository.updateDataChurch(iglesia_references)
 
-    override fun getRedObject(name: String, callback: Callback<MutableList<GeneralModel>>) =
+    override fun getRedObject(name: String, callback: Callback<MutableList<Red>>) =
         churchRepository.getRedObject(name, callback)
 
     override fun getSubredObject(
         iglesia: String,
         red: String,
-        callback: Callback<MutableList<GeneralModel>>
+        callback: Callback<List<Subred>>
     ) = churchRepository.getSubredObject(iglesia, red, callback)
 
     override fun getCelulaObject(
         iglesia: String,
         red: String,
         subred: String,
-        callback: Callback<MutableList<GeneralModel>>
+        callback: Callback<MutableList<Celula>>
     ) = churchRepository.getCelulaObject(iglesia, red, subred, callback)
+
+    override fun getListUser(callback: Callback<List<User>>) = userRepository.getListUser(callback)
+
+    override fun searchUserWithoutSomeParams(
+        char: String, key: String, callback: Callback<List<User>>
+    ) = userRepository.searchUserWithoutSomeParams(char, key, callback)
 }

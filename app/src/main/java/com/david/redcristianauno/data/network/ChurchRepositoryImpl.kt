@@ -87,7 +87,7 @@ class ChurchRepositoryImpl : ChurchRepository {
             }
     }
 
-    override fun getRedObject(name: String, callback: Callback<MutableList<GeneralModel>>) {
+    override fun getRedObject(name: String, callback: Callback<MutableList<Red>>) {
         firebaseService.firebaseFirestore.collection(
             "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
                     "${name}/" +
@@ -99,28 +99,43 @@ class ChurchRepositoryImpl : ChurchRepository {
                 val redesList = result.toObjects(Red::class.java)
 
                 for (red in redesList) {
-                    Log.i(GeneralListFragment.TAG, "name_leader: ${red.name_leader}")
-                    Log.i(GeneralListFragment.TAG, "id: ${red.id_red}")
                     list.add(GeneralModel(red.id_red, red.name_leader))
                 }
 
-                callback.OnSucces(list)
+                callback.OnSucces(redesList)
             }
     }
 
     override fun getSubredObject(
         iglesia: String,
         red: String,
-        callback: Callback<MutableList<GeneralModel>>
+        callback: Callback<List<Subred>>
     ) {
-        TODO("Not yet implemented")
+        firebaseService.firebaseFirestore.collection(
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${iglesia}/" +
+                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+                    "${red}/" +
+                    FirebaseService.SUBREDES_COLLECTION_NAME
+        )
+            .get()
+            .addOnSuccessListener { result ->
+                val list: MutableList<GeneralModel> = mutableListOf()
+                val subredesList = result.toObjects(Subred::class.java)
+
+                for (subred in subredesList) {
+                    list.add(GeneralModel(subred.id_subred, subred.name_leader))
+                }
+
+                callback.OnSucces(subredesList)
+            }
     }
 
     override fun getCelulaObject(
         iglesia: String,
         red: String,
         subred: String,
-        callback: Callback<MutableList<GeneralModel>>
+        callback: Callback<MutableList<Celula>>
     ) {
         TODO("Not yet implemented")
     }

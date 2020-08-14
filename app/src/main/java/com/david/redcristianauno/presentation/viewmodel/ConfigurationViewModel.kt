@@ -22,8 +22,8 @@ class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
         getUsersPostulatesFromFirebase(type)
     }
 
-    fun search(name: String){
-        searchUserFromFirebase(name)
+    fun search(name: String, key: String){
+        searchUserFromFirebase(name, key)
     }
 
     private fun getUsersFromFirebase(type: String){
@@ -68,8 +68,8 @@ class ConfigurationViewModel(configUseCase: ConfigurationUseCase): ViewModel(){
         users.deleteUser(id)
     }
 
-    private fun searchUserFromFirebase(name: String){
-        users.searchUser(name, object: Callback<List<User>>{
+    private fun searchUserFromFirebase(name: String, key: String){
+        users.searchUser(name, key, object: Callback<List<User>>{
             override fun OnSucces(result: List<User>?) {
                 listUser.postValue(result)
                 processFinished()

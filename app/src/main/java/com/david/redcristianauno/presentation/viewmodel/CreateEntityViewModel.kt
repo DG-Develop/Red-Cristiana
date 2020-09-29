@@ -12,6 +12,7 @@ import java.lang.Exception
 class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
     private val church = churchUseCase
     var users = MutableLiveData<ArrayList<CreateEntityModel>>()
+    var redesList = MutableLiveData<MutableList<String>>()
     var subred = MutableLiveData<ArrayList<CreateEntityModel>>()
     val listUser: ArrayList<CreateEntityModel> = ArrayList()
     val listFound: ArrayList<CreateEntityModel> = ArrayList()
@@ -47,6 +48,18 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
                     }
                 }
                 subred.postValue(listEntity)
+            }
+
+            override fun onFailure(exception: Exception) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun fillTilRedFromFirebase(churchName: String){
+        church.getRedes(churchName, object : Callback<MutableList<String>>{
+            override fun OnSucces(result: MutableList<String>?) {
+                redesList.postValue(result)
             }
 
             override fun onFailure(exception: Exception) {

@@ -134,5 +134,7 @@ ser aceptado o rechazado por los administradores</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_capture">Datos Generales</string>
+    <string name="name_entity">Nombre Red</string>
+    <string name="write_name">Escribe un nombre</string>
 
 </resources>

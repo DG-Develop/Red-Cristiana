@@ -3,10 +3,10 @@ package com.david.redcristianauno.presentation.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -14,18 +14,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.CreateEntityModel
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
-import com.david.redcristianauno.data.network.ConfigurationRepositoryImpl
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
-import com.david.redcristianauno.domain.ConfigurationUseCaseImpl
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.adapters.CreateEntityAdapter
-import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModel
-import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModelFactory
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModel
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelFactory
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.fragment_create_entity.*
 import java.util.*
 
@@ -78,7 +75,7 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
             if (chip != null) {
                 showSearch(chip.text)
             } else {
-                llSearchContainer.visibility = View.GONE
+                tilFindByEntity.visibility = View.GONE
             }
         }
 
@@ -105,19 +102,22 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
         })
 
         observedViewModel()
+        observables()
     }
 
     private fun showSearch(text: CharSequence?) {
         etFindByEntity.setText("")
-        llSearchContainer.visibility = View.VISIBLE
+        tilFindByEntity.visibility = View.VISIBLE
         tilFindByEntity.hint = "Escriba el $text"
     }
 
     private fun putHints(permision: String?) {
         when (permision) {
             "AT" -> {
-                tilCreateEntityName.hint = "Nombre Red"
+                viewModel.fillTilRedFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
+                tvTitleCreate.text = "Nombre Red"
                 tvLeaderCreateEntity.text = "Líder de Red"
+                tvGroupSubred.text = "Grupos de Subred"
                 tvChoiceCreateEntity.text = "Escoge máximo dos grupos de Subred"
             }
         }
@@ -136,17 +136,33 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
 
     }
 
-    private var isOtherSelected = false
+    private val oneSelected = mutableListOf<MaterialCardView>()
 
     override fun onItemClick(cardView: MaterialCardView, user: CreateEntityModel) {
-        if (isOtherSelected){
-            cardView.isChecked = !cardView.isChecked
-            isOtherSelected = false
-        }else{
-            isOtherSelected = true
-            cardView.isChecked = !cardView.isChecked
+
+        if (oneSelected.size == 0) {
+            oneSelected.add(cardView)
+        } else if (cardView.isChecked && oneSelected.size > 0) {
+            oneSelected.removeAt(0)
+        } else {
+            val check: MaterialCardView = oneSelected[0]
+            check.isChecked = false
+            oneSelected.removeAt(0)
+            oneSelected.add(cardView)
         }
 
+        cardView.isChecked = !cardView.isChecked
+
+    }
+
+    private fun observables() {
+        viewModel.redesList.observe(viewLifecycleOwner, Observer { listRedes ->
+            val firstDataRed = listRedes[0]
+            filled_exposed_dropdown_entity.setText(firstDataRed)
+            val adapter =
+                context?.let { ArrayAdapter(it, R.layout.dropdown_menu_popup_item, listRedes) }
+            filled_exposed_dropdown_entity.setAdapter(adapter)
+        })
     }
 
     companion object {

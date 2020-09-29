@@ -2,7 +2,6 @@ package com.david.redcristianauno.data.network
 
 import android.util.Log
 import com.david.redcristianauno.data.model.*
-import com.david.redcristianauno.presentation.ui.fragments.GeneralListFragment
 
 class ChurchRepositoryImpl : ChurchRepository {
     val firebaseService = FirebaseService()

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/GrayBlue"
+    android:background="@color/colorPrimary"
     tools:context=".presentation.ui.fragments.CreateEntityFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,29 +34,33 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/Small"
-            android:layout_marginEnd="@dimen/Small"
-            android:layout_marginTop="@dimen/VerySmall"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardElevation="@dimen/VerySmall"
-            app:cardCornerRadius="@dimen/VerySmall">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvTitleCreate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginStart="@dimen/Small"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textStyle="bold"
+                    tools:text="@string/name_entity"
+                    android:textSize="@dimen/TitleSecondary"
+                    android:textColor="@color/GrayDark"
+                    android:textAlignment="center" />
+
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilCreateEntityName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
+                    android:layout_marginTop="@dimen/VerySmall"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    tools:hint="Nombre Red"
+                    android:hint="@string/write_name"
                     android:textColorHint="@color/Gray"
                     app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
                     app:boxCornerRadiusBottomStart="@dimen/VerySmall"
@@ -82,171 +86,214 @@
                     android:id="@+id/tvLeaderCreateEntity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="@dimen/Medium"
+                    android:layout_marginStart="@dimen/Small"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textStyle="bold"
                     tools:text="Líder de Red"
                     android:textSize="@dimen/TitleSecondary"
-                    android:textColor="@color/Gray"/>
+                    android:textColor="@color/GrayDark"/>
 
-                <TextView
-                    android:id="@+id/tvFoundByCreateEntity"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/Small"
+                    android:layout_marginEnd="@dimen/Small"
                     android:layout_marginTop="@dimen/VerySmall"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:fontFamily="@font/roboto"
-                    android:text="@string/found_by"
-                    android:textSize="@dimen/Normal"
-                    android:textColor="@color/Gray"/>
+                    app:cardCornerRadius="@dimen/Small"
+                    app:cardBackgroundColor="@color/GrayAccent">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/cgFilterEntity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:singleSelection="true">
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="@string/find_by_id"
-                            android:textColor="@color/text_chip_color_state"
-                            app:textStartPadding="@dimen/Small"
-                            app:textEndPadding="@dimen/Small"
-                            app:chipBackgroundColor="@color/chip_choice_state"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
-                        <com.google.android.material.chip.Chip
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="@string/find_by_email"
-                            android:textColor="@color/text_chip_color_state"
-                            android:layout_marginStart="@dimen/VerySmall"
-                            app:textStartPadding="@dimen/Small"
-                            app:textEndPadding="@dimen/Small"
-                            app:chipBackgroundColor="@color/chip_choice_state"
-                            style="@style/Widget.MaterialComponents.Chip.Choice"/>
-
-                    </com.google.android.material.chip.ChipGroup>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/llSearchContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    android:visibility="gone"
-                    android:weightSum="1">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilFindByEntity"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.9"
-                        android:layout_marginEnd="@dimen/VerySmall"
-                        tools:hint="Nombre Red"
-                        android:textColorHint="@color/Gray"
-                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
-                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusTopStart="@dimen/VerySmall"
-                        app:boxStrokeColor="@color/Gray"
-                        app:hintTextColor="@color/Gray"
-                        style="@style/TextInputLayoutStyle">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etFindByEntity"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:padding="@dimen/VerySmall"
-                            android:fontFamily="@font/roboto"
-                            android:textColor="@color/Gray"
-                            android:textSize="@dimen/Normal"
-                            android:inputType="textPersonName"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="0.1"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_search_en"/>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvListUserEntity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"/>
-
-                <TextView
-                    android:id="@+id/tvChoiceCreateEntity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    android:fontFamily="@font/roboto"
-                    tools:text="Escoge máximo dos grupos de Subred:"
-                    android:textSize="@dimen/TitleSecondary"
-                    android:textColor="@color/Gray"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilEntity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
-                    app:boxCornerRadiusBottomStart="@dimen/VerySmall"
-                    app:boxCornerRadiusTopEnd="@dimen/VerySmall"
-                    app:boxCornerRadiusTopStart="@dimen/VerySmall"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/filled_exposed_dropdown_entity"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:focusable="false"/>
+                        android:orientation="vertical">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <TextView
+                            android:id="@+id/tvFoundByCreateEntity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/VerySmall"
+                            android:layout_marginStart="@dimen/Small"
+                            android:fontFamily="@font/roboto_bold"
+                            android:textStyle="bold"
+                            android:text="@string/found_by"
+                            android:textSize="@dimen/Normal"
+                            android:textColor="@color/GrayDark"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvListEntity"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/cgFilterEntity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:singleSelection="true">
+
+                                <com.google.android.material.chip.Chip
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="@string/find_by_id"
+                                    android:textColor="@color/text_chip_color_state"
+                                    app:textStartPadding="@dimen/Small"
+                                    app:textEndPadding="@dimen/Small"
+                                    app:chipBackgroundColor="@color/chip_choice_state"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+                                <com.google.android.material.chip.Chip
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:text="@string/find_by_email"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/text_chip_color_state"
+                                    android:layout_marginStart="@dimen/VerySmall"
+                                    app:textStartPadding="@dimen/Small"
+                                    app:textEndPadding="@dimen/Small"
+                                    app:chipBackgroundColor="@color/chip_choice_state"
+                                    style="@style/Widget.MaterialComponents.Chip.Choice"/>
+
+                            </com.google.android.material.chip.ChipGroup>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilFindByEntity"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            tools:hint="Escriba un Id..."
+                            android:textColorHint="@color/Gray"
+                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                            app:boxStrokeColor="@color/Gray"
+                            app:hintTextColor="@color/Gray"
+                            style="@style/TextInputLayoutStyle">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etFindByEntity"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:padding="@dimen/VerySmall"
+                                android:fontFamily="@font/roboto"
+                                android:textColor="@color/Gray"
+                                android:textSize="@dimen/Normal"
+                                android:inputType="textPersonName"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/GrayLow"
+                            android:layout_marginTop="@dimen/Small"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvListUserEntity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            android:layout_marginBottom="@dimen/Medium"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:orientation="horizontal"/>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <TextView
+                    android:id="@+id/tvGroupSubred"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/Medium"
+                    android:layout_marginStart="@dimen/Small"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textStyle="bold"
+                    tools:text="Grupos de Subred"
+                    android:textSize="@dimen/TitleSecondary"
+                    android:textColor="@color/GrayDark"/>
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Small"
-                    android:layout_marginStart="@dimen/horinzontal_cardview"
-                    android:layout_marginEnd="@dimen/horinzontal_cardview"
-                    android:layout_marginBottom="@dimen/Big"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"/>
+                    android:layout_marginStart="@dimen/Small"
+                    android:layout_marginEnd="@dimen/Small"
+                    android:layout_marginTop="@dimen/VerySmall"
+                    app:cardCornerRadius="@dimen/Small"
+                    app:cardBackgroundColor="@color/GrayAccent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvChoiceCreateEntity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/VerySmall"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            android:fontFamily="@font/roboto_bold"
+                            tools:text="Escoge máximo dos grupos de Subred:"
+                            android:textSize="@dimen/TitleSecondary"
+                            android:textColor="@color/GrayDark"/>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilEntity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/filled_exposed_dropdown_entity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/GrayLow"
+                            android:layout_marginTop="@dimen/Small"/>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvListEntity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/Small"
+                            android:layout_marginStart="@dimen/Small"
+                            android:layout_marginEnd="@dimen/Small"
+                            android:layout_marginBottom="@dimen/Medium"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:orientation="horizontal"/>
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
     </ScrollView>
 
 

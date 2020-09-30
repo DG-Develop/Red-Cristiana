@@ -3,9 +3,11 @@ package com.david.redcristianauno.presentation.ui.fragments
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -13,22 +15,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
 import com.david.redcristianauno.data.model.CreateEntityModel
+import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.adapters.CreateEntityAdapter
+import com.david.redcristianauno.presentation.ui.adapters.CreateEntityUserAdapter
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModel
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelFactory
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
-import kotlinx.android.synthetic.main.activity_join.*
 import kotlinx.android.synthetic.main.fragment_create_entity.*
 import java.util.*
 
-class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityClickListener {
+class CreateEntityFragment :
+    DialogFragment(),
+    CreateEntityAdapter.OnListEntityClickListener,
+    CreateEntityUserAdapter.OnListEntityUserListener
+{
 
     private lateinit var listAdapter: CreateEntityAdapter
+    private lateinit var listAdapterUsers: CreateEntityUserAdapter
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -64,11 +72,22 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
         val permision = arguments?.getString("permission")
         putHints(permision)
 
+        rvListUserEntity.apply {
+            setHasFixedSize(true)
+        }
+
         viewModel.listUsersFromFirebase()
-        viewModel.listSubredFromFirebase(
-            UserSingleton.getIdEntity("Iglesia")!!,
-            UserSingleton.getIdEntity("Red")!!
-        )
+
+        filled_exposed_dropdown_entity.onItemClickListener =
+            AdapterView.OnItemClickListener{_, _, _, _ ->
+                val data = filled_exposed_dropdown_entity.text.toString()
+                Log.i(TAG, "data: $data")
+                viewModel.refreshListFromFirebase(
+                    UserSingleton.getIdEntity("Iglesia")!!,
+                    data
+                )
+            }
+
 
         cgFilterEntity.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -101,8 +120,15 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
             }
         })
 
+        fab_send_entity.setOnClickListener {
+            createEntity()
+        }
+
         observedViewModel()
-        observables()
+    }
+
+    private fun createEntity() {
+        Log.i(TAG, "Name: ${user.names}")
     }
 
     private fun showSearch(text: CharSequence?) {
@@ -125,8 +151,8 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
 
     private fun observedViewModel() {
         viewModel.users.observe(viewLifecycleOwner, Observer { users ->
-            listAdapter = context?.let { CreateEntityAdapter(it, users, this) }!!
-            rvListUserEntity.adapter = listAdapter
+            listAdapterUsers = context?.let { CreateEntityUserAdapter(it, users, this) }!!
+            rvListUserEntity.adapter = listAdapterUsers
         })
 
         viewModel.subred.observe(viewLifecycleOwner, Observer { subredes ->
@@ -134,11 +160,42 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
             rvListEntity.adapter = listAdapter
         })
 
+        viewModel.redesList.observe(viewLifecycleOwner, Observer { listRedes ->
+            val firstDataRed = listRedes[0]
+            filled_exposed_dropdown_entity.setText(firstDataRed)
+            val adapter =
+                context?.let { ArrayAdapter(it, R.layout.dropdown_menu_popup_item, listRedes) }
+            filled_exposed_dropdown_entity.setAdapter(adapter)
+
+            viewModel.listSubredFromFirebase(
+                UserSingleton.getIdEntity("Iglesia")!!,
+                firstDataRed
+            )
+        })
     }
 
     private val oneSelected = mutableListOf<MaterialCardView>()
+    private val oneSelectedEntity = mutableListOf<MaterialCardView>()
+    private lateinit var user: User
 
-    override fun onItemClick(cardView: MaterialCardView, user: CreateEntityModel) {
+    override fun onItemClick(cardView: MaterialCardView, entity: CreateEntityModel) {
+
+        if (oneSelectedEntity.size == 0) {
+            oneSelectedEntity.add(cardView)
+        } else if (cardView.isChecked && oneSelectedEntity.size > 0) {
+            oneSelectedEntity.removeAt(0)
+        } else {
+            val check: MaterialCardView = oneSelectedEntity[0]
+            check.isChecked = false
+            oneSelectedEntity.removeAt(0)
+            oneSelectedEntity.add(cardView)
+        }
+
+        cardView.isChecked = !cardView.isChecked
+
+    }
+
+    override fun onItemClickUser(cardView: MaterialCardView, user: User) {
 
         if (oneSelected.size == 0) {
             oneSelected.add(cardView)
@@ -152,17 +209,7 @@ class CreateEntityFragment : DialogFragment(), CreateEntityAdapter.OnListEntityC
         }
 
         cardView.isChecked = !cardView.isChecked
-
-    }
-
-    private fun observables() {
-        viewModel.redesList.observe(viewLifecycleOwner, Observer { listRedes ->
-            val firstDataRed = listRedes[0]
-            filled_exposed_dropdown_entity.setText(firstDataRed)
-            val adapter =
-                context?.let { ArrayAdapter(it, R.layout.dropdown_menu_popup_item, listRedes) }
-            filled_exposed_dropdown_entity.setAdapter(adapter)
-        })
+        this.user = user
     }
 
     companion object {

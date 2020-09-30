@@ -11,12 +11,16 @@ import java.lang.Exception
 
 class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
     private val church = churchUseCase
-    var users = MutableLiveData<ArrayList<CreateEntityModel>>()
-    var redesList = MutableLiveData<MutableList<String>>()
+    var redesList = MutableLiveData<MutableList<String>>() //Para rellenar el comboBox
+
+    var users = MutableLiveData<ArrayList<User>>()
     var subred = MutableLiveData<ArrayList<CreateEntityModel>>()
-    val listUser: ArrayList<CreateEntityModel> = ArrayList()
-    val listFound: ArrayList<CreateEntityModel> = ArrayList()
-    private val listEntity: ArrayList<CreateEntityModel> = ArrayList()
+
+    val listUser: ArrayList<User> = ArrayList()
+    val listEntity: ArrayList<CreateEntityModel> = ArrayList()
+
+    val listFoundUsers: ArrayList<User> = ArrayList()
+    val listFoundEntity: ArrayList<CreateEntityModel> = ArrayList()
 
     fun search(char: String, key: String){
         searchUserWithoutSomeParamsFromFirebase(char, key)
@@ -27,7 +31,7 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
             override fun OnSucces(result: List<User>?) {
                 if (result != null) {
                     for (user in result){
-                        listUser.add(CreateEntityModel(user.names, user.email, user.permission))
+                        listUser.add(user)
                     }
                 }
                 users.postValue(listUser)
@@ -71,13 +75,31 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
     private fun searchUserWithoutSomeParamsFromFirebase(char: String, key: String){
         church.searchUserWithoutSomeParams(char, key, object: Callback<List<User>>{
             override fun OnSucces(result: List<User>?) {
-                listFound.clear()
+                listFoundUsers.clear()
                 if (result != null) {
                     for(user in result){
-                        listFound.add(CreateEntityModel(user.names, user.email, user.permission))
+                        listFoundUsers.add(user)
                     }
                 }
-                users.postValue(listFound)
+                users.postValue(listFoundUsers)
+            }
+
+            override fun onFailure(exception: Exception) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun refreshListFromFirebase(iglesia: String, red: String){
+        church.getSubredObject(iglesia, red, object : Callback<List<Subred>>{
+            override fun OnSucces(result: List<Subred>?) {
+                listFoundEntity.clear()
+                if (result != null) {
+                    for(subred in result){
+                        listFoundEntity.add(CreateEntityModel(subred.id_subred, "", "Subred"))
+                    }
+                }
+                subred.postValue(listFoundEntity)
             }
 
             override fun onFailure(exception: Exception) {

@@ -1,6 +1,7 @@
 package com.david.redcristianauno.presentation.ui.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +20,7 @@ class CreateEntityAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder<*>>() {
 
     interface OnListEntityClickListener {
-        fun onItemClick(cardView: MaterialCardView, user: CreateEntityModel)
+        fun onItemClick(cardView: MaterialCardView, entity: CreateEntityModel)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> =
@@ -43,8 +44,8 @@ class CreateEntityAdapter(
     inner class EntityViewHolder(itemView: View) : BaseViewHolder<CreateEntityModel>(itemView) {
         override fun bind(item: CreateEntityModel, position: Int) {
             putImage(item)
-            itemView.tvName.text = item.name
-            itemView.tvEmail.text = item.email
+            itemView.tvNameEntity.text = item.name
+            itemView.tvNameLeader.text = item.name_leader
             itemView.mcvEntityItem.setOnClickListener {
                 itemClickListener.onItemClick(itemView.mcvEntityItem, item)
             }
@@ -52,12 +53,8 @@ class CreateEntityAdapter(
 
         private fun putImage(item: CreateEntityModel){
             when(item.image){
-                "Normal" -> itemView.ivType.setImageResource(R.drawable.ic_icon_member)
-                "Lider Celula" -> itemView.ivType.setImageResource(R.drawable.ic_icon_leader_celula)
-                "Lider Subred" -> itemView.ivType.setImageResource(R.drawable.ic_icon_leader_subred)
-                "Lider Red" -> itemView.ivType.setImageResource(R.drawable.ic_icon_leader_red)
-                "Subred" -> itemView.ivType.setImageResource(R.drawable.ic_icon_subred)
-                "Celula" -> itemView.ivType.setImageResource(R.drawable.ic_icon_celula)
+                "Subred" -> itemView.ivTypeEntity.setImageResource(R.drawable.ic_icon_subred)
+                "Celula" -> itemView.ivTypeEntity.setImageResource(R.drawable.ic_icon_celula)
             }
         }
     }

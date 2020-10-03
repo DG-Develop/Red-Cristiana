@@ -5,22 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
 import com.david.redcristianauno.base.BaseViewHolder
 import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.presentation.ui.fragments.CreateEntityFragment
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.item_entity_user.view.*
 import java.lang.IllegalArgumentException
 
 class CreateEntityUserAdapter(
     private val context: Context,
-    private var list: ArrayList<User>,
+    private val listUserEntity: List<User>,
     private val itemClickListenerUser: OnListEntityUserListener
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(){
 
     interface OnListEntityUserListener{
-        fun onItemClickUser(cardView: MaterialCardView, user: User)
+        fun onItemClickUser(cardView: MaterialCardView,  user: User)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> =
@@ -32,19 +34,20 @@ class CreateEntityUserAdapter(
             )
         )
 
+    override fun getItemCount(): Int = listUserEntity.size
+
     override fun onBindViewHolder(holder: BaseViewHolder<*>, position: Int) {
-        Log.i("entityInfo", "position $position")
         when(holder){
-            is UserEntityViewHolder -> holder.bind(list[position], position)
+            is UserEntityViewHolder -> holder.bind(listUserEntity[position], position)
             else -> throw IllegalArgumentException("Se olvido pasar el viewmodel en el bind")
         }
     }
 
-    override fun getItemCount(): Int = list.size
-
     inner class UserEntityViewHolder(itemView: View) : BaseViewHolder<User>(itemView){
 
         override fun bind(item: User, position: Int) {
+            /*setIsRecyclable(false)*/
+            /*Log.i(CreateEntityFragment.TAG, "Card: ${itemView.mcvEntityUserItem}")*/
             putImage(item)
             itemView.tvName.text = item.names
             itemView.tvEmail.text = item.email

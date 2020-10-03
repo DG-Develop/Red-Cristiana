@@ -13,10 +13,9 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
     private val church = churchUseCase
     var redesList = MutableLiveData<MutableList<String>>() //Para rellenar el comboBox
 
-    var users = MutableLiveData<ArrayList<User>>()
+    var users: MutableLiveData<List<User>> = MutableLiveData()
     var subred = MutableLiveData<ArrayList<CreateEntityModel>>()
 
-    val listUser: ArrayList<User> = ArrayList()
     val listEntity: ArrayList<CreateEntityModel> = ArrayList()
 
     val listFoundUsers: ArrayList<User> = ArrayList()
@@ -29,12 +28,7 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
     fun listUsersFromFirebase(){
         church.getListUser(object : Callback<List<User>>{
             override fun OnSucces(result: List<User>?) {
-                if (result != null) {
-                    for (user in result){
-                        listUser.add(user)
-                    }
-                }
-                users.postValue(listUser)
+                users.postValue(result)
             }
 
             override fun onFailure(exception: Exception) {

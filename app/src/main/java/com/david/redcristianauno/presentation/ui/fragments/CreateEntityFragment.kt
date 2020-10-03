@@ -72,10 +72,6 @@ class CreateEntityFragment :
         val permision = arguments?.getString("permission")
         putHints(permision)
 
-        rvListUserEntity.apply {
-            setHasFixedSize(true)
-        }
-
         viewModel.listUsersFromFirebase()
 
         filled_exposed_dropdown_entity.onItemClickListener =
@@ -153,6 +149,8 @@ class CreateEntityFragment :
         viewModel.users.observe(viewLifecycleOwner, Observer { users ->
             listAdapterUsers = context?.let { CreateEntityUserAdapter(it, users, this) }!!
             rvListUserEntity.adapter = listAdapterUsers
+            /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria*/
+            rvListUserEntity.setItemViewCacheSize(users.size)
         })
 
         viewModel.subred.observe(viewLifecycleOwner, Observer { subredes ->
@@ -179,7 +177,6 @@ class CreateEntityFragment :
     private lateinit var user: User
 
     override fun onItemClick(cardView: MaterialCardView, entity: CreateEntityModel) {
-
         if (oneSelectedEntity.size == 0) {
             oneSelectedEntity.add(cardView)
         } else if (cardView.isChecked && oneSelectedEntity.size > 0) {
@@ -196,23 +193,31 @@ class CreateEntityFragment :
     }
 
     override fun onItemClickUser(cardView: MaterialCardView, user: User) {
-
         if (oneSelected.size == 0) {
             oneSelected.add(cardView)
         } else if (cardView.isChecked && oneSelected.size > 0) {
             oneSelected.removeAt(0)
         } else {
             val check: MaterialCardView = oneSelected[0]
-            check.isChecked = false
+            check.isChecked = !check.isChecked
             oneSelected.removeAt(0)
             oneSelected.add(cardView)
         }
 
         cardView.isChecked = !cardView.isChecked
+        cardView.isFocusable = !cardView.isFocusable
         this.user = user
     }
 
     companion object {
         const val TAG = "entityInfo"
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 }

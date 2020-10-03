@@ -202,12 +202,12 @@
                             android:id="@+id/rvListUserEntity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/Small"
                             android:layout_marginStart="@dimen/Small"
+                            android:layout_marginTop="@dimen/Small"
                             android:layout_marginEnd="@dimen/Small"
                             android:layout_marginBottom="@dimen/Medium"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            android:orientation="horizontal"/>
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                     </LinearLayout>
 

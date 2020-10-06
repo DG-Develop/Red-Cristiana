@@ -206,91 +206,12 @@
                             android:layout_marginTop="@dimen/Small"
                             android:layout_marginEnd="@dimen/Small"
                             android:layout_marginBottom="@dimen/Medium"
+                            app:spanCount="5"
                             android:orientation="horizontal"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
                     </LinearLayout>
 
-                </com.google.android.material.card.MaterialCardView>
-
-                <TextView
-                    android:id="@+id/tvGroupSubred"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/Medium"
-                    android:layout_marginStart="@dimen/Small"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textStyle="bold"
-                    tools:text="Grupos de Subred"
-                    android:textSize="@dimen/TitleSecondary"
-                    android:textColor="@color/GrayDark"/>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/Small"
-                    android:layout_marginEnd="@dimen/Small"
-                    android:layout_marginTop="@dimen/VerySmall"
-                    app:cardCornerRadius="@dimen/Small"
-                    app:cardBackgroundColor="@color/GrayAccent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvChoiceCreateEntity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/VerySmall"
-                            android:layout_marginStart="@dimen/Small"
-                            android:layout_marginEnd="@dimen/Small"
-                            android:fontFamily="@font/roboto_bold"
-                            tools:text="Escoge máximo dos grupos de Subred:"
-                            android:textSize="@dimen/TitleSecondary"
-                            android:textColor="@color/GrayDark"/>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/tilEntity"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/Small"
-                            android:layout_marginStart="@dimen/Small"
-                            android:layout_marginEnd="@dimen/Small"
-                            app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
-                            app:boxCornerRadiusBottomStart="@dimen/VerySmall"
-                            app:boxCornerRadiusTopEnd="@dimen/VerySmall"
-                            app:boxCornerRadiusTopStart="@dimen/VerySmall"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
-
-                            <AutoCompleteTextView
-                                android:id="@+id/filled_exposed_dropdown_entity"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="false"/>
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/GrayLow"
-                            android:layout_marginTop="@dimen/Small"/>
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvListEntity"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/Small"
-                            android:layout_marginStart="@dimen/Small"
-                            android:layout_marginEnd="@dimen/Small"
-                            android:layout_marginBottom="@dimen/Medium"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            android:orientation="horizontal"/>
-
-                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>

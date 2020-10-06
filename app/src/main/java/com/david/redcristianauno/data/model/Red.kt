@@ -4,7 +4,7 @@ import com.google.firebase.firestore.DocumentReference
 import java.io.Serializable
 
 class Red : Serializable{
-    val created_by: DocumentReference? = null
-    val id_red: String = ""
-    val name_leader: String = ""
+    var created_by: DocumentReference? = null
+    var id_red: String = ""
+    var name_leader: String = ""
 }

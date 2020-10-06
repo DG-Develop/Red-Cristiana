@@ -2,40 +2,39 @@ package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
-import com.david.redcristianauno.data.model.CreateEntityModel
+import com.david.redcristianauno.data.model.Red
 import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
+import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
-import com.david.redcristianauno.presentation.ui.adapters.CreateEntityAdapter
 import com.david.redcristianauno.presentation.ui.adapters.CreateEntityUserAdapter
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModel
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelFactory
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_create_entity.*
+import java.lang.Exception
 import java.util.*
 
 class CreateEntityFragment :
     DialogFragment(),
-    CreateEntityAdapter.OnListEntityClickListener,
-    CreateEntityUserAdapter.OnListEntityUserListener
-{
-
-    private lateinit var listAdapter: CreateEntityAdapter
+    CreateEntityUserAdapter.OnListEntityUserListener {
+    val firebaseService = FirebaseService()
     private lateinit var listAdapterUsers: CreateEntityUserAdapter
 
     private val viewModel by lazy {
@@ -74,16 +73,6 @@ class CreateEntityFragment :
 
         viewModel.listUsersFromFirebase()
 
-        filled_exposed_dropdown_entity.onItemClickListener =
-            AdapterView.OnItemClickListener{_, _, _, _ ->
-                val data = filled_exposed_dropdown_entity.text.toString()
-                Log.i(TAG, "data: $data")
-                viewModel.refreshListFromFirebase(
-                    UserSingleton.getIdEntity("Iglesia")!!,
-                    data
-                )
-            }
-
 
         cgFilterEntity.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -117,14 +106,50 @@ class CreateEntityFragment :
         })
 
         fab_send_entity.setOnClickListener {
-            createEntity()
+            createEntity(it)
         }
 
         observedViewModel()
     }
 
-    private fun createEntity() {
-        Log.i(TAG, "Name: ${user.names}")
+    private fun createEntity(view: View) {
+        val name = etCreateEntityName.text.toString().trim()
+
+        if (TextUtils.isEmpty(name)) {
+            return SnackBarMD.getSBIndefinite(view, "Ponga un nombre a la red")
+        }
+
+        if (selectUser.isEmpty()) {
+            return SnackBarMD.getSBIndefinite(view, "Por favot seleccione a un lider de red")
+        }
+
+        Log.i(TAG, "Collection: ${selectUser.values.first().names}")
+        val red = Red()
+        red.id_red = name
+        red.name_leader = selectUser.values.first().names
+        red.created_by = firebaseService.firebaseFirestore
+            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+
+        firebaseService.setDocumentWithID(
+            red,
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${UserSingleton.getIdEntity("Iglesia")}/" +
+                    FirebaseService.REDES_COLLECTION_NAME,
+            name,
+            object : Callback<Void> {
+                override fun OnSucces(result: Void?) {
+                    SnackBarMD.getSBNormal(view, "Registrado con exito")
+                }
+
+                override fun onFailure(exception: Exception) {
+                    SnackBarMD.getSBNormal(
+                        view,
+                        "Hubo un error en el registro intentelo mas tarde."
+                    )
+                }
+            })
+
     }
 
     private fun showSearch(text: CharSequence?) {
@@ -136,11 +161,8 @@ class CreateEntityFragment :
     private fun putHints(permision: String?) {
         when (permision) {
             "AT" -> {
-                viewModel.fillTilRedFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
                 tvTitleCreate.text = "Nombre Red"
                 tvLeaderCreateEntity.text = "Líder de Red"
-                tvGroupSubred.text = "Grupos de Subred"
-                tvChoiceCreateEntity.text = "Escoge máximo dos grupos de Subred"
             }
         }
     }
@@ -152,61 +174,25 @@ class CreateEntityFragment :
             /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria*/
             rvListUserEntity.setItemViewCacheSize(users.size)
         })
-
-        viewModel.subred.observe(viewLifecycleOwner, Observer { subredes ->
-            listAdapter = context?.let { CreateEntityAdapter(it, subredes, this) }!!
-            rvListEntity.adapter = listAdapter
-        })
-
-        viewModel.redesList.observe(viewLifecycleOwner, Observer { listRedes ->
-            val firstDataRed = listRedes[0]
-            filled_exposed_dropdown_entity.setText(firstDataRed)
-            val adapter =
-                context?.let { ArrayAdapter(it, R.layout.dropdown_menu_popup_item, listRedes) }
-            filled_exposed_dropdown_entity.setAdapter(adapter)
-
-            viewModel.listSubredFromFirebase(
-                UserSingleton.getIdEntity("Iglesia")!!,
-                firstDataRed
-            )
-        })
     }
 
-    private val oneSelected = mutableListOf<MaterialCardView>()
-    private val oneSelectedEntity = mutableListOf<MaterialCardView>()
-    private lateinit var user: User
-
-    override fun onItemClick(cardView: MaterialCardView, entity: CreateEntityModel) {
-        if (oneSelectedEntity.size == 0) {
-            oneSelectedEntity.add(cardView)
-        } else if (cardView.isChecked && oneSelectedEntity.size > 0) {
-            oneSelectedEntity.removeAt(0)
-        } else {
-            val check: MaterialCardView = oneSelectedEntity[0]
-            check.isChecked = false
-            oneSelectedEntity.removeAt(0)
-            oneSelectedEntity.add(cardView)
-        }
-
-        cardView.isChecked = !cardView.isChecked
-
-    }
+    private val selectUser = mutableMapOf<MaterialCardView, User>()
 
     override fun onItemClickUser(cardView: MaterialCardView, user: User) {
-        if (oneSelected.size == 0) {
-            oneSelected.add(cardView)
-        } else if (cardView.isChecked && oneSelected.size > 0) {
-            oneSelected.removeAt(0)
+
+        if (selectUser.isEmpty()) {
+            selectUser[cardView] = user
+        } else if (cardView.isChecked && selectUser.isNotEmpty()) {
+            selectUser.clear()
         } else {
-            val check: MaterialCardView = oneSelected[0]
-            check.isChecked = !check.isChecked
-            oneSelected.removeAt(0)
-            oneSelected.add(cardView)
+            val card: MaterialCardView = selectUser.keys.first()
+            card.isChecked = !card.isChecked
+            selectUser.clear()
+            selectUser[cardView] = user
         }
 
         cardView.isChecked = !cardView.isChecked
         cardView.isFocusable = !cardView.isFocusable
-        this.user = user
     }
 
     companion object {

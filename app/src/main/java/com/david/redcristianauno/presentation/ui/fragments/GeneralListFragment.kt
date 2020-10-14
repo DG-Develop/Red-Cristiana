@@ -75,9 +75,9 @@ class GeneralListFragment : DialogFragment() {
             "Normal", "Lider Celula" -> {
 
             }
-            "AT"-> {
+            "Admin"-> {
                 rvTitleGeneral.text = "Lista de Redes"
-                type = "AT"
+                type = "Admin"
             }
         }
     }

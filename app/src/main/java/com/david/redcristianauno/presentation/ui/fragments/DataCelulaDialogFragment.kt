@@ -31,10 +31,6 @@ import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class DataCelulaDialogFragment : DialogFragment() {
 
     private var cal = Calendar.getInstance()

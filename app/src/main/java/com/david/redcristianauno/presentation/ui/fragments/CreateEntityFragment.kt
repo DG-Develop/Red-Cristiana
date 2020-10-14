@@ -160,11 +160,17 @@ class CreateEntityFragment :
 
     private fun putHints(permision: String?) {
         when (permision) {
-            "AT" -> {
+            "Admin" -> {
+                hideSelect()
                 tvTitleCreate.text = "Nombre Red"
                 tvLeaderCreateEntity.text = "Líder de Red"
             }
         }
+    }
+
+    private fun hideSelect() {
+        tvSelectEntity.visibility = View.GONE
+        tilEntity.visibility = View.GONE
     }
 
     private fun observedViewModel() {

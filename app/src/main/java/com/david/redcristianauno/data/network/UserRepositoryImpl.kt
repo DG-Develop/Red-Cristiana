@@ -118,7 +118,7 @@ class UserRepositoryImpl : UserRepository {
                     for (doc in result) {
                         list = result.toObjects(User::class.java)
                         val filter =
-                            list.filter { it.permission != "Postulado" && it.permission != "Red" && it.permission != "AT" }
+                            list.filter { it.permission != "Postulado" && it.permission != "Red" && it.permission != "Admin" }
                         val names = filter.sortedBy { it.names }
                         callback.OnSucces(names)
                         break

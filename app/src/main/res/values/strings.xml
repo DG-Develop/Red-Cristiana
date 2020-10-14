@@ -136,5 +136,8 @@ ser aceptado o rechazado por los administradores</string>
     <string name="title_capture">Datos Generales</string>
     <string name="name_entity">Nombre Red</string>
     <string name="write_name">Escribe un nombre</string>
+    <string name="bs_network">Redes</string>
+    <string name="bs_subnetwork">Subredes</string>
+    <string name="bs_cell">Celulas</string>
 
 </resources>

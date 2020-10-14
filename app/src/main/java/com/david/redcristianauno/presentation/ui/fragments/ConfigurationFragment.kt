@@ -116,8 +116,8 @@ class ConfigurationFragment : Fragment() {
                 cvUploadNotice.visibility = View.GONE
                 putCreateTitle("Crear Celula")
             }
-            "AT"-> {
-                putCreateTitle("Crear Red")
+            "Admin"-> {
+                putCreateTitle("Ver Lista Entidades")
             }
         }
     }

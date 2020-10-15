@@ -55,10 +55,12 @@ class GeneralListFragment : DialogFragment() {
         }
 
         viewModel.listRedesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
-        putTitle(user?.permission)
+        val data = arguments?.getString("permission")
+
+        putTitle(data)
         observedViewModel()
         fab_new_item.setOnClickListener {
-            val bundle = bundleOf("permission" to type)
+            val bundle = bundleOf("typeList" to type)
             findNavController().navigate(R.id.createEntityFragment, bundle)
         }
     }
@@ -76,8 +78,21 @@ class GeneralListFragment : DialogFragment() {
 
             }
             "Admin"-> {
-                rvTitleGeneral.text = "Lista de Redes"
-                type = "Admin"
+                val dataType = arguments?.getString("dataType")
+                when (dataType) {
+                    "Red" -> {
+                        rvTitleGeneral.text = "Lista de Redes"
+                        type = dataType
+                    }
+                    "Subred" -> {
+                        rvTitleGeneral.text = "Lista de Subredes"
+                        type = dataType
+                    }
+                    "Celula" -> {
+                        rvTitleGeneral.text = "Lista de Celulas"
+                        type = dataType
+                    }
+                }
             }
         }
     }

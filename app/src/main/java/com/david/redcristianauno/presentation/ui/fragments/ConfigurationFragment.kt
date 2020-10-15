@@ -15,12 +15,15 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.PermissionUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModel
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModelFactory
 import com.david.redcristianauno.vo.Resource
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.android.synthetic.main.bottom_sheet_entity.*
 import kotlinx.android.synthetic.main.fragment_configuration.*
 
 class ConfigurationFragment : Fragment() {
@@ -28,6 +31,7 @@ class ConfigurationFragment : Fragment() {
     val firebaseService = FirebaseService()
     private var permission: String? = null
     private val user = UserSingleton.getUser()
+    private lateinit var type: String //Dependiendo del tipo de dato podra hacer diferentes funciones
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -52,12 +56,21 @@ class ConfigurationFragment : Fragment() {
         //observedPermission()
         hideMenuUserNormal(user?.permission!!)
 
+        val mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet_entity)
+        mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        var flag = true
+
         cvProfile.setOnClickListener {
             findNavController().navigate(R.id.profileConfigurationFragmentDialog)
         }
 
         cvCreate.setOnClickListener {
-            findNavController().navigate(R.id.generalListFragment)
+            if(type == "Admin"){
+                mBottomSheetBehavior.state = if (flag) BottomSheetBehavior.STATE_EXPANDED else BottomSheetBehavior.STATE_HIDDEN
+                flag = !flag
+            }else{
+                findNavController().navigate(R.id.generalListFragment)
+            }
         }
 
         cvManageUser.setOnClickListener{
@@ -84,6 +97,37 @@ class ConfigurationFragment : Fragment() {
                 .setNegativeButton("Cancelar") { dialog, _ ->
                     dialog.cancel()
                 }.show()
+        }
+
+        // Bottom Sheet Entity Events
+        btnGoRed.setOnClickListener {
+            val bundle = bundleOf(
+                "permission" to "Admin",
+                "dataType" to "Red"
+            )
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            flag=!flag
+            findNavController().navigate(R.id.generalListFragment, bundle)
+        }
+
+        btnGoSubred.setOnClickListener {
+            val bundle = bundleOf(
+                "permission" to type,
+                "dataType" to "Subred"
+            )
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            flag=!flag
+            findNavController().navigate(R.id.generalListFragment, bundle)
+        }
+
+        btnGoCelula.setOnClickListener{
+            val bundle = bundleOf(
+                "permission" to type,
+                "dataType" to "Celula"
+            )
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            flag=!flag
+            findNavController().navigate(R.id.generalListFragment, bundle)
         }
 
     }
@@ -117,6 +161,7 @@ class ConfigurationFragment : Fragment() {
                 putCreateTitle("Crear Celula")
             }
             "Admin"-> {
+                type = data
                 putCreateTitle("Ver Lista Entidades")
             }
         }

@@ -68,8 +68,9 @@ class CreateEntityFragment :
         toolbarCreateEntity.setNavigationOnClickListener {
             dismiss()
         }
-        val permision = arguments?.getString("permission")
-        putHints(permision)
+        val data = arguments?.getString("typeList")
+        Log.i(TAG, "data es: $data")
+        putHints(data)
 
         viewModel.listUsersFromFirebase()
 
@@ -160,7 +161,17 @@ class CreateEntityFragment :
 
     private fun putHints(permision: String?) {
         when (permision) {
-            "Admin" -> {
+            "Celula" -> {
+                hideSelect()
+                tvTitleCreate.text = "Nombre Celula"
+                tvLeaderCreateEntity.text = "Líder de Celula"
+            }
+            "Subred" -> {
+                hideSelect()
+                tvTitleCreate.text = "Nombre Subred"
+                tvLeaderCreateEntity.text = "Líder de Subred"
+            }
+            "Red" -> {
                 hideSelect()
                 tvTitleCreate.text = "Nombre Red"
                 tvLeaderCreateEntity.text = "Líder de Red"

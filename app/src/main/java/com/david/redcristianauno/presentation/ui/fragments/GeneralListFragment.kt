@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -23,7 +25,6 @@ import kotlinx.android.synthetic.main.fragment_general_list.*
 
 class GeneralListFragment : DialogFragment() {
 
-    private val user = UserSingleton.getUser()
     private lateinit var listAdapter: GeneralListAdapter
     private lateinit var type: String
 
@@ -54,14 +55,42 @@ class GeneralListFragment : DialogFragment() {
             dismiss()
         }
 
-        viewModel.listRedesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
         val data = arguments?.getString("permission")
 
         putTitle(data)
-        observedViewModel()
+
+        dropdown_entity_general_red.onItemClickListener =
+            AdapterView.OnItemClickListener{ _, _, _, _ ->
+                val red = dropdown_entity_general_red.text.toString()
+                fillListOrFillDropdownEntity(red)
+            }
+
+        dropdown_entity_general_subred.onItemClickListener =
+            AdapterView.OnItemClickListener{ _, _, _, _ ->
+                val subred = dropdown_entity_general_subred.text.toString()
+                viewModel.listCelulasFromFirebase(
+                    UserSingleton.getIdEntity("Iglesia")!!,
+                    dropdown_entity_general_red.text.toString(),
+                    subred
+                )
+            }
+
         fab_new_item.setOnClickListener {
             val bundle = bundleOf("typeList" to type)
             findNavController().navigate(R.id.createEntityFragment, bundle)
+        }
+
+        observedViewModel()
+    }
+
+    private fun fillListOrFillDropdownEntity(name: String){
+        when (arguments?.getString("dataType")) {
+            "Subred" -> {
+                viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, name)
+            }
+            "Celula" -> {
+                viewModel.fillTilSubred(UserSingleton.getIdEntity("Iglesia")!!, name)
+            }
         }
     }
 
@@ -70,6 +99,55 @@ class GeneralListFragment : DialogFragment() {
             listAdapter = context?.let { GeneralListAdapter(it, redes) }!!
             rvListUserGeneral.adapter = listAdapter
         })
+
+        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes->
+            listAdapter = context?.let { GeneralListAdapter(it, subredes) }!!
+            rvListUserGeneral.adapter = listAdapter
+        })
+
+        viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas->
+            listAdapter = context?.let { GeneralListAdapter(it, celulas) }!!
+            rvListUserGeneral.adapter = listAdapter
+        })
+
+        // dropdown observes
+        viewModel.dropdownRed.observe(viewLifecycleOwner, Observer {listRedes ->
+            var firstData  = ""
+            if(listRedes.isNotEmpty()){
+                firstData = listRedes[0]
+            }
+
+            dropdown_entity_general_red.setText(firstData)
+
+            val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listRedes)
+            dropdown_entity_general_red.setAdapter(adapter)
+
+            viewModel.fillTilSubred(
+                UserSingleton.getIdEntity("Iglesia")!!,
+                firstData
+            )
+
+            viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, firstData)
+        })
+
+        viewModel.dropdownSubred.observe(viewLifecycleOwner, Observer {listSubredes ->
+            var firstData = ""
+            if(listSubredes.isNotEmpty()){
+                firstData = listSubredes[0]
+            }
+            dropdown_entity_general_subred.setText(firstData)
+
+            val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listSubredes)
+            dropdown_entity_general_subred.setAdapter(adapter)
+
+            if(dropdown_entity_general_red.text.toString().isNotEmpty()){
+                viewModel.listCelulasFromFirebase(
+                    UserSingleton.getIdEntity("Iglesia")!!,
+                    dropdown_entity_general_red.text.toString(),
+                    firstData
+                )
+            }
+        })
     }
 
     private fun putTitle(permission: String?) {
@@ -77,18 +155,24 @@ class GeneralListFragment : DialogFragment() {
             "Normal", "Lider Celula" -> {
 
             }
-            "Admin"-> {
-                val dataType = arguments?.getString("dataType")
-                when (dataType) {
+            "Admin" -> {
+                when (val dataType = arguments?.getString("dataType")) {
                     "Red" -> {
+                        viewModel.listRedesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
                         rvTitleGeneral.text = "Lista de Redes"
                         type = dataType
                     }
                     "Subred" -> {
+                        viewModel.fillTilRed(UserSingleton.getIdEntity("Iglesia")!!)
+                        mcvEntityContainer.visibility = View.VISIBLE
                         rvTitleGeneral.text = "Lista de Subredes"
                         type = dataType
                     }
                     "Celula" -> {
+                        viewModel.fillTilRed(UserSingleton.getIdEntity("Iglesia")!!)
+                        tvSelectContainerSubred.visibility = View.VISIBLE
+                        tilEntityGeneralSubred.visibility = View.VISIBLE
+                        mcvEntityContainer.visibility = View.VISIBLE
                         rvTitleGeneral.text = "Lista de Celulas"
                         type = dataType
                     }

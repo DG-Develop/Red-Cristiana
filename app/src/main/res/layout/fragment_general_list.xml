@@ -38,6 +38,88 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcvEntityContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:elevation="@dimen/Diminute">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvSelectContainerRed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:layout_marginStart="@dimen/Small"
+                        android:layout_marginTop="@dimen/Small"
+                        android:layout_marginBottom="@dimen/VerySmall"
+                        android:text="@string/select_red"
+                        android:textSize="@dimen/Subtitle"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEntityGeneral"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/Small"
+                        android:layout_marginEnd="@dimen/Small"
+                        android:layout_marginBottom="@dimen/Medium"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/dropdown_entity_general_red"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tvSelectContainerSubred"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:layout_marginStart="@dimen/Small"
+                        android:layout_marginBottom="@dimen/VerySmall"
+                        android:text="@string/select_subred"
+                        android:textSize="@dimen/Subtitle"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEntityGeneralSubred"
+                        android:visibility="gone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/Small"
+                        android:layout_marginEnd="@dimen/Small"
+                        android:layout_marginBottom="@dimen/Medium"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/dropdown_entity_general_subred"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvListUserGeneral"
                 android:layout_width="match_parent"

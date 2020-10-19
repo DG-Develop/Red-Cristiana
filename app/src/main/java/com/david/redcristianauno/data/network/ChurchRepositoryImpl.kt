@@ -136,7 +136,25 @@ class ChurchRepositoryImpl : ChurchRepository {
         subred: String,
         callback: Callback<MutableList<Celula>>
     ) {
-        TODO("Not yet implemented")
+        firebaseService.firebaseFirestore.collection(
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${iglesia}/" +
+                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+                    "${red}/" +
+                    "${FirebaseService.SUBREDES_COLLECTION_NAME}/" +
+                    "${subred}/" +
+                    FirebaseService.CELULA_COLLECTION_NAME
+        ).get()
+            .addOnSuccessListener { result ->
+                val list: MutableList<GeneralModel> = mutableListOf()
+                val celulasList = result.toObjects(Celula::class.java)
+
+                for (celula in celulasList) {
+                    list.add(GeneralModel(celula.id_celula, celula.name_leader))
+                }
+
+                callback.OnSucces(celulasList)
+            }
     }
 
     companion object {

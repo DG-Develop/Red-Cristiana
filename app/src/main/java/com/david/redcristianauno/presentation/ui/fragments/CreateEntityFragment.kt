@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,9 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
+import com.david.redcristianauno.data.model.Celula
 import com.david.redcristianauno.data.model.Red
+import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
@@ -69,7 +70,6 @@ class CreateEntityFragment :
             dismiss()
         }
         val data = arguments?.getString("typeList")
-        Log.i(TAG, "data es: $data")
         putHints(data)
 
         viewModel.listUsersFromFirebase()
@@ -124,7 +124,14 @@ class CreateEntityFragment :
             return SnackBarMD.getSBIndefinite(view, "Por favot seleccione a un lider de red")
         }
 
-        Log.i(TAG, "Collection: ${selectUser.values.first().names}")
+        when (arguments?.getString("typeList")) {
+            "Celula" -> createCelula(name, view)
+            "Subred" -> createSubred(name, view)
+            "Red" -> createRed(name, view)
+        }
+    }
+
+    private fun createRed(name: String, view: View) {
         val red = Red()
         red.id_red = name
         red.name_leader = selectUser.values.first().names
@@ -150,7 +157,70 @@ class CreateEntityFragment :
                     )
                 }
             })
+    }
 
+    private fun createSubred(name: String, view: View) {
+        val subred = Subred()
+        subred.id_subred = name
+        subred.name_leader = selectUser.values.first().names
+        subred.created_by = firebaseService.firebaseFirestore
+            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+
+        firebaseService.setDocumentWithID(
+            subred,
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${UserSingleton.getIdEntity("Iglesia")}/" +
+                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+                    "${arguments?.getString("red")!!}/" +
+                    FirebaseService.SUBREDES_COLLECTION_NAME,
+            name,
+
+            object : Callback<Void> {
+                override fun OnSucces(result: Void?) {
+                    SnackBarMD.getSBNormal(view, "Registrado con exito")
+                }
+
+                override fun onFailure(exception: Exception) {
+                    SnackBarMD.getSBNormal(
+                        view,
+                        "Hubo un error en el registro intentelo mas tarde."
+                    )
+                }
+            })
+    }
+
+    private fun createCelula(name: String, view: View) {
+        val celula = Celula()
+        celula.id_celula = name
+        celula.name_leader = selectUser.values.first().names
+        celula.created_by = firebaseService.firebaseFirestore
+            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
+
+        firebaseService.setDocumentWithID(
+            celula,
+            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
+                    "${UserSingleton.getIdEntity("Iglesia")}/" +
+                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+                    "${arguments?.getString("red")!!}/" +
+                    "${FirebaseService.SUBREDES_COLLECTION_NAME}/" +
+                    "${arguments?.getString("subred")!!}/" +
+                    FirebaseService.CELULA_COLLECTION_NAME,
+            name,
+
+            object : Callback<Void> {
+                override fun OnSucces(result: Void?) {
+                    SnackBarMD.getSBNormal(view, "Registrado con exito")
+                }
+
+                override fun onFailure(exception: Exception) {
+                    SnackBarMD.getSBNormal(
+                        view,
+                        "Hubo un error en el registro intentelo mas tarde."
+                    )
+                }
+            })
     }
 
     private fun showSearch(text: CharSequence?) {

@@ -31,7 +31,12 @@ class GeneralListFragment : DialogFragment() {
     private val viewModel by lazy {
         ViewModelProvider(
             this,
-            GeneralListViewModelFactory(ChurchUseCaseImpl(ChurchRepositoryImpl(), UserRepositoryImpl()))
+            GeneralListViewModelFactory(
+                ChurchUseCaseImpl(
+                    ChurchRepositoryImpl(),
+                    UserRepositoryImpl()
+                )
+            )
         ).get(GeneralListViewModel::class.java)
     }
 
@@ -50,7 +55,8 @@ class GeneralListFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbarGeneralList.navigationIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
+        toolbarGeneralList.navigationIcon =
+            ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
         toolbarGeneralList.setNavigationOnClickListener {
             dismiss()
         }
@@ -60,13 +66,13 @@ class GeneralListFragment : DialogFragment() {
         putTitle(data)
 
         dropdown_entity_general_red.onItemClickListener =
-            AdapterView.OnItemClickListener{ _, _, _, _ ->
+            AdapterView.OnItemClickListener { _, _, _, _ ->
                 val red = dropdown_entity_general_red.text.toString()
                 fillListOrFillDropdownEntity(red)
             }
 
         dropdown_entity_general_subred.onItemClickListener =
-            AdapterView.OnItemClickListener{ _, _, _, _ ->
+            AdapterView.OnItemClickListener { _, _, _, _ ->
                 val subred = dropdown_entity_general_subred.text.toString()
                 viewModel.listCelulasFromFirebase(
                     UserSingleton.getIdEntity("Iglesia")!!,
@@ -76,14 +82,18 @@ class GeneralListFragment : DialogFragment() {
             }
 
         fab_new_item.setOnClickListener {
-            val bundle = bundleOf("typeList" to type)
+            val bundle = bundleOf(
+                "typeList" to type,
+                "red" to dropdown_entity_general_red.text.toString(),
+                "subred" to dropdown_entity_general_subred.text.toString()
+            )
             findNavController().navigate(R.id.createEntityFragment, bundle)
         }
 
         observedViewModel()
     }
 
-    private fun fillListOrFillDropdownEntity(name: String){
+    private fun fillListOrFillDropdownEntity(name: String) {
         when (arguments?.getString("dataType")) {
             "Subred" -> {
                 viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, name)
@@ -94,53 +104,58 @@ class GeneralListFragment : DialogFragment() {
         }
     }
 
-    private fun observedViewModel(){
-        viewModel.redes.observe(viewLifecycleOwner, Observer { redes->
+    private fun observedViewModel() {
+        viewModel.redes.observe(viewLifecycleOwner, Observer { redes ->
             listAdapter = context?.let { GeneralListAdapter(it, redes) }!!
             rvListUserGeneral.adapter = listAdapter
         })
 
-        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes->
+        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes ->
             listAdapter = context?.let { GeneralListAdapter(it, subredes) }!!
             rvListUserGeneral.adapter = listAdapter
         })
 
-        viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas->
+        viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas ->
             listAdapter = context?.let { GeneralListAdapter(it, celulas) }!!
             rvListUserGeneral.adapter = listAdapter
         })
 
         // dropdown observes
-        viewModel.dropdownRed.observe(viewLifecycleOwner, Observer {listRedes ->
-            var firstData  = ""
-            if(listRedes.isNotEmpty()){
+        viewModel.dropdownRed.observe(viewLifecycleOwner, Observer { listRedes ->
+            var firstData = ""
+            if (listRedes.isNotEmpty()) {
                 firstData = listRedes[0]
             }
 
             dropdown_entity_general_red.setText(firstData)
 
-            val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listRedes)
+            val adapter =
+                ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listRedes)
             dropdown_entity_general_red.setAdapter(adapter)
 
-            viewModel.fillTilSubred(
-                UserSingleton.getIdEntity("Iglesia")!!,
-                firstData
-            )
+            if(arguments?.getString("dataType") == "Celula"){
+                viewModel.fillTilSubred(
+                    UserSingleton.getIdEntity("Iglesia")!!,
+                    firstData
+                )
+            }else{
+                viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, firstData)
+            }
 
-            viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, firstData)
         })
 
-        viewModel.dropdownSubred.observe(viewLifecycleOwner, Observer {listSubredes ->
+        viewModel.dropdownSubred.observe(viewLifecycleOwner, Observer { listSubredes ->
             var firstData = ""
-            if(listSubredes.isNotEmpty()){
+            if (listSubredes.isNotEmpty()) {
                 firstData = listSubredes[0]
             }
             dropdown_entity_general_subred.setText(firstData)
 
-            val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listSubredes)
+            val adapter =
+                ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listSubredes)
             dropdown_entity_general_subred.setAdapter(adapter)
 
-            if(dropdown_entity_general_red.text.toString().isNotEmpty()){
+            if (dropdown_entity_general_red.text.toString().isNotEmpty()) {
                 viewModel.listCelulasFromFirebase(
                     UserSingleton.getIdEntity("Iglesia")!!,
                     dropdown_entity_general_red.text.toString(),
@@ -151,7 +166,7 @@ class GeneralListFragment : DialogFragment() {
     }
 
     private fun putTitle(permission: String?) {
-        when(permission){
+        when (permission) {
             "Normal", "Lider Celula" -> {
 
             }
@@ -181,7 +196,7 @@ class GeneralListFragment : DialogFragment() {
         }
     }
 
-    companion object{
+    companion object {
         const val TAG = "genInfo"
     }
 

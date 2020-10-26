@@ -1,10 +1,14 @@
 package com.david.redcristianauno.presentation.ui.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
@@ -22,7 +26,13 @@ class CreateEntityUserAdapter(
 ) : RecyclerView.Adapter<BaseViewHolder<*>>(){
 
     interface OnListEntityUserListener{
-        fun onItemClickUser(cardView: MaterialCardView,  user: User)
+        fun onItemClickUser(
+            cardView: MaterialCardView,
+            iv: ImageView,
+            tvName: TextView,
+            tvEmail: TextView,
+            user: User
+        )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<*> =
@@ -46,13 +56,17 @@ class CreateEntityUserAdapter(
     inner class UserEntityViewHolder(itemView: View) : BaseViewHolder<User>(itemView){
 
         override fun bind(item: User, position: Int) {
-            /*setIsRecyclable(false)*/
-            /*Log.i(CreateEntityFragment.TAG, "Card: ${itemView.mcvEntityUserItem}")*/
             putImage(item)
             itemView.tvName.text = item.names
             itemView.tvEmail.text = item.email
             itemView.mcvEntityUserItem.setOnClickListener {
-                itemClickListenerUser.onItemClickUser(itemView.mcvEntityUserItem, item)
+                itemClickListenerUser.onItemClickUser(
+                    itemView.mcvEntityUserItem,
+                    itemView.ivPermission,
+                    itemView.tvName,
+                    itemView.tvEmail,
+                    item
+                )
             }
         }
 

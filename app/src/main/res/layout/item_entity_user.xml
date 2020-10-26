@@ -14,8 +14,9 @@
     app:cardCornerRadius="@dimen/VerySmall"
     app:cardElevation="@dimen/Diminute"
     app:strokeWidth="2dp"
-    app:strokeColor="@color/Gray"
+    app:strokeColor="@color/gray_secondary_to_accent_low"
     android:layout_margin="@dimen/Diminute"
+    android:clipChildren="true"
     android:id="@+id/mcvEntityUserItem">
 
     <LinearLayout
@@ -28,11 +29,10 @@
             android:id="@+id/ivPermission"
             android:layout_width="100dp"
             android:layout_height="100dp"
-
             android:layout_marginTop="@dimen/VerySmall"
             android:layout_gravity="center_horizontal"
             tools:src="@drawable/ic_icon_normal"
-            android:tint="@color/colorAccent"
+            android:tint="@color/Gray"
             android:layout_margin="@dimen/VerySmall"/>
 
         <TextView
@@ -44,7 +44,7 @@
             tools:text="David Gómez"
             android:textAlignment="center"
             android:gravity="center_horizontal"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/Gray" />
 
         <TextView
             android:id="@+id/tvEmail"
@@ -54,7 +54,7 @@
             android:textSize="@dimen/Normal"
             tools:text="dgdband@gmail.com"
             android:gravity="center_horizontal"
-            android:textColor="@color/AccentMedium"
+            android:textColor="@color/GraySecondary"
             android:lines="2"
             android:textAlignment="center"/>
 

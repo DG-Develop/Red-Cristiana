@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -37,6 +40,13 @@ class CreateEntityFragment :
     CreateEntityUserAdapter.OnListEntityUserListener {
     val firebaseService = FirebaseService()
     private lateinit var listAdapterUsers: CreateEntityUserAdapter
+
+    /*Parameters for the RecyclerView when clicked*/
+    private val selectUser = mutableMapOf<MaterialCardView, User>()
+    private val listItemsColors = mutableListOf<Any>()
+    private lateinit var textName: TextView
+    private lateinit var textEmail: TextView
+    private lateinit var ivCircle: ImageView
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -74,14 +84,16 @@ class CreateEntityFragment :
 
         viewModel.listUsersFromFirebase()
 
-
-        cgFilterEntity.setOnCheckedChangeListener { group, checkedId ->
+        cgFilterEntity.setOnCheckedChangeListener{group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
-            if (chip != null) {
-                showSearch(chip.text)
-            } else {
-                tilFindByEntity.visibility = View.GONE
-            }
+            val filter = if (chip != null) chip.text else ""
+            Log.i(TAG, "Chip Selected: $filter")
+        }
+
+
+        cgFindEntity.setOnCheckedChangeListener { group, checkedId ->
+            val chip = group.findViewById<Chip>(checkedId)
+            if (chip != null) showSearch(chip.text)  else  tilFindByEntity.visibility = View.GONE
         }
 
         etFindByEntity.addTextChangedListener(object : TextWatcher {
@@ -232,26 +244,18 @@ class CreateEntityFragment :
     private fun putHints(permision: String?) {
         when (permision) {
             "Celula" -> {
-                hideSelect()
                 tvTitleCreate.text = "Nombre Celula"
                 tvLeaderCreateEntity.text = "Líder de Celula"
             }
             "Subred" -> {
-                hideSelect()
                 tvTitleCreate.text = "Nombre Subred"
                 tvLeaderCreateEntity.text = "Líder de Subred"
             }
             "Red" -> {
-                hideSelect()
                 tvTitleCreate.text = "Nombre Red"
                 tvLeaderCreateEntity.text = "Líder de Red"
             }
         }
-    }
-
-    private fun hideSelect() {
-        tvSelectEntity.visibility = View.GONE
-        tilEntity.visibility = View.GONE
     }
 
     private fun observedViewModel() {
@@ -263,23 +267,77 @@ class CreateEntityFragment :
         })
     }
 
-    private val selectUser = mutableMapOf<MaterialCardView, User>()
+    override fun onItemClickUser(
+        cardView: MaterialCardView,
+        iv: ImageView,
+        tvName: TextView,
+        tvEmail: TextView,
+        user: User
+    ) {
 
-    override fun onItemClickUser(cardView: MaterialCardView, user: User) {
-
-        if (selectUser.isEmpty()) {
+        if (selectUser.isEmpty() && listItemsColors.isEmpty()) {
             selectUser[cardView] = user
-        } else if (cardView.isChecked && selectUser.isNotEmpty()) {
+
+            listItemsColors.add(tvName)
+            listItemsColors.add(iv)
+            listItemsColors.add(tvEmail)
+
+            textName = listItemsColors[0] as TextView
+            textName.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+
+            ivCircle = listItemsColors[1] as ImageView
+            ivCircle.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+
+            textEmail = listItemsColors[2] as TextView
+            textEmail.setTextColor(ContextCompat.getColor(requireContext(), R.color.AccentLow))
+
+        } else if (cardView.isChecked && selectUser.isNotEmpty() && listItemsColors.isNotEmpty()) {
+            textName.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray))
+            ivCircle.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.Gray),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+            textEmail.setTextColor(ContextCompat.getColor(requireContext(), R.color.GraySecondary))
+
+            listItemsColors.clear()
             selectUser.clear()
         } else {
             val card: MaterialCardView = selectUser.keys.first()
             card.isChecked = !card.isChecked
+            textName.setTextColor(ContextCompat.getColor(requireContext(), R.color.Gray))
+            textEmail.setTextColor(ContextCompat.getColor(requireContext(), R.color.GraySecondary))
+            ivCircle.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.Gray),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+
+            listItemsColors.clear()
             selectUser.clear()
+
             selectUser[cardView] = user
+            listItemsColors.add(tvName)
+            listItemsColors.add(iv)
+            listItemsColors.add(tvEmail)
+
+            textName = listItemsColors[0] as TextView
+            textName.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+
+            ivCircle = listItemsColors[1] as ImageView
+            ivCircle.setColorFilter(
+                ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                android.graphics.PorterDuff.Mode.SRC_IN
+            )
+
+            textEmail = listItemsColors[2] as TextView
+            textEmail.setTextColor(ContextCompat.getColor(requireContext(), R.color.AccentLow))
         }
 
         cardView.isChecked = !cardView.isChecked
         cardView.isFocusable = !cardView.isFocusable
+
     }
 
     companion object {

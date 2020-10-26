@@ -111,6 +111,7 @@ ser aceptado o rechazado por los administradores</string>
 
     <string name="postulates">Postulados</string>
     <string name="members">Miembros</string>
+    <string name="member">Miembro</string>
     <string name="red_leader_user">Lideres de Red</string>
 
     <string name="title_general_list_item">Nombre del Líder:</string>
@@ -139,5 +140,6 @@ ser aceptado o rechazado por los administradores</string>
     <string name="bs_network">Redes</string>
     <string name="bs_subnetwork">Subredes</string>
     <string name="bs_cell">Celulas</string>
+    <string name="filter_by">Filtrar por:</string>
 
 </resources>

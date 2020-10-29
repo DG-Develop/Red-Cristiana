@@ -46,7 +46,10 @@ class ChurchUseCaseImpl(
 
     override fun getListUser(callback: Callback<List<User>>) = userRepository.getListUser(callback)
 
+    override fun filterByPermission(permission: String, callback: Callback<List<User>>) =
+        userRepository.filterByPermission(permission, callback)
+
     override fun searchUserWithoutSomeParams(
-        char: String, key: String, callback: Callback<List<User>>
-    ) = userRepository.searchUserWithoutSomeParams(char, key, callback)
+        permission: String, char: String, key: String, callback: Callback<List<User>>
+    ) = userRepository.searchUserWithoutSomeParams(permission, char, key, callback)
 }

@@ -71,11 +71,19 @@ class CreateEntityUserAdapter(
         }
 
         private fun putImage(item: User){
-            when(item.permission){
+            /* En comentarios de forma temporal */
+            /*when(item.permission){
                 "Normal" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_member)
                 "Lider Celula" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_celula)
                 "Lider Subred" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_subred)
                 "Lider Red" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_red)
+            }*/
+
+            when(item.permission){
+                "Normal" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_member)
+                "Lider Celula" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_celula)
+                "Subred" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_subred)
+                "Red" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_red)
             }
         }
     }

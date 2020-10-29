@@ -14,5 +14,6 @@ interface ChurchUseCase {
     fun getSubredObject(iglesia: String, red: String, callback: Callback<List<Subred>>)
     fun getCelulaObject(iglesia: String, red: String, subred: String, callback: Callback<MutableList<Celula>>)
     fun getListUser(callback: Callback<List<User>>)
-    fun searchUserWithoutSomeParams(char: String, key: String, callback: Callback<List<User>>)
+    fun filterByPermission(permission: String, callback: Callback<List<User>>)
+    fun searchUserWithoutSomeParams(permission: String, char: String, key: String, callback: Callback<List<User>>)
 }

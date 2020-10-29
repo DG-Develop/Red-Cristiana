@@ -119,7 +119,7 @@ class UserRepositoryImpl : UserRepository {
                         list = result.toObjects(User::class.java)
                         val filter =
                             list.filter {
-                                it.permission != "Postulado" && it.permission != "Red" && it.permission != "Admin"
+                                it.permission != "Postulado" && it.permission != "Admin"
                             }
                         val names = filter.sortedBy { it.names }
                         callback.OnSucces(names)
@@ -132,21 +132,49 @@ class UserRepositoryImpl : UserRepository {
             }
     }
 
-    override fun searchUserWithoutSomeParams(
-        char: String, key: String, callback: Callback<List<User>>
-    ) {
+    override fun filterByPermission(permission: String, callback: Callback<List<User>>) {
         firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
-            .orderBy(key)
-            .startAt(char).endAt(char + "\uf8ff") //"\uf8ff"
+            .whereEqualTo("permission", permission)
             .get()
             .addOnSuccessListener { result ->
                 lateinit var list: List<User>
                 if (!result.isEmpty) {
                     for (doc in result) {
                         list = result.toObjects(User::class.java)
-                        val filter = list.filter {
-                            it.permission != "Postulado" && it.permission != "Red" && it.permission != "Admin"
+                        callback.OnSucces(list)
+                        break
+                    }
+                } else {
+                    list = result.toObjects(User::class.java)
+                    callback.OnSucces(list)
+                }
+            }
+    }
+
+    override fun searchUserWithoutSomeParams(
+        permission: String, char: String, key: String, callback: Callback<List<User>>
+    ) {
+        firebaseService.firebaseFirestore.collection(USER_COLLECTION_NAME)
+            .orderBy(key)
+            .startAt(char).endAt(char + "\uf8ff") //"\uf8ff"
+            .get()
+            .addOnSuccessListener { result ->
+                Log.i(CreateEntityFragment.TAG, "Permit: $permission")
+                lateinit var list: List<User>
+                if (!result.isEmpty) {
+                    for (doc in result) {
+                        list = result.toObjects(User::class.java)
+
+                        val filter = if (permission.isBlank()) {
+                            list.filter {
+                                it.permission != "Postulado" && it.permission != "Admin"
+                            }
+                        } else {
+                            list.filter {
+                                it.permission == permission
+                            }
                         }
+
                         val names = filter.sortedBy { it.names }
                         callback.OnSucces(names)
                         break

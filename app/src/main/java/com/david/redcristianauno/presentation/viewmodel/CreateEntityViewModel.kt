@@ -16,8 +16,12 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
 
     val listFoundUsers: ArrayList<User> = ArrayList()
 
-    fun search(char: String, key: String){
-        searchUserWithoutSomeParamsFromFirebase(char, key)
+    fun search(permission: String, char: String, key: String){
+        searchUserWithoutSomeParamsFromFirebase(permission ,char, key)
+    }
+
+    fun filter(permission: String){
+        filterByPermissionFromFirebase(permission)
     }
 
     fun listUsersFromFirebase(){
@@ -32,10 +36,26 @@ class CreateEntityViewModel(churchUseCase: ChurchUseCase) : ViewModel(){
         })
     }
 
+    private fun filterByPermissionFromFirebase(permission: String){
+        church.filterByPermission(permission, object : Callback<List<User>>{
+            override fun OnSucces(result: List<User>?) {
+                listFoundUsers.clear()
+                if (result != null){
+                    for (user in result){
+                        listFoundUsers.add(user)
+                    }
+                }
+                users.postValue(listFoundUsers)
+            }
 
+            override fun onFailure(exception: Exception) {
 
-    private fun searchUserWithoutSomeParamsFromFirebase(char: String, key: String){
-        church.searchUserWithoutSomeParams(char, key, object: Callback<List<User>>{
+            }
+        })
+    }
+
+    private fun searchUserWithoutSomeParamsFromFirebase(permission: String, char: String, key: String){
+        church.searchUserWithoutSomeParams(permission, char, key, object: Callback<List<User>>{
             override fun OnSucces(result: List<User>?) {
                 listFoundUsers.clear()
                 if (result != null) {

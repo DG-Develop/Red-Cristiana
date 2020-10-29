@@ -40,6 +40,7 @@ class CreateEntityFragment :
     CreateEntityUserAdapter.OnListEntityUserListener {
     val firebaseService = FirebaseService()
     private lateinit var listAdapterUsers: CreateEntityUserAdapter
+    private var permission: String = ""
 
     /*Parameters for the RecyclerView when clicked*/
     private val selectUser = mutableMapOf<MaterialCardView, User>()
@@ -87,7 +88,24 @@ class CreateEntityFragment :
         cgFilterEntity.setOnCheckedChangeListener{group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
             val filter = if (chip != null) chip.text else ""
-            Log.i(TAG, "Chip Selected: $filter")
+            permission = when (filter) {
+                "Miembro" -> {
+                    "Normal"
+                }
+                "Celula" -> {
+                    "Lider Celula"
+                }
+                else -> {
+                    filter.toString()
+                }
+            }
+
+            if(permission.isNotBlank()){
+                viewModel.filter(permission)
+            }else{
+                viewModel.listUsersFromFirebase()
+            }
+
         }
 
 
@@ -106,13 +124,13 @@ class CreateEntityFragment :
             }
 
             override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                if (tilFindByEntity.hint == "Escriba el ID") {
+                if (tilFindByEntity.hint == "Escriba el Nombre") {
                     viewModel.search(
-                        char.toString().toLowerCase(Locale.getDefault()).trim(), "id"
+                        permission, char.toString(), "names"
                     )
-                } else {
+                }else if(tilFindByEntity.hint == "Escriba el Correo"){
                     viewModel.search(
-                        char.toString().toLowerCase(Locale.getDefault()).trim(), "email"
+                        permission, char.toString().toLowerCase(Locale.getDefault()).trim(), "email"
                     )
                 }
             }
@@ -262,7 +280,7 @@ class CreateEntityFragment :
         viewModel.users.observe(viewLifecycleOwner, Observer { users ->
             listAdapterUsers = context?.let { CreateEntityUserAdapter(it, users, this) }!!
             rvListUserEntity.adapter = listAdapterUsers
-            /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria*/
+            /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria */
             rvListUserEntity.setItemViewCacheSize(users.size)
         })
     }

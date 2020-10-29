@@ -13,5 +13,6 @@ interface UserRepository {
     suspend fun getDataUserAsync(): Resource<User>
     fun updateDataUser(names: String, last_names: String, telephone: String, address: String)
     fun updateDataChurch(iglesia_references: DocumentReference)
-    fun searchUserWithoutSomeParams(char: String, key: String, callback: Callback<List<User>>)
+    fun filterByPermission(permission: String, callback: Callback<List<User>>)
+    fun searchUserWithoutSomeParams(permission: String, char: String, key: String, callback: Callback<List<User>>)
 }

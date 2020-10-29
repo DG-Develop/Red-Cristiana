@@ -100,6 +100,7 @@
                 android:layout_marginStart="@dimen/Small"
                 android:layout_marginTop="@dimen/VerySmall"
                 android:layout_marginEnd="@dimen/Small"
+                android:layout_marginBottom="@dimen/Small"
                 app:cardBackgroundColor="@color/GrayAccent"
                 app:cardCornerRadius="@dimen/Small">
 

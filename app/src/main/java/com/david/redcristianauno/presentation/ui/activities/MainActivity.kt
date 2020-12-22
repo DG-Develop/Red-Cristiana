@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
+import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
@@ -17,16 +19,21 @@ import com.david.redcristianauno.data.preferences.ActivityPreferences
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.viewmodel.MainViewModel
 import com.david.redcristianauno.presentation.viewmodel.MainViewModelFactory
+import com.david.redcristianauno.presentation.viewmodel.MainViewModelP
 import com.david.redcristianauno.vo.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.DateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val firebaseService = FirebaseService()
     private var permission: String? = null
     private val user = UserSingleton.getUser()
+
+    private val mainViewModel by viewModels<MainViewModelP>()
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -42,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         configNav()
         observedDayOfWeek()
         observedPermission()
+
+        mainViewModel.setSearchUser("8VZSKi5HmVITr30p7WQi")
+        setupObservers()
     }
 
     private fun configNav() {
@@ -51,6 +61,22 @@ class MainActivity : AppCompatActivity() {
                 R.id.fragContent
             )
         )
+    }
+
+    private fun setupObservers(){
+        mainViewModel.fetchUserId.observe(this, Observer { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    Log.i(MAIN_ACTIVITY, "Cargando")
+                }
+                is Resource.Success -> {
+                    Log.i(MAIN_ACTIVITY, "Datos: ${result.data}")
+                }
+                is Resource.Failure -> {
+                    Log.i(MAIN_ACTIVITY, "Error: ${result.exception}")
+                }
+            }
+        })
     }
 
     private fun observedDayOfWeek() {

@@ -15,7 +15,6 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.PermissionUseCaseImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
-import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.PermissionViewModel

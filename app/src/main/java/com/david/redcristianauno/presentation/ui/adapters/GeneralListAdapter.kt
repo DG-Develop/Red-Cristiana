@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
-import com.david.redcristianauno.base.BaseViewHolder
+import com.david.redcristianauno.core.BaseViewHolder
 import com.david.redcristianauno.data.model.GeneralModel
 import kotlinx.android.synthetic.main.item_general_list.view.*
 import java.lang.IllegalArgumentException

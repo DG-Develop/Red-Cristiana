@@ -1,8 +1,5 @@
 package com.david.redcristianauno.domain
 
-import android.content.Context
-import android.widget.AutoCompleteTextView
-import android.widget.Spinner
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.vo.Resource
 

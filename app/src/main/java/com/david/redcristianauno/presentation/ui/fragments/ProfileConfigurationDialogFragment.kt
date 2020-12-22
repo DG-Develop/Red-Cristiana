@@ -1,7 +1,6 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +16,6 @@ import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
 import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
 import kotlinx.android.synthetic.main.fragment_profile_configuration_dialog.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class ProfileConfigurationDialogFragment : DialogFragment() {

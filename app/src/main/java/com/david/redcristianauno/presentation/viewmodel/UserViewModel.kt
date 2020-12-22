@@ -1,16 +1,12 @@
 package com.david.redcristianauno.presentation.viewmodel
 
-import android.content.Context
 import android.util.Log
-import android.widget.AutoCompleteTextView
-import android.widget.Spinner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.domain.UserUseCase
 import com.david.redcristianauno.vo.Resource
-import kotlinx.android.synthetic.main.fragment_data_celula_dialog.*
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 

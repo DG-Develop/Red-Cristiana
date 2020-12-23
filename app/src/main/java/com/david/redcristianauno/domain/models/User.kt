@@ -7,6 +7,19 @@ import androidx.room.PrimaryKey
 import com.google.firebase.firestore.DocumentReference
 import kotlinx.android.parcel.Parcelize
 
+
+data class UserDataSource(
+    val id: String = "",
+    val names: String = "",
+    val last_names: String = "",
+    val email: String = "",
+    val address: String = "",
+    val telephone: String = "",
+    val permission: List<String> = listOf(),
+    val subred_name: String = "",
+    val iglesia_references: DocumentReference? = null
+)
+
 @Parcelize
 data class User(
     val id: String = "",
@@ -17,7 +30,7 @@ data class User(
     val telephone: String = "",
     val permission: List<String> = listOf(),
     val subred_name: String = "",
-    val iglesia_references: DocumentReference? = null
+    val iglesia_references: String? = null
 ) : Parcelable
 
 data class UserList(
@@ -43,7 +56,34 @@ data class UserEntity(
     @ColumnInfo(name = "user_subredName")
     val subred_name: String,
     @ColumnInfo(name = "user_iglesiaReferences")
-    val iglesia_references: DocumentReference?
+    val iglesia_references: String?
 )
 
-fun UserEntity.asUser() = User(id, names, last_names, email, address, telephone,permission, subred_name, iglesia_references)
+fun UserEntity.asUser() = User(
+    id,
+    names,
+    last_names,
+    email,
+    address,
+    telephone,
+    permission,
+    subred_name,
+    iglesia_references
+)
+
+fun User.asUserEntity() = UserEntity(
+    id,
+    names,
+    last_names,
+    email,
+    address,
+    telephone,
+    permission,
+    subred_name,
+    iglesia_references
+)
+
+fun UserDataSource.asUser() = User(
+    id, names, last_names, email, address, telephone, permission, subred_name,
+    iglesia_references?.path
+)

@@ -63,7 +63,7 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
         ibDeleteUserConfigurationDialog.setOnClickListener {
             if (userChecked.size > 0) {
                 MaterialAlertDialogBuilder(
-                    context,
+                    requireContext(),
                     R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
                 )
                     .setTitle("Eliminar")
@@ -88,7 +88,7 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
             if (userChecked.size > 0) {
                 context?.let {
                     MaterialAlertDialogBuilder(
-                        context,
+                        requireContext(),
                         R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
                     )
                         .setTitle("Elija un permiso")

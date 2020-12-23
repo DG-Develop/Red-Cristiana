@@ -5,5 +5,6 @@ import com.david.redcristianauno.vo.Resource
 
 interface LocalDataSource {
 
-    suspend fun getUserById(userId: String): Resource<User>?
+    suspend fun getUserById(userId: String): Resource<User?>
+    suspend fun createUser(data: User)
 }

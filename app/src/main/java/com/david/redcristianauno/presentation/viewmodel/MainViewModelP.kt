@@ -22,7 +22,7 @@ class MainViewModelP @ViewModelInject constructor(
             emit(Resource.Loading())
 
             try {
-                emit(getUserByIdUseCase.invoke(userId))
+                emit(getUserByIdUseCase.invokeRemote(userId))
             }catch (e: Exception){
                 emit(Resource.Failure(e))
             }

@@ -82,7 +82,7 @@ class ConfigurationFragment : Fragment() {
 
         cvCloseSession.setOnClickListener {
             MaterialAlertDialogBuilder(
-                context,
+                requireContext(),
                 R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
             )
                 .setTitle("Cerrar Sesión")

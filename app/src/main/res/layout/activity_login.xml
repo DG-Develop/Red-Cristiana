@@ -130,7 +130,7 @@
                 app:elevation="@dimen/Diminute"
                 android:letterSpacing="0"
                 android:fontFamily="@font/roboto"
-                android:onClick="enterokayMain"
+                android:onClick="loginMain"
                 android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@color/colorPrimary"

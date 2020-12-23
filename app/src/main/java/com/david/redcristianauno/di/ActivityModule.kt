@@ -23,5 +23,4 @@ abstract class ActivityModule {
 
     @Binds
     abstract fun bindUserRepositoryImpl(userRepositoryImpl: UserRepositoryImpl): UserRepository
-
 }

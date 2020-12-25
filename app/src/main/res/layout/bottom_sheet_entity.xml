@@ -1,85 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/Medium"
-    android:paddingBottom="@dimen/Big"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardBackgroundColor="@color/colorPrimary"
-    app:cardCornerRadius="@dimen/VerySmall"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    app:behavior_hideable="true"
-    android:id="@+id/bottom_sheet_entity">
+    tools:context=".presentation.ui.fragments.BottomSheetConfig">
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/Medium"
+        android:paddingBottom="@dimen/Big"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="@dimen/VerySmall"
+        android:id="@+id/bottom_sheet_entity">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGoRed"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/Small"
-            app:icon="@drawable/ic_network"
-            app:iconTint="@color/GrayDark"
-            android:letterSpacing="0"
-            android:text="@string/bs_network"
-            android:textColor="@color/GrayDark"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/GrayLow"
-            android:layout_marginStart="@dimen/Small"
-            android:layout_marginEnd="@dimen/Small"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoRed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/Small"
+                app:icon="@drawable/ic_network"
+                app:iconTint="@color/GrayDark"
+                android:letterSpacing="0"
+                android:text="@string/bs_network"
+                android:textColor="@color/GrayDark"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGoSubred"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/Small"
-            app:icon="@drawable/ic_subnetwork"
-            app:iconTint="@color/GrayDark"
-            android:letterSpacing="0"
-            android:text="@string/bs_subnetwork"
-            android:textColor="@color/GrayDark"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/GrayLow"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/GrayLow"
-            android:layout_marginStart="@dimen/Small"
-            android:layout_marginEnd="@dimen/Small"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoSubred"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/Small"
+                app:icon="@drawable/ic_subnetwork"
+                app:iconTint="@color/GrayDark"
+                android:letterSpacing="0"
+                android:text="@string/bs_subnetwork"
+                android:textColor="@color/GrayDark"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/GrayLow"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"/>
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnGoCelula"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/Small"
-            app:icon="@drawable/ic_celula"
-            app:iconTint="@color/GrayDark"
-            android:letterSpacing="0"
-            android:text="@string/bs_cell"
-            android:textColor="@color/GrayDark"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGoCelula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/Small"
+                app:icon="@drawable/ic_celula"
+                app:iconTint="@color/GrayDark"
+                android:letterSpacing="0"
+                android:text="@string/bs_cell"
+                android:textColor="@color/GrayDark"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/GrayLow"
-            android:layout_marginStart="@dimen/Small"
-            android:layout_marginEnd="@dimen/Small"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/GrayLow"
+                android:layout_marginStart="@dimen/Small"
+                android:layout_marginEnd="@dimen/Small"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

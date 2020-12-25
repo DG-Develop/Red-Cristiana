@@ -8,17 +8,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.*
 import com.david.redcristianauno.application.AppConstants.LOGIN_ACTIVITY
-import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.data.network.UserRepositoryImpl
-import com.david.redcristianauno.domain.ProfileUseCaseImpl
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
-import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
-import com.david.redcristianauno.presentation.viewmodel.LoginViewModelP
-import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
-import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
+import com.david.redcristianauno.presentation.viewmodel.LoginViewModel
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -27,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel by viewModels<LoginViewModelP>()
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +65,6 @@ class LoginActivity : AppCompatActivity() {
                     rlBaseLogin.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    rlBaseLogin.visibility = View.GONE
                     result.data?.let { loginViewModel.getUser(it) }
                 }
                 is Resource.Failure -> {
@@ -82,23 +74,25 @@ class LoginActivity : AppCompatActivity() {
                         SnackBarMD.getSBIndefinite(btn_start_session_loginActivity, "Contraseña Invalida")
                     }
                     rlBaseLogin.visibility = View.GONE
-
                 }
             }
         })
 
         loginViewModel.getUser.observe(this, Observer { result ->
             when (result) {
-                is Resource.Loading -> Log.i(LOGIN_ACTIVITY, "Cargando...")
+                is Resource.Loading ->  rlBaseLogin.visibility = View.VISIBLE
                 is Resource.Success -> {
-                    Log.i(LOGIN_ACTIVITY, "Data: ${result.data}")
+                    rlBaseLogin.visibility = View.GONE
                     if(result.data == null){
                         return@Observer
                     }
                     loginViewModel.saveUserLocal(result.data)
                     actionMain()
                 }
-                is Resource.Failure -> Log.i(LOGIN_ACTIVITY, "Error: ${result.exception}")
+                is Resource.Failure -> {
+                    Log.i(LOGIN_ACTIVITY, "Error: ${result.exception}")
+                    rlBaseLogin.visibility = View.GONE
+                }
             }
         })
     }

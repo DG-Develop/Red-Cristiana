@@ -11,4 +11,5 @@ object AppConstants {
     //Debug Constants
     const val MAIN_ACTIVITY = "DEBUG_MAIN"
     const val LOGIN_ACTIVITY = "DEBUG_LOGIN"
+    const val CONFIG_FRAGMENT = "DEBUG_CONFIG"
 }

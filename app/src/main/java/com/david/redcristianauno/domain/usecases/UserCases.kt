@@ -18,6 +18,18 @@ class LoginUserUseCase @Inject constructor(
     suspend fun invoke(email: String, password: String) = userRepository.loginUser(email, password)
 }
 
+class SignOutUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke() = userRepository.signOut()
+}
+
+class GetIdUserUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke() = userRepository.getIdUser()
+}
+
 class CurrentUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ){

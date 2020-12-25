@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_navSettingFragment_to_generalListFragment"
             app:destination="@id/generalListFragment" />
+        <action
+            android:id="@+id/action_navSettingFragment_to_bottomSheetConfig"
+            app:destination="@id/bottomSheetConfig" />
     </fragment>
     <dialog
         android:id="@+id/dataCelulaFragmentDialog"
@@ -129,4 +132,13 @@
         android:name="com.david.redcristianauno.presentation.ui.fragments.CreateEntityFragment"
         android:label="fragment_create_entity"
         tools:layout="@layout/fragment_create_entity" />
+    <dialog
+        android:id="@+id/bottomSheetConfig"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.BottomSheetConfig"
+        android:label="bottom_sheet_entity"
+        tools:layout="@layout/bottom_sheet_entity" >
+        <action
+            android:id="@+id/action_bottomSheetConfig_to_navSettingFragment"
+            app:destination="@id/navSettingFragment" />
+    </dialog>
 </navigation>

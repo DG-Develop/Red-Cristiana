@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,7 +31,7 @@
                         android:layout_height="30dp"
                         android:src="@drawable/profile"
                         android:layout_alignParentStart="true"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +73,7 @@
                         android:layout_height="30dp"
                         android:src="@drawable/ic_eye_with_pupil"
                         android:layout_alignParentStart="true"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <TextView
                         android:id="@+id/tvCreateConfiguration"
@@ -114,7 +115,7 @@
                         android:layout_height="30dp"
                         android:src="@drawable/ic_key"
                         android:layout_alignParentStart="true"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -155,7 +156,7 @@
                         android:layout_height="30dp"
                         android:src="@drawable/ic_news"
                         android:layout_alignParentStart="true"
-                        android:tint="@color/colorPrimaryDark" />
+                        app:tint="@color/colorPrimaryDark" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -224,7 +225,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/bottom_sheet_entity"/>
+    <!--<include layout="@layout/bottom_sheet_entity"/>-->
 
     <RelativeLayout
         android:id="@+id/rlBaseConfiguration"

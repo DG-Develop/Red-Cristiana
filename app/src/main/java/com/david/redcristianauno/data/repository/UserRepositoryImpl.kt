@@ -20,6 +20,10 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun loginUser(email: String, password: String): Resource<String?> =
         remoteDataSource.loginUser(email, password)
 
+    override suspend fun signOut() = remoteDataSource.signOut()
+
+    override suspend fun getIdUser(): String? = remoteDataSource.getIdUser()
+
     override suspend fun isCurrentUser(): Boolean = remoteDataSource.isCurrentUser()
 
     override suspend fun createUserLocal(data: User) =

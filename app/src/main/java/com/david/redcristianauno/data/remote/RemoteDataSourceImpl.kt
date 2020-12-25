@@ -26,6 +26,10 @@ class RemoteDataSourceImpl @Inject constructor(private val firebaseService: Fire
         return  Resource.Success(result.user?.uid)
     }
 
+    override suspend fun signOut() = firebaseService.firebaseAuth.signOut()
+
+    override suspend fun getIdUser(): String? = firebaseService.firebaseAuth.uid
+
     override suspend fun isCurrentUser(): Boolean = firebaseService.firebaseAuth.currentUser != null
 
 }

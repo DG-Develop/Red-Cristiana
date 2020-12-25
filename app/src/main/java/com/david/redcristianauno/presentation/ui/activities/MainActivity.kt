@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
-import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
 import com.david.redcristianauno.data.preferences.ActivityPreferences
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
@@ -28,9 +27,6 @@ import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
-    private val firebaseService = FirebaseService()
-    private var permission: String? = null
     private val user = UserSingleton.getUser()
 
     private val mainViewModel by viewModels<MainViewModelP>()
@@ -48,9 +44,12 @@ class MainActivity : AppCompatActivity() {
         //setActionBar(findViewById(R.id.toolbarMain))
         configNav()
         observedDayOfWeek()
-        observedPermission()
 
-        mainViewModel.setSearchUser("8VZSKi5HmVITr30p7WQi")
+        val id = mainViewModel.getIdUserFromFirebase()
+        if(id.isNotBlank()){
+            mainViewModel.getUser(id)
+        }
+
         setupObservers()
     }
 
@@ -67,12 +66,15 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.fetchUserId.observe(this, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
-                    Log.i(MAIN_ACTIVITY, "Cargando")
+                    rlBaseMain.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    Log.i(MAIN_ACTIVITY, "Datos: ${result.data}")
+                    rlBaseMain.visibility = View.GONE
+                    result.data?.let { mainViewModel.saveUserLocal(it) }
+                    hideMenuUserNormal(result.data?.permission)
                 }
                 is Resource.Failure -> {
+                    rlBaseMain.visibility = View.GONE
                     Log.i(MAIN_ACTIVITY, "Error: ${result.exception}")
                 }
             }
@@ -92,28 +94,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observedPermission() {
-        viewModel.id_user = firebaseService.firebaseAuth.currentUser?.uid.toString()
-
-        viewModel.fetchPermission.observe(this, Observer { result ->
-            when (result) {
-                is Resource.Loading -> {
-                    rlBaseMain.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    rlBaseMain.visibility = View.GONE
-                    permission = result.data
-                    hideMenuUserNormal(permission!!)
-                }
-                is Resource.Failure -> {
-                    Log.e("ERROR:", "${result.exception.message}")
-                }
-            }
-        })
-    }
-
-    private fun hideMenuUserNormal(data: String) {
-        if (data == "Normal") {
+    private fun hideMenuUserNormal(data: List<String>?) {
+        if(data.isNullOrEmpty()){
+            return
+        }
+        /* Si el tamaño del array es 1 es por que es un usuario normal o postulado data.size == 1 */
+        if (data.contains("Normal")) {
             bnvMenu.menu.removeItem(R.id.navDataFragment)
             bnvMenu.menu.removeItem(R.id.navHistoricalFragment)
         }
@@ -142,9 +128,4 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    companion object {
-        private const val TAG = "MainInfo"
-    }
-
 }

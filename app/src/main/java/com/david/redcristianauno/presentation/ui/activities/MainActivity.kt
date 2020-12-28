@@ -10,11 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.Observer
+import androidx.navigation.NavArgument
+import androidx.navigation.NavController
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
 import com.david.redcristianauno.data.preferences.ActivityPreferences
+import com.david.redcristianauno.presentation.objectsUtils.ConfigurationSingleton
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.viewmodel.MainViewModel
 import com.david.redcristianauno.presentation.viewmodel.MainViewModelFactory
@@ -46,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         observedDayOfWeek()
 
         val id = mainViewModel.getIdUserFromFirebase()
-        if(id.isNotBlank()){
+        if (id.isNotBlank()) {
             mainViewModel.getUser(id)
         }
 
@@ -55,14 +58,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun configNav() {
         NavigationUI.setupWithNavController(
-            bnvMenu, Navigation.findNavController(
-                this,
-                R.id.fragContent
-            )
+            bnvMenu,
+            Navigation.findNavController(this, R.id.fragContent)
         )
     }
 
-    private fun setupObservers(){
+    private fun setupObservers() {
         mainViewModel.fetchUserId.observe(this, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -70,7 +71,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Resource.Success -> {
                     rlBaseMain.visibility = View.GONE
-                    result.data?.let { mainViewModel.saveUserLocal(it) }
                     hideMenuUserNormal(result.data?.permission)
                 }
                 is Resource.Failure -> {
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideMenuUserNormal(data: List<String>?) {
-        if(data.isNullOrEmpty()){
+        if (data.isNullOrEmpty()) {
             return
         }
         /* Si el tamaño del array es 1 es por que es un usuario normal o postulado data.size == 1 */
@@ -107,16 +107,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (user?.iglesia_references == null){
+        if (user?.iglesia_references == null) {
             oneShowActivity()
         }
     }
 
     private fun oneShowActivity() {
         val show = ActivityPreferences.getPreferencesBoolean(
-                applicationContext,
-                ActivityPreferences.PREFERENCES_STATE_ACTIVITY
-            )
+            applicationContext,
+            ActivityPreferences.PREFERENCES_STATE_ACTIVITY
+        )
 
         if (show) {
             startActivity(Intent(this, JoinOrInviteActivity::class.java))

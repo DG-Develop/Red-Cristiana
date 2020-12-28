@@ -3,13 +3,19 @@ package com.david.redcristianauno.domain.usecases
 import com.david.redcristianauno.data.repository.UserRepository
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.vo.Resource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetUserByIdUseCase @Inject constructor(
     private val userRepository: UserRepository
 ){
-    suspend fun invokeRemote(userId: String): Resource<User?> = userRepository.getUserByIdRemote(userId)
-    suspend fun invokeLocal(userId: String): Resource<User?> = userRepository.getUserByIdLocal(userId)
+    suspend fun invoke(userId: String): Flow<Resource<User?>> = userRepository.getUserById(userId)
+}
+
+class GetUserCached @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke(userId: String): Resource<User?> = userRepository.getCachedUser(userId)
 }
 
 class LoginUserUseCase @Inject constructor(
@@ -34,10 +40,4 @@ class CurrentUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ){
     suspend fun invoke() = userRepository.isCurrentUser()
-}
-
-class CreateUserUseCase @Inject constructor(
-    private val  userRepository: UserRepository
-){
-    suspend fun invokeLocal(data: User) = userRepository.createUserLocal(data)
 }

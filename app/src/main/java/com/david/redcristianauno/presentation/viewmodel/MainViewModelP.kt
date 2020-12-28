@@ -2,19 +2,17 @@ package com.david.redcristianauno.presentation.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.david.redcristianauno.domain.models.User
-import com.david.redcristianauno.domain.usecases.CreateUserUseCase
 import com.david.redcristianauno.domain.usecases.GetIdUserUseCase
 import com.david.redcristianauno.domain.usecases.GetUserByIdUseCase
 import com.david.redcristianauno.vo.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class MainViewModelP @ViewModelInject constructor(
     private val getUserByIdUseCase: GetUserByIdUseCase,
-    private val getIdUserUseCase: GetIdUserUseCase,
-    private val createUserUseCase: CreateUserUseCase
+    private val getIdUserUseCase: GetIdUserUseCase
 ) : ViewModel(){
 
     private val userData = MutableLiveData<String>()
@@ -34,18 +32,13 @@ class MainViewModelP @ViewModelInject constructor(
     val fetchUserId = userData.switchMap { userId ->
         liveData(viewModelScope.coroutineContext + Dispatchers.IO) {
             emit(Resource.Loading())
-
             try {
-                emit(getUserByIdUseCase.invokeRemote(userId))
+                getUserByIdUseCase.invoke(userId).collect { user->
+                    emit(user)
+                }
             }catch (e: Exception){
                 emit(Resource.Failure(e))
             }
-        }
-    }
-
-    fun saveUserLocal(data: User){
-        viewModelScope.launch {
-            createUserUseCase.invokeLocal(data)
         }
     }
 }

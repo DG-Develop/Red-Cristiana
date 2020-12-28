@@ -3,13 +3,11 @@ package com.david.redcristianauno.presentation.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.*
-import com.david.redcristianauno.application.AppConstants.LOGIN_ACTIVITY
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.LoginViewModel
 import com.david.redcristianauno.vo.Resource
@@ -53,44 +51,39 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-       if(loginViewModel.isCurrentUserFromFirebase()) {
-           actionMain()
-       }
+        if (loginViewModel.isCurrentUserFromFirebase()) {
+            actionMain()
+        }
     }
 
-    private fun setupObservers(email: String, password: String){
+    private fun setupObservers(email: String, password: String) {
         loginViewModel.login(email, password).observe(this, Observer { result ->
             when (result) {
                 is Resource.Loading -> {
                     rlBaseLogin.visibility = View.VISIBLE
                 }
                 is Resource.Success -> {
-                    result.data?.let { loginViewModel.getUser(it) }
-                }
-                is Resource.Failure -> {
-                    if(result.exception is FirebaseAuthInvalidUserException){
-                        SnackBarMD.getSBIndefinite(btn_start_session_loginActivity, "Usuario Invalido")
-                    }else if(result.exception is FirebaseAuthInvalidCredentialsException){
-                        SnackBarMD.getSBIndefinite(btn_start_session_loginActivity, "Contraseña Invalida")
-                    }
-                    rlBaseLogin.visibility = View.GONE
-                }
-            }
-        })
-
-        loginViewModel.getUser.observe(this, Observer { result ->
-            when (result) {
-                is Resource.Loading ->  rlBaseLogin.visibility = View.VISIBLE
-                is Resource.Success -> {
-                    rlBaseLogin.visibility = View.GONE
-                    if(result.data == null){
+                    if (result.data.isNullOrEmpty()) {
+                        SnackBarMD.getSBIndefinite(
+                            btn_start_session_loginActivity,
+                            "Ocurrió un error intentelo mas tarde"
+                        )
                         return@Observer
                     }
-                    loginViewModel.saveUserLocal(result.data)
                     actionMain()
                 }
                 is Resource.Failure -> {
-                    Log.i(LOGIN_ACTIVITY, "Error: ${result.exception}")
+                    if (result.exception is FirebaseAuthInvalidUserException) {
+                        SnackBarMD.getSBIndefinite(
+                            btn_start_session_loginActivity,
+                            "Usuario Invalido"
+                        )
+                    } else if (result.exception is FirebaseAuthInvalidCredentialsException) {
+                        SnackBarMD.getSBIndefinite(
+                            btn_start_session_loginActivity,
+                            "Contraseña Invalida"
+                        )
+                    }
                     rlBaseLogin.visibility = View.GONE
                 }
             }

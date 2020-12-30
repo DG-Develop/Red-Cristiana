@@ -10,14 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgument
-import androidx.navigation.NavController
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.domain.HistoricalWeeklyUseCaseImpl
 import com.david.redcristianauno.data.network.HistoricalWeeklyRepositoryImpl
 import com.david.redcristianauno.data.preferences.ActivityPreferences
-import com.david.redcristianauno.presentation.objectsUtils.ConfigurationSingleton
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.viewmodel.MainViewModel
 import com.david.redcristianauno.presentation.viewmodel.MainViewModelFactory

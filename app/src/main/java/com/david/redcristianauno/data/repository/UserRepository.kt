@@ -8,6 +8,8 @@ interface UserRepository {
 
     suspend fun getCachedUser(userId: String): Resource<User?>
     suspend fun getUserById(userId: String): Flow<Resource<User?>>
+    suspend fun getListUsers(): Flow<Resource<List<User>>>
+    suspend fun getUserByIdAsFlow(userId: String): Flow<Resource<User?>>
     suspend fun loginUser(email: String, password: String): Resource<String?>
     suspend fun signOut()
     suspend fun getIdUser(): String?

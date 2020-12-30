@@ -16,7 +16,7 @@ import com.david.redcristianauno.R
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
-import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
+import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.ui.adapters.GeneralListAdapter
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModel
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModelFactory
@@ -26,6 +26,7 @@ class GeneralListFragment : DialogFragment() {
 
     private lateinit var listAdapter: GeneralListAdapter
     private lateinit var type: String
+    private lateinit var userData: User
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -57,12 +58,12 @@ class GeneralListFragment : DialogFragment() {
         toolbarGeneralList.navigationIcon =
             ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
         toolbarGeneralList.setNavigationOnClickListener {
-            dismiss()
+            findNavController().navigate(R.id.navSettingFragment)
         }
 
-        val data = arguments?.getString("permission")
+         userData= arguments?.getParcelable("user")!!
 
-        putTitle(data)
+        putTitle()
 
         dropdown_entity_general_red.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, _, _ ->
@@ -74,7 +75,7 @@ class GeneralListFragment : DialogFragment() {
             AdapterView.OnItemClickListener { _, _, _, _ ->
                 val subred = dropdown_entity_general_subred.text.toString()
                 viewModel.listCelulasFromFirebase(
-                    UserSingleton.getIdEntity("Iglesia")!!,
+                    getIdEntity("Iglesia", userData),
                     dropdown_entity_general_red.text.toString(),
                     subred
                 )
@@ -95,10 +96,10 @@ class GeneralListFragment : DialogFragment() {
     private fun fillListOrFillDropdownEntity(name: String) {
         when (arguments?.getString("dataType")) {
             "Subred" -> {
-                viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, name)
+                viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), name)
             }
             "Celula" -> {
-                viewModel.fillTilSubred(UserSingleton.getIdEntity("Iglesia")!!, name)
+                viewModel.fillTilSubred(getIdEntity("Iglesia", userData), name)
             }
         }
     }
@@ -134,11 +135,11 @@ class GeneralListFragment : DialogFragment() {
 
             if(arguments?.getString("dataType") == "Celula"){
                 viewModel.fillTilSubred(
-                    UserSingleton.getIdEntity("Iglesia")!!,
+                    getIdEntity("Iglesia", userData),
                     firstData
                 )
             }else{
-                viewModel.listSubredesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!, firstData)
+                viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), firstData)
             }
 
         })
@@ -156,7 +157,7 @@ class GeneralListFragment : DialogFragment() {
 
             if (dropdown_entity_general_red.text.toString().isNotEmpty()) {
                 viewModel.listCelulasFromFirebase(
-                    UserSingleton.getIdEntity("Iglesia")!!,
+                    getIdEntity("Iglesia", userData),
                     dropdown_entity_general_red.text.toString(),
                     firstData
                 )
@@ -164,39 +165,44 @@ class GeneralListFragment : DialogFragment() {
         })
     }
 
-    private fun putTitle(permission: String?) {
-        when (permission) {
-            "Normal", "Lider Celula" -> {
-
-            }
-            "Admin" -> {
-                when (val dataType = arguments?.getString("dataType")) {
-                    "Red" -> {
-                        viewModel.listRedesFromFirebase(UserSingleton.getIdEntity("Iglesia")!!)
-                        rvTitleGeneral.text = "Lista de Redes"
-                        type = dataType
-                    }
-                    "Subred" -> {
-                        viewModel.fillTilRed(UserSingleton.getIdEntity("Iglesia")!!)
-                        mcvEntityContainer.visibility = View.VISIBLE
-                        rvTitleGeneral.text = "Lista de Subredes"
-                        type = dataType
-                    }
-                    "Celula" -> {
-                        viewModel.fillTilRed(UserSingleton.getIdEntity("Iglesia")!!)
-                        tvSelectContainerSubred.visibility = View.VISIBLE
-                        tilEntityGeneralSubred.visibility = View.VISIBLE
-                        mcvEntityContainer.visibility = View.VISIBLE
-                        rvTitleGeneral.text = "Lista de Celulas"
-                        type = dataType
-                    }
+    private fun putTitle() {
+        if(userData.permission.contains("Admin")){
+            when (val dataType = arguments?.getString("dataType")) {
+                "Red" -> {
+                    viewModel.listRedesFromFirebase(getIdEntity("Iglesia", userData))
+                    rvTitleGeneral.text = "Lista de Redes"
+                    type = dataType
+                }
+                "Subred" -> {
+                    viewModel.fillTilRed(getIdEntity("Iglesia", userData))
+                    mcvEntityContainer.visibility = View.VISIBLE
+                    rvTitleGeneral.text = "Lista de Subredes"
+                    type = dataType
+                }
+                "Celula" -> {
+                    viewModel.fillTilRed(getIdEntity("Iglesia", userData))
+                    tvSelectContainerSubred.visibility = View.VISIBLE
+                    tilEntityGeneralSubred.visibility = View.VISIBLE
+                    mcvEntityContainer.visibility = View.VISIBLE
+                    rvTitleGeneral.text = "Lista de Celulas"
+                    type = dataType
                 }
             }
         }
     }
 
-    companion object {
-        const val TAG = "genInfo"
+    private fun getIdEntity(type: String, user: User?):String {
+        val documents = user?.iglesia_references?.split("/")
+        if (documents != null) {
+            return when(type){
+                "Iglesia" -> documents[1]
+                "Red" -> documents[3]
+                "Subred" -> documents[5]
+                "Celula" -> documents[7]
+                else -> ""
+            }
+        }
+        return ""
     }
 
 }

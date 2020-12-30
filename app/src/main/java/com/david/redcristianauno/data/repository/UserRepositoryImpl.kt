@@ -5,7 +5,6 @@ import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.data.local.LocalDataSource
 import com.david.redcristianauno.data.remote.RemoteDataSource
 import com.david.redcristianauno.domain.models.User
-import com.david.redcristianauno.presentation.objectsUtils.ConfigurationSingleton
 import com.david.redcristianauno.vo.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -29,7 +28,7 @@ class UserRepositoryImpl @Inject constructor(
                 is Resource.Success -> {
                     Log.i(MAIN_ACTIVITY, "Rescatando datos de manera remota")
                     user.data?.let { createUserLocal(it) }
-                    ConfigurationSingleton.setConfig(user.data?.permission)
+                    offer(getCachedUser(userId))
                 }
                 else -> {
                     offer(getCachedUser(userId))
@@ -40,10 +39,13 @@ class UserRepositoryImpl @Inject constructor(
         awaitClose { cancel() }
     }
 
+    override suspend fun getListUsers(): Flow<Resource<List<User>>> = remoteDataSource.getListUsers()
+
+    override suspend fun getUserByIdAsFlow(userId: String): Flow<Resource<User?>> =
+        localDataSource.getUserByIdAsFlow(userId)
 
     override suspend fun getCachedUser(userId: String): Resource<User?> =
         localDataSource.getUserById(userId)
-
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> =
         remoteDataSource.loginUser(email, password)

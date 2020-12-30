@@ -2,9 +2,7 @@ package com.david.redcristianauno.data.remote
 
 import com.david.redcristianauno.application.AppConstants.USER_COLLECTION_NAME
 import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.domain.models.User
-import com.david.redcristianauno.domain.models.UserDataSource
-import com.david.redcristianauno.domain.models.asUser
+import com.david.redcristianauno.domain.models.*
 import com.david.redcristianauno.vo.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -23,16 +21,40 @@ class RemoteDataSourceImpl @Inject constructor(
             .collection(USER_COLLECTION_NAME)
             .document(userId)
 
-        val subscription = evenDocument.addSnapshotListener{ documentSnapshot, firebaseFirestoreException->
-            if (documentSnapshot != null) {
-                if(documentSnapshot.exists()){
-                    val user = documentSnapshot.toObject(UserDataSource::class.java)
-                    offer(Resource.Success(user?.asUser()))
-                }else{
-                    channel.close(firebaseFirestoreException?.cause)
+        val subscription =
+            evenDocument.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                if (documentSnapshot != null) {
+                    if (documentSnapshot.exists()) {
+                        val user = documentSnapshot.toObject(UserDataSource::class.java)
+                        offer(Resource.Success(user?.asUser()))
+                    } else {
+                        channel.close(firebaseFirestoreException?.cause)
+                    }
                 }
             }
-        }
+
+        awaitClose { subscription.remove() }
+    }
+
+    @ExperimentalCoroutinesApi
+    override suspend fun getListUsers(): Flow<Resource<List<User>>> = callbackFlow {
+        val eventsDocuments = firebaseService.firebaseFirestore
+            .collection(USER_COLLECTION_NAME)
+            .whereArrayContainsAny("permission", listOf("Normal", "Lider Celula", "Subred", "Red"))
+
+        val subscription =
+            eventsDocuments.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                if (documentSnapshot != null) {
+                    val users = documentSnapshot
+                        .toObjects(UserDataSource::class.java)
+                        .asListUser()
+                        .sortedBy { it.names }
+                    offer(Resource.Success(users))
+                } else {
+                    channel.close(firebaseFirestoreException?.cause)
+                }
+
+            }
 
         awaitClose { subscription.remove() }
     }

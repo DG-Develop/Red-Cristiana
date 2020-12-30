@@ -68,9 +68,6 @@
             android:id="@+id/action_navConfigurationFragment_to_uploadNoticeConfigurationFragmentDialog"
             app:destination="@id/uploadNoticeConfigurationFragmentDialog" />
         <action
-            android:id="@+id/action_navSettingFragment_to_generalListFragment"
-            app:destination="@id/generalListFragment" />
-        <action
             android:id="@+id/action_navSettingFragment_to_bottomSheetConfig"
             app:destination="@id/bottomSheetConfig" />
     </fragment>
@@ -140,5 +137,8 @@
         <action
             android:id="@+id/action_bottomSheetConfig_to_navSettingFragment"
             app:destination="@id/navSettingFragment" />
+        <action
+            android:id="@+id/action_bottomSheetConfig_to_generalListFragment"
+            app:destination="@id/generalListFragment" />
     </dialog>
 </navigation>

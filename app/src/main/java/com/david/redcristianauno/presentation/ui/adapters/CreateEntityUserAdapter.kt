@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
 import com.david.redcristianauno.core.BaseViewHolder
-import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.domain.models.User
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.item_entity_user.view.*
 import java.lang.IllegalArgumentException
@@ -74,12 +74,21 @@ class CreateEntityUserAdapter(
                 "Lider Red" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_red)
             }*/
 
-            when(item.permission){
-                "Normal" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_member)
-                "Lider Celula" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_celula)
-                "Subred" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_subred)
-                "Red" -> itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_red)
+            when {
+                item.permission.contains("Normal") -> {
+                    itemView.ivPermission.setImageResource(R.drawable.ic_icon_member)
+                }
+                item.permission.contains("Lider Celula") -> {
+                    itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_celula)
+                }
+                item.permission.contains("Subred") -> {
+                    itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_subred)
+                }
+                item.permission.contains("Red") -> {
+                    itemView.ivPermission.setImageResource(R.drawable.ic_icon_leader_red)
+                }
             }
+
         }
     }
 }

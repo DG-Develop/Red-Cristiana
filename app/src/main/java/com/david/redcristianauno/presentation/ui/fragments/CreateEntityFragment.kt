@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,29 +12,35 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
+import com.david.redcristianauno.application.AppConstants.CREATE_ENTITY_FRAGMENT
 import com.david.redcristianauno.data.model.Celula
 import com.david.redcristianauno.data.model.Red
 import com.david.redcristianauno.data.model.Subred
-import com.david.redcristianauno.data.model.User
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
+import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.adapters.CreateEntityUserAdapter
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModel
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelFactory
+import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelP
+import com.david.redcristianauno.vo.Resource
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_create_entity.*
 import java.lang.Exception
 import java.util.*
 
+@AndroidEntryPoint
 class CreateEntityFragment :
     DialogFragment(),
     CreateEntityUserAdapter.OnListEntityUserListener {
@@ -47,6 +54,8 @@ class CreateEntityFragment :
     private lateinit var textName: TextView
     private lateinit var textEmail: TextView
     private lateinit var ivCircle: ImageView
+
+    private val createEntityViewModel by viewModels<CreateEntityViewModelP>()
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -82,7 +91,9 @@ class CreateEntityFragment :
         val data = arguments?.getString("typeList")
         putHints(data)
 
-        viewModel.listUsersFromFirebase()
+        createEntityViewModel.getListUsersFromFirebase()
+
+        /*viewModel.listUsersFromFirebase()*/
 
         cgFilterEntity.setOnCheckedChangeListener{group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -276,12 +287,31 @@ class CreateEntityFragment :
     }
 
     private fun observedViewModel() {
-        viewModel.users.observe(viewLifecycleOwner, Observer { users ->
+       /* viewModel.users.observe(viewLifecycleOwner, Observer { users ->
             listAdapterUsers = context?.let { CreateEntityUserAdapter(it, users, this) }!!
             rvListUserEntity.adapter = listAdapterUsers
-            /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria */
+            *//* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria *//*
             rvListUserEntity.setItemViewCacheSize(users.size)
-        })
+        })*/
+
+        createEntityViewModel.getListUsersFromFirebase().observe(
+            viewLifecycleOwner,
+            Observer { result ->
+                when (result) {
+                    is Resource.Loading -> { }
+                    is Resource.Success -> {
+                        listAdapterUsers =
+                            context?.let { CreateEntityUserAdapter(it, result.data, this) }!!
+                        rvListUserEntity.adapter = listAdapterUsers
+                        /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria */
+                        rvListUserEntity.setItemViewCacheSize(result.data.size)
+                    }
+                    is Resource.Failure -> {
+                        Log.i(CREATE_ENTITY_FRAGMENT, "Error: ${result.exception}")
+                    }
+                }
+
+            })
     }
 
     override fun onItemClickUser(

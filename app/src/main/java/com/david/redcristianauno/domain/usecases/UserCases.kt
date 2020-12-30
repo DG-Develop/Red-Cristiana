@@ -12,6 +12,18 @@ class GetUserByIdUseCase @Inject constructor(
     suspend fun invoke(userId: String): Flow<Resource<User?>> = userRepository.getUserById(userId)
 }
 
+class GetListUsersUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke(): Flow<Resource<List<User>>> = userRepository.getListUsers()
+}
+
+class GetUserByIdUseCaseAsFlow @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke(userId: String): Flow<Resource<User?>> = userRepository.getUserByIdAsFlow(userId)
+}
+
 class GetUserCached @Inject constructor(
     private val userRepository: UserRepository
 ){

@@ -33,10 +33,6 @@ data class User(
     val iglesia_references: String? = null
 ) : Parcelable
 
-data class UserList(
-    val userList: List<User> = listOf()
-)
-
 @Entity(tableName = "userTable")
 data class UserEntity(
     @PrimaryKey
@@ -71,6 +67,7 @@ fun UserEntity.asUser() = User(
     iglesia_references
 )
 
+
 fun User.asUserEntity() = UserEntity(
     id,
     names,
@@ -87,3 +84,17 @@ fun UserDataSource.asUser() = User(
     id, names, last_names, email, address, telephone, permission, subred_name,
     iglesia_references?.path
 )
+
+fun List<UserDataSource>.asListUser(): List<User> = this.map {
+    User(
+        it.id,
+        it.names,
+        it.last_names,
+        it.email,
+        it.address,
+        it.telephone,
+        it.permission,
+        it.subred_name,
+        it.iglesia_references?.path
+    )
+}

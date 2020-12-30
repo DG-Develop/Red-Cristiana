@@ -9,13 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CONFIG_FRAGMENT
 import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
-import com.david.redcristianauno.presentation.objectsUtils.ConfigurationSingleton
+import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModelP
 import com.david.redcristianauno.vo.Resource
@@ -25,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_configuration.*
 
 @AndroidEntryPoint
 class ConfigurationFragment : Fragment() {
-    private lateinit var type: String //Dependiendo del tipo de dato podra hacer diferentes funciones
+    private lateinit var user: User //Dependiendo del tipo de dato podra hacer diferentes funciones
     private val configurationViewModel by viewModels<ConfigurationViewModelP>()
 
     override fun onCreateView(
@@ -51,8 +49,10 @@ class ConfigurationFragment : Fragment() {
         }
 
         cvCreate.setOnClickListener {
-            if(type == "Admin"){
-               findNavController().navigate(R.id.bottomSheetConfig)
+            if(user.permission.contains("Admin")){
+                val bundle = Bundle()
+                bundle.putParcelable("user", user)
+               findNavController().navigate(R.id.bottomSheetConfig, bundle)
             }else{
                 findNavController().navigate(R.id.generalListFragment)
             }
@@ -69,33 +69,6 @@ class ConfigurationFragment : Fragment() {
         cvCloseSession.setOnClickListener {
             closeSession()
         }
-
-        // Bottom Sheet Entity Events
-        /*btnGoRed.setOnClickListener {
-            val bundle = bundleOf(
-                "permission" to "Admin",
-                "dataType" to "Red"
-            )
-            findNavController().navigate(R.id.generalListFragment, bundle)
-        }
-
-        btnGoSubred.setOnClickListener {
-            val bundle = bundleOf(
-                "permission" to type,
-                "dataType" to "Subred"
-            )
-
-            findNavController().navigate(R.id.generalListFragment, bundle)
-        }
-
-        btnGoCelula.setOnClickListener{
-            val bundle = bundleOf(
-                "permission" to type,
-                "dataType" to "Celula"
-            )
-            findNavController().navigate(R.id.generalListFragment, bundle)
-        }*/
-
     }
 
     private fun closeSession(){
@@ -122,8 +95,9 @@ class ConfigurationFragment : Fragment() {
                 is Resource.Success -> {
                     if (result.data != null){
                         Log.i(MAIN_ACTIVITY, "User: ${result.data}")
+                        hideMenuUserNormal(result.data.permission)
+                        user = result.data
                     }
-                    result.data?.let { hideMenuUserNormal(it.permission) }
                 }
                 is Resource.Failure -> Log.i(CONFIG_FRAGMENT, "Error: ${result.exception}")
             }
@@ -140,11 +114,14 @@ class ConfigurationFragment : Fragment() {
             cvManageUser.visibility = View.GONE
             cvUploadNotice.visibility = View.GONE
             putCreateTitle("Crear Celula")
+        }else{
+            cvCreate.visibility = View.VISIBLE
+            cvManageUser.visibility = View.VISIBLE
+            cvUploadNotice.visibility = View.VISIBLE
         }
 
         permissionList.forEach{ permission->
             if(permission == "Admin"){
-                type = permission
                 putCreateTitle("Ver Lista Entidades")
             }
         }

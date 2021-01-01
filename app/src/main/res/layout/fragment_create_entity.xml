@@ -147,7 +147,6 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/celula_title_data"
-                            android:textAllCaps="true"
                             android:textColor="@color/text_chip_color_state"
                             app:chipBackgroundColor="@color/chip_choice_state"
                             app:textEndPadding="@dimen/Small"
@@ -159,7 +158,6 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/subred_title_data"
-                            android:textAllCaps="true"
                             android:textColor="@color/text_chip_color_state"
                             app:chipBackgroundColor="@color/chip_choice_state"
                             app:textEndPadding="@dimen/Small"
@@ -171,7 +169,6 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_bold"
                             android:text="@string/red_user"
-                            android:textAllCaps="true"
                             android:textColor="@color/text_chip_color_state"
                             app:chipBackgroundColor="@color/chip_choice_state"
                             app:textEndPadding="@dimen/Small"
@@ -223,7 +220,6 @@
                                 android:layout_marginStart="@dimen/VerySmall"
                                 android:fontFamily="@font/roboto_bold"
                                 android:text="@string/find_by_email"
-                                android:textAllCaps="true"
                                 android:textColor="@color/text_chip_color_state"
                                 app:chipBackgroundColor="@color/chip_choice_state"
                                 app:textEndPadding="@dimen/Small"
@@ -233,35 +229,19 @@
 
                     </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilFindByEntity"
-                        style="@style/TextInputLayoutStyle"
+                    <SearchView
+                        android:id="@+id/svFindByEntity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/Small"
                         android:layout_marginTop="@dimen/Small"
                         android:layout_marginEnd="@dimen/Small"
                         android:textColorHint="@color/Gray"
-                        android:visibility="gone"
-                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
-                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusTopStart="@dimen/VerySmall"
-                        app:boxStrokeColor="@color/Gray"
+                        android:background="@color/GrayAccent"
                         app:hintTextColor="@color/Gray"
-                        tools:hint="Escriba un Id...">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etFindByEntity"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:fontFamily="@font/roboto"
-                            android:inputType="textPersonName"
-                            android:padding="@dimen/VerySmall"
-                            android:textColor="@color/Gray"
-                            android:textSize="@dimen/Normal" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
+                        app:iconifiedByDefault="false"
+                        android:visibility="gone"
+                        tools:queryHint="Escriba un Id..." />
 
                     <View
                         android:layout_width="match_parent"

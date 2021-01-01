@@ -1,7 +1,9 @@
 package com.david.redcristianauno.domain.usecases
 
+import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.repository.UserRepository
 import com.david.redcristianauno.domain.models.User
+import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.vo.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -28,6 +30,18 @@ class GetUserCached @Inject constructor(
     private val userRepository: UserRepository
 ){
     suspend fun invoke(userId: String): Resource<User?> = userRepository.getCachedUser(userId)
+}
+
+class CreateUserAuthUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke(email: String, password: String) = userRepository.createUserAuth(email, password)
+}
+
+class CreateUserFirestoreUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+     fun invoke(user: UserDataSource, callback: Callback<Void>) = userRepository.createUserFirestore(user, callback)
 }
 
 class LoginUserUseCase @Inject constructor(

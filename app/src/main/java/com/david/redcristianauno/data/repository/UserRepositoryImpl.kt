@@ -3,9 +3,12 @@ package com.david.redcristianauno.data.repository
 import android.util.Log
 import com.david.redcristianauno.application.AppConstants.MAIN_ACTIVITY
 import com.david.redcristianauno.data.local.LocalDataSource
+import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.remote.RemoteDataSource
 import com.david.redcristianauno.domain.models.User
+import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
@@ -46,6 +49,12 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getCachedUser(userId: String): Resource<User?> =
         localDataSource.getUserById(userId)
+
+    override suspend fun createUserAuth(email: String, password: String): Resource<AuthResult?> =
+        remoteDataSource.createUserAuth(email, password)
+
+    override  fun createUserFirestore(user: UserDataSource, callback: Callback<Void>) =
+        remoteDataSource.createUserFirestore(user, callback)
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> =
         remoteDataSource.loginUser(email, password)

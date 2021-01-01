@@ -1,14 +1,19 @@
 package com.david.redcristianauno.data.remote
 
+import android.util.Log
+import com.david.redcristianauno.application.AppConstants.REGISTER_ACTIVITY
 import com.david.redcristianauno.application.AppConstants.USER_COLLECTION_NAME
+import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.domain.models.*
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
@@ -57,6 +62,29 @@ class RemoteDataSourceImpl @Inject constructor(
             }
 
         awaitClose { subscription.remove() }
+    }
+
+    override suspend fun createUserAuth(email: String, password: String): Resource<AuthResult?> {
+        val result = firebaseService.firebaseAuth
+            .createUserWithEmailAndPassword(email, password)
+            .await()
+
+        return Resource.Success(result)
+    }
+
+    override fun createUserFirestore(user: UserDataSource, callback: Callback<Void>) {
+        firebaseService.firebaseFirestore
+            .collection(USER_COLLECTION_NAME)
+            .document(user.id)
+            .set(user)
+            .addOnSuccessListener {
+                Log.i(REGISTER_ACTIVITY, "Creado con exito")
+                callback.OnSucces(null)
+            }
+            .addOnFailureListener{exception ->
+                Log.e(REGISTER_ACTIVITY, "Error al crear el archivo: ${exception.message}")
+                callback.onFailure(exception )
+            }
     }
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> {

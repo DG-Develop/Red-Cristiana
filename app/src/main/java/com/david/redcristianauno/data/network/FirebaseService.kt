@@ -15,7 +15,7 @@ class FirebaseService {
     private var dbReference : DatabaseReference
     var mStorage: StorageReference
 
-    val settings = FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
+    private val settings = FirebaseFirestoreSettings.Builder().setPersistenceEnabled(true).build()
 
     init {
         firebaseFirestore.firestoreSettings = settings

@@ -1,37 +1,30 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CREATE_ENTITY_FRAGMENT
 import com.david.redcristianauno.data.model.Celula
 import com.david.redcristianauno.data.model.Red
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.network.Callback
-import com.david.redcristianauno.data.network.ChurchRepositoryImpl
 import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.data.network.UserRepositoryImpl
-import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.objectsUtils.UserSingleton
 import com.david.redcristianauno.presentation.ui.adapters.CreateEntityUserAdapter
 import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModel
-import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelFactory
-import com.david.redcristianauno.presentation.viewmodel.CreateEntityViewModelP
 import com.david.redcristianauno.vo.Resource
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
@@ -47,6 +40,8 @@ class CreateEntityFragment :
     val firebaseService = FirebaseService()
     private lateinit var listAdapterUsers: CreateEntityUserAdapter
     private var permission: String = ""
+    private lateinit var listUsers: List<User>
+    private var listFilterUsers: List<User> = listOf()
 
     /*Parameters for the RecyclerView when clicked*/
     private val selectUser = mutableMapOf<MaterialCardView, User>()
@@ -55,19 +50,7 @@ class CreateEntityFragment :
     private lateinit var textEmail: TextView
     private lateinit var ivCircle: ImageView
 
-    private val createEntityViewModel by viewModels<CreateEntityViewModelP>()
-
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            CreateEntityViewModelFactory(
-                ChurchUseCaseImpl(
-                    ChurchRepositoryImpl(),
-                    UserRepositoryImpl()
-                )
-            )
-        ).get(CreateEntityViewModel::class.java)
-    }
+    private val createEntityViewModel by viewModels<CreateEntityViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,9 +76,8 @@ class CreateEntityFragment :
 
         createEntityViewModel.getListUsersFromFirebase()
 
-        /*viewModel.listUsersFromFirebase()*/
 
-        cgFilterEntity.setOnCheckedChangeListener{group, checkedId ->
+        cgFilterEntity.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
             val filter = if (chip != null) chip.text else ""
             permission = when (filter) {
@@ -110,41 +92,21 @@ class CreateEntityFragment :
                 }
             }
 
-            if(permission.isNotBlank()){
-                viewModel.filter(permission)
-            }else{
-                viewModel.listUsersFromFirebase()
+            if (permission.isNotBlank()) {
+                val list = filterUser(permission)
+                setupRecycler(list)
+            } else {
+                setupRecycler(listUsers)
             }
-
+            svFindByEntity.setQuery("", false)
         }
-
 
         cgFindEntity.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
-            if (chip != null) showSearch(chip.text)  else  tilFindByEntity.visibility = View.GONE
+            if (chip != null) showSearch(chip.text) else svFindByEntity.visibility = View.GONE
         }
 
-        etFindByEntity.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-                if (tilFindByEntity.hint == "Escriba el Nombre") {
-                    viewModel.search(
-                        permission, char.toString(), "names"
-                    )
-                }else if(tilFindByEntity.hint == "Escriba el Correo"){
-                    viewModel.search(
-                        permission, char.toString().toLowerCase(Locale.getDefault()).trim(), "email"
-                    )
-                }
-            }
-        })
+        setupSearchView()
 
         fab_send_entity.setOnClickListener {
             createEntity(it)
@@ -263,10 +225,40 @@ class CreateEntityFragment :
             })
     }
 
+    private fun setupRecycler(list: List<User>) {
+        listAdapterUsers = CreateEntityUserAdapter(requireContext(), list, this)
+        rvListUserEntity.adapter = listAdapterUsers
+        /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria */
+        rvListUserEntity.setItemViewCacheSize(list.size)
+    }
+
+    private fun setupSearchView() {
+        svFindByEntity.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query != null) {
+                    var listSearch: List<User> = listUsers
+                    if (svFindByEntity.queryHint == "Escriba el Nombre") {
+                        listSearch = searchUser(query.toLowerCase(Locale.ROOT), "names")
+                    } else if (svFindByEntity.queryHint == "Escriba el Correo") {
+                        listSearch = searchUser(query.toLowerCase(Locale.ROOT), "email")
+                    }
+
+                    setupRecycler(listSearch)
+                }
+
+                return false
+            }
+        })
+    }
+
     private fun showSearch(text: CharSequence?) {
-        etFindByEntity.setText("")
-        tilFindByEntity.visibility = View.VISIBLE
-        tilFindByEntity.hint = "Escriba el $text"
+        svFindByEntity.setQuery("", false)
+        svFindByEntity.visibility = View.VISIBLE
+        svFindByEntity.queryHint = "Escriba el $text"
     }
 
     private fun putHints(permision: String?) {
@@ -287,24 +279,15 @@ class CreateEntityFragment :
     }
 
     private fun observedViewModel() {
-       /* viewModel.users.observe(viewLifecycleOwner, Observer { users ->
-            listAdapterUsers = context?.let { CreateEntityUserAdapter(it, users, this) }!!
-            rvListUserEntity.adapter = listAdapterUsers
-            *//* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria *//*
-            rvListUserEntity.setItemViewCacheSize(users.size)
-        })*/
-
         createEntityViewModel.getListUsersFromFirebase().observe(
             viewLifecycleOwner,
             Observer { result ->
                 when (result) {
-                    is Resource.Loading -> { }
+                    is Resource.Loading -> {
+                    }
                     is Resource.Success -> {
-                        listAdapterUsers =
-                            context?.let { CreateEntityUserAdapter(it, result.data, this) }!!
-                        rvListUserEntity.adapter = listAdapterUsers
-                        /* Este metodo agranda el tamaño de cache para que no se repitan datos en memoria */
-                        rvListUserEntity.setItemViewCacheSize(result.data.size)
+                        setupRecycler(result.data)
+                        listUsers = result.data
                     }
                     is Resource.Failure -> {
                         Log.i(CREATE_ENTITY_FRAGMENT, "Error: ${result.exception}")
@@ -312,6 +295,37 @@ class CreateEntityFragment :
                 }
 
             })
+    }
+
+    private fun searchUser(query: String, key: String): List<User> {
+        val list = if(listFilterUsers.isNullOrEmpty()) listUsers else listFilterUsers
+
+        return when (key) {
+            "names" -> {
+                list.filter { user ->
+                    user.names
+                        .toLowerCase(Locale.ROOT)
+                        .startsWith(query)
+                        .or(user.names.endsWith(query + "\uf8ff"))
+                }
+            }
+            "email" -> {
+                list.filter { user ->
+                    user.email
+                        .toLowerCase(Locale.ROOT)
+                        .startsWith(query)
+                        .or(user.email.endsWith(query + "\uf8ff"))
+                }
+            }
+            else -> list
+        }
+    }
+
+    private fun filterUser(permission: String):List<User>{
+        listFilterUsers = listUsers.filter { user->
+            user.permission.contains(permission)
+        }
+        return listFilterUsers
     }
 
     override fun onItemClickUser(

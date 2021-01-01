@@ -13,4 +13,5 @@ object AppConstants {
     const val LOGIN_ACTIVITY = "DEBUG_LOGIN"
     const val CONFIG_FRAGMENT = "DEBUG_CONFIG"
     const val CREATE_ENTITY_FRAGMENT = "DEBUG_ENTITY"
+    const val REGISTER_ACTIVITY = "DEBUG_REGISTER"
 }

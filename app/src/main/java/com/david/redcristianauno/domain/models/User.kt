@@ -9,15 +9,15 @@ import kotlinx.android.parcel.Parcelize
 
 
 data class UserDataSource(
-    val id: String = "",
-    val names: String = "",
-    val last_names: String = "",
-    val email: String = "",
-    val address: String = "",
-    val telephone: String = "",
-    val permission: List<String> = listOf(),
-    val subred_name: String = "",
-    val iglesia_references: DocumentReference? = null
+    var id: String = "",
+    var names: String = "",
+    var last_names: String = "",
+    var email: String = "",
+    var address: String = "",
+    var telephone: String = "",
+    var permission: List<String> = listOf(),
+    var subred_name: String = "",
+    var iglesia_references: DocumentReference? = null
 )
 
 @Parcelize
@@ -29,7 +29,7 @@ data class User(
     val address: String = "",
     val telephone: String = "",
     val permission: List<String> = listOf(),
-    val subred_name: String = "",
+    val subred_name: String = "default",
     val iglesia_references: String? = null
 ) : Parcelable
 

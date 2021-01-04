@@ -39,10 +39,6 @@ class RegisterViewModel @ViewModelInject constructor(
     }
 
     fun createUserFirestoreFromFirebase(user: UserDataSource, callback: Callback<Void>){
-        /*viewModelScope.launch {
-            createUserFirestoreUseCase.invoke(user)
-        }*/
-
         createUserFirestoreUseCase.invoke(user, callback)
     }
 

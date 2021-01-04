@@ -1,6 +1,7 @@
 package com.david.redcristianauno.data.remote
 
 import android.util.Log
+import com.david.redcristianauno.application.AppConstants.PROFILE_FRAGMENT
 import com.david.redcristianauno.application.AppConstants.REGISTER_ACTIVITY
 import com.david.redcristianauno.application.AppConstants.USER_COLLECTION_NAME
 import com.david.redcristianauno.data.network.Callback
@@ -85,6 +86,17 @@ class RemoteDataSourceImpl @Inject constructor(
                 Log.e(REGISTER_ACTIVITY, "Error al crear el archivo: ${exception.message}")
                 callback.onFailure(exception )
             }
+    }
+
+    override suspend fun updateUserFirestore(fields: Map<String, String>) {
+        getIdUser()?.let { id->
+            firebaseService.firebaseFirestore
+                .collection(USER_COLLECTION_NAME)
+                .document(id)
+                .update(fields)
+                .addOnSuccessListener { Log.i(PROFILE_FRAGMENT, "Update Success") }
+                .addOnFailureListener{ e-> Log.e(PROFILE_FRAGMENT, "Error: Updating document", e)}
+        }
     }
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> {

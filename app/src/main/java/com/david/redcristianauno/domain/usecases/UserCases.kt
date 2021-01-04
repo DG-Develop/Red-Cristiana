@@ -44,6 +44,12 @@ class CreateUserFirestoreUseCase @Inject constructor(
      fun invoke(user: UserDataSource, callback: Callback<Void>) = userRepository.createUserFirestore(user, callback)
 }
 
+class UpdateUserFirestoreUseCase @Inject constructor(
+    private val userRepository: UserRepository
+){
+    suspend fun invoke(fields: Map<String, String>) = userRepository.updateUserFirestore(fields)
+}
+
 class LoginUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ){

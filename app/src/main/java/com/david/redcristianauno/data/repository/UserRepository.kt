@@ -15,6 +15,7 @@ interface UserRepository {
     suspend fun getUserByIdAsFlow(userId: String): Flow<Resource<User?>>
     suspend fun createUserAuth(email: String, password: String): Resource<AuthResult?>
     fun createUserFirestore(user: UserDataSource, callback: Callback<Void>)
+    suspend fun updateUserFirestore(fields: Map<String, String>)
     suspend fun loginUser(email: String, password: String): Resource<String?>
     suspend fun signOut()
     suspend fun getIdUser(): String?

@@ -44,8 +44,12 @@ class ConfigurationFragment : Fragment() {
 
         setupObservers()
 
+
+
         cvProfile.setOnClickListener {
-            findNavController().navigate(R.id.profileConfigurationFragmentDialog)
+            val bundle = Bundle()
+            bundle.putParcelable("user", user)
+            findNavController().navigate(R.id.profileConfigurationFragmentDialog, bundle)
         }
 
         cvCreate.setOnClickListener {

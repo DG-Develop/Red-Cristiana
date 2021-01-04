@@ -14,7 +14,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
+import com.david.redcristianauno.application.AppConstants.CELL_COLLECTION_NAME
+import com.david.redcristianauno.application.AppConstants.CHURCH_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.CREATE_ENTITY_FRAGMENT
+import com.david.redcristianauno.application.AppConstants.NET_COLLECTION_NAME
+import com.david.redcristianauno.application.AppConstants.SUBNET_COLLECTION_NAME
+import com.david.redcristianauno.application.AppConstants.USER_COLLECTION_NAME
 import com.david.redcristianauno.data.model.Celula
 import com.david.redcristianauno.data.model.Red
 import com.david.redcristianauno.data.model.Subred
@@ -42,6 +47,7 @@ class CreateEntityFragment :
     private var permission: String = ""
     private lateinit var listUsers: List<User>
     private var listFilterUsers: List<User> = listOf()
+    private lateinit var user: User
 
     /*Parameters for the RecyclerView when clicked*/
     private val selectUser = mutableMapOf<MaterialCardView, User>()
@@ -73,6 +79,8 @@ class CreateEntityFragment :
         }
         val data = arguments?.getString("typeList")
         putHints(data)
+
+        user = arguments?.getParcelable("user")!!
 
         createEntityViewModel.getListUsersFromFirebase()
 
@@ -138,14 +146,14 @@ class CreateEntityFragment :
         red.id_red = name
         red.name_leader = selectUser.values.first().names
         red.created_by = firebaseService.firebaseFirestore
-            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .collection(USER_COLLECTION_NAME)
             .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
 
         firebaseService.setDocumentWithID(
             red,
-            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
-                    "${UserSingleton.getIdEntity("Iglesia")}/" +
-                    FirebaseService.REDES_COLLECTION_NAME,
+            "${CHURCH_COLLECTION_NAME}/" +
+                    "${getIdEntity("Iglesia", user)}/" +
+                    NET_COLLECTION_NAME,
             name,
             object : Callback<Void> {
                 override fun OnSucces(result: Void?) {
@@ -166,16 +174,16 @@ class CreateEntityFragment :
         subred.id_subred = name
         subred.name_leader = selectUser.values.first().names
         subred.created_by = firebaseService.firebaseFirestore
-            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .collection(USER_COLLECTION_NAME)
             .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
 
         firebaseService.setDocumentWithID(
             subred,
-            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
-                    "${UserSingleton.getIdEntity("Iglesia")}/" +
-                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+            "${CHURCH_COLLECTION_NAME}/" +
+                    "${getIdEntity("Iglesia", user)}/" +
+                    "${NET_COLLECTION_NAME}/" +
                     "${arguments?.getString("red")!!}/" +
-                    FirebaseService.SUBREDES_COLLECTION_NAME,
+                    SUBNET_COLLECTION_NAME,
             name,
 
             object : Callback<Void> {
@@ -197,18 +205,18 @@ class CreateEntityFragment :
         celula.id_celula = name
         celula.name_leader = selectUser.values.first().names
         celula.created_by = firebaseService.firebaseFirestore
-            .collection(FirebaseService.USER_COLLECTION_NAME)
+            .collection(USER_COLLECTION_NAME)
             .document(firebaseService.firebaseAuth.currentUser?.uid.toString())
 
         firebaseService.setDocumentWithID(
             celula,
-            "${FirebaseService.IGLESIA_COLLECTION_NAME}/" +
-                    "${UserSingleton.getIdEntity("Iglesia")}/" +
-                    "${FirebaseService.REDES_COLLECTION_NAME}/" +
+            "${CHURCH_COLLECTION_NAME}/" +
+                    "${getIdEntity("Iglesia", user)}/" +
+                    "${NET_COLLECTION_NAME}/" +
                     "${arguments?.getString("red")!!}/" +
-                    "${FirebaseService.SUBREDES_COLLECTION_NAME}/" +
+                    "${SUBNET_COLLECTION_NAME}/" +
                     "${arguments?.getString("subred")!!}/" +
-                    FirebaseService.CELULA_COLLECTION_NAME,
+                    CELL_COLLECTION_NAME,
             name,
 
             object : Callback<Void> {
@@ -399,6 +407,20 @@ class CreateEntityFragment :
         cardView.isChecked = !cardView.isChecked
         cardView.isFocusable = !cardView.isFocusable
 
+    }
+
+    private fun getIdEntity(type: String, user: User?):String {
+        val documents = user?.iglesia_references?.split("/")
+        if (documents != null) {
+            return when(type){
+                "Iglesia" -> documents[1]
+                "Red" -> documents[3]
+                "Subred" -> documents[5]
+                "Celula" -> documents[7]
+                else -> ""
+            }
+        }
+        return ""
     }
 
     companion object {

@@ -6,26 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 
 import com.david.redcristianauno.R
-import com.david.redcristianauno.domain.ProfileUseCaseImpl
-import com.david.redcristianauno.data.model.User
-import com.david.redcristianauno.data.network.UserRepositoryImpl
-import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
-import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelFactory
+import com.david.redcristianauno.domain.models.User
+import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelP
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_profile_configuration_dialog.*
 
-
+@AndroidEntryPoint
 class ProfileConfigurationDialogFragment : DialogFragment() {
 
-    private val viewModel by lazy {
-        ViewModelProvider(
-            this,
-            ProfileViewModelFactory(ProfileUseCaseImpl(UserRepositoryImpl()))
-        ).get(ProfileViewModel::class.java)
-    }
+    private val profileViewModel by viewModels<ProfileViewModelP>()
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +35,10 @@ class ProfileConfigurationDialogFragment : DialogFragment() {
         toolbarBackProfileConfiguration.setNavigationOnClickListener {
             dismiss()
         }
-        viewModel.refresh()
+
+        user = arguments?.getParcelable("user")!!
+
+        fillFields(user)
 
         btnEditProfileConfigurationDialog.setOnClickListener {
             btnSaveProfileConfigurationDialog.visibility = View.VISIBLE
@@ -51,23 +47,21 @@ class ProfileConfigurationDialogFragment : DialogFragment() {
         }
 
         btnSaveProfileConfigurationDialog.setOnClickListener {
-            rlBaseProfile.visibility = View.VISIBLE
             updateDataUser()
             enableOrDisableFields(false)
             btnSaveProfileConfigurationDialog.visibility = View.GONE
             btnEditProfileConfigurationDialog.visibility = View.VISIBLE
-            rlBaseProfile.visibility = View.GONE
         }
-
-        observedViewModel()
     }
 
     private fun updateDataUser() {
-        val names = etNameConfigurationDialogFragment.text.toString().trim()
-        val last_names = etLastNamesConfigurationDialogFragment.text.toString().trim()
-        val telephone = etTelephoneConfigurationDialogFragment.text.toString().trim()
-        val address = etAddressConfigurationDialogFragment.text.toString().trim()
-        viewModel.updateDataUserFromFirebase(names, last_names, telephone, address)
+        val fields =  mapOf(
+            "names" to etNameConfigurationDialogFragment.text.toString().trim(),
+            "last_names" to etLastNamesConfigurationDialogFragment.text.toString().trim(),
+            "telephone" to etTelephoneConfigurationDialogFragment.text.toString().trim(),
+            "address" to etAddressConfigurationDialogFragment.text.toString().trim()
+        )
+        profileViewModel.updateUser(fields)
     }
 
     private fun enableOrDisableFields(response: Boolean) {
@@ -80,18 +74,6 @@ class ProfileConfigurationDialogFragment : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-    }
-
-    private fun observedViewModel(){
-        viewModel.userData.observe(viewLifecycleOwner, Observer { user ->
-            fillFields(user)
-        })
-
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            if (it != null){
-                rlBaseProfile.visibility = View.GONE
-            }
-        })
     }
 
     private fun fillFields(user: User){

@@ -86,7 +86,6 @@ class RegisterActivity : AppCompatActivity() {
                     user.id = id
                     registerViewModel.createUserFirestoreFromFirebase(user, object : Callback<Void>{
                         override fun OnSucces(result: Void?) {
-                            rlBaseRegister.visibility = View.GONE
                             actionLogin()
                         }
 

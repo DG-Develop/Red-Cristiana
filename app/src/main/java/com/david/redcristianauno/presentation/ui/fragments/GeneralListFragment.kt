@@ -85,7 +85,8 @@ class GeneralListFragment : DialogFragment() {
             val bundle = bundleOf(
                 "typeList" to type,
                 "red" to dropdown_entity_general_red.text.toString(),
-                "subred" to dropdown_entity_general_subred.text.toString()
+                "subred" to dropdown_entity_general_subred.text.toString(),
+                "user" to userData
             )
             findNavController().navigate(R.id.createEntityFragment, bundle)
         }

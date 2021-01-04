@@ -7,6 +7,10 @@ object AppConstants {
 
     //Firebase
     const val USER_COLLECTION_NAME = "users"
+    const val CHURCH_COLLECTION_NAME = "iglesia"
+    const val NET_COLLECTION_NAME = "redes"
+    const val SUBNET_COLLECTION_NAME = "subredes"
+    const val CELL_COLLECTION_NAME = "celulas"
 
     //Debug Constants
     const val MAIN_ACTIVITY = "DEBUG_MAIN"
@@ -14,4 +18,5 @@ object AppConstants {
     const val CONFIG_FRAGMENT = "DEBUG_CONFIG"
     const val CREATE_ENTITY_FRAGMENT = "DEBUG_ENTITY"
     const val REGISTER_ACTIVITY = "DEBUG_REGISTER"
+    const val PROFILE_FRAGMENT = "DEBUG_PROFILE"
 }

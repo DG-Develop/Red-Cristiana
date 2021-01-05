@@ -43,10 +43,11 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    override suspend fun getListUsers(): Flow<Resource<List<User>>> = callbackFlow {
+    override suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>> = callbackFlow {
         val eventsDocuments = firebaseService.firebaseFirestore
             .collection(USER_COLLECTION_NAME)
-            .whereArrayContainsAny("permission", listOf("Normal", "Lider Celula", "Subred", "Red"))
+            .whereArrayContainsAny("permission", filter)
+            /*.whereArrayContainsAny("permission", listOf("Normal", "Lider Celula", "Subred", "Red"))*/
 
         val subscription =
             eventsDocuments.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->

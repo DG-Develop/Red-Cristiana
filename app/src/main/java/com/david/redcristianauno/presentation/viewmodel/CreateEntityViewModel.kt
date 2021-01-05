@@ -12,15 +12,24 @@ class CreateEntityViewModel @ViewModelInject constructor(
     private val getListUsersUseCase: GetListUsersUseCase
 ) : ViewModel(){
 
-    fun getListUsersFromFirebase() = liveData(viewModelScope.coroutineContext + Dispatchers.IO){
-        emit(Resource.Loading())
+    private val filterLiveData = MutableLiveData<List<String>>()
 
-        try {
-            getListUsersUseCase.invoke().collect { userList ->
-                emit(userList)
+    fun setFilter(filter: List<String>){
+        filterLiveData.value = filter
+    }
+
+    fun getListUsersFromFirebase() = filterLiveData.switchMap { filter ->
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO){
+            emit(Resource.Loading())
+
+            try {
+                getListUsersUseCase.invoke(filter).collect { userList ->
+                    emit(userList)
+                }
+            }catch (e: Exception){
+                emit(Resource.Failure(e))
             }
-        }catch (e: Exception){
-            emit(Resource.Failure(e))
         }
     }
+
 }

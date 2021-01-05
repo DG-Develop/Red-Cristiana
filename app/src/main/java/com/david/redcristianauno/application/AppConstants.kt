@@ -19,4 +19,5 @@ object AppConstants {
     const val CREATE_ENTITY_FRAGMENT = "DEBUG_ENTITY"
     const val REGISTER_ACTIVITY = "DEBUG_REGISTER"
     const val PROFILE_FRAGMENT = "DEBUG_PROFILE"
+    const val LIST_USER_FRAGMENT = "DEBUG_LIST"
 }

@@ -42,7 +42,8 @@ class UserRepositoryImpl @Inject constructor(
         awaitClose { cancel() }
     }
 
-    override suspend fun getListUsers(): Flow<Resource<List<User>>> = remoteDataSource.getListUsers()
+    override suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>>
+    = remoteDataSource.getListUsers(filter)
 
     override suspend fun getUserByIdAsFlow(userId: String): Flow<Resource<User?>> =
         localDataSource.getUserByIdAsFlow(userId)

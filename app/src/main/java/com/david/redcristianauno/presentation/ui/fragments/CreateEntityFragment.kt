@@ -82,8 +82,8 @@ class CreateEntityFragment :
 
         user = arguments?.getParcelable("user")!!
 
-        createEntityViewModel.getListUsersFromFirebase()
 
+        createEntityViewModel.setFilter(listOf("Normal", "Lider Celula", "Subred", "Red"))
 
         cgFilterEntity.setOnCheckedChangeListener { group, checkedId ->
             val chip = group.findViewById<Chip>(checkedId)
@@ -102,6 +102,7 @@ class CreateEntityFragment :
 
             if (permission.isNotBlank()) {
                 val list = filterUser(permission)
+                Log.i(CREATE_ENTITY_FRAGMENT, "ListFilter: $list")
                 setupRecycler(list)
             } else {
                 setupRecycler(listUsers)

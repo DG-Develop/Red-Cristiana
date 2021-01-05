@@ -17,7 +17,8 @@ class GetUserByIdUseCase @Inject constructor(
 class GetListUsersUseCase @Inject constructor(
     private val userRepository: UserRepository
 ){
-    suspend fun invoke(): Flow<Resource<List<User>>> = userRepository.getListUsers()
+    suspend fun invoke(filter: List<String>): Flow<Resource<List<User>>> =
+        userRepository.getListUsers(filter)
 }
 
 class GetUserByIdUseCaseAsFlow @Inject constructor(

@@ -1,33 +1,40 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 
 import com.david.redcristianauno.R
-import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.application.AppConstants.LIST_USER_FRAGMENT
 import com.david.redcristianauno.domain.ConfigurationUseCaseImpl
 import com.david.redcristianauno.data.network.ConfigurationRepositoryImpl
+import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.ui.adapters.UserAdapter
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModel
 import com.david.redcristianauno.presentation.viewmodel.ConfigurationViewModelFactory
+import com.david.redcristianauno.presentation.viewmodel.ListUserConfigurationViewModel
+import com.david.redcristianauno.vo.Resource
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list_user_configuration_dialog.*
 
+@AndroidEntryPoint
 class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnListUserClickListener{
 
     private lateinit var listAdapter: UserAdapter
     private val userChecked = ArrayList<User>()
     private val checked = MutableLiveData<Boolean>()
-
+    private val listUserConfigurationViewModel by viewModels<ListUserConfigurationViewModel>()
     private val viewModel by lazy {
         ViewModelProvider(
             this,
@@ -54,11 +61,8 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
         }
 
         val user = arguments?.getString("user")
-        if (user == "Postulado"){
-            viewModel.refreshPostulates(user)
-        }else{
-            viewModel.refresh(user!!)
-        }
+
+        listUserConfigurationViewModel.setFilter(listOf(user!!))
 
         ibDeleteUserConfigurationDialog.setOnClickListener {
             if (userChecked.size > 0) {
@@ -97,7 +101,10 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
                             val data = array[which]
                             rlBaseListUser.visibility = View.VISIBLE
                             for (userSelected in userChecked) {
-                                viewModel.updateUserFromFirebase(userSelected.id, data)
+                                /*viewModel.updateUserFromFirebase(userSelected.id, data)*/
+                                listUserConfigurationViewModel.updateUserFromFirestore(
+                                    mapOf("permission" to data)
+                                )
                             }
                             viewModel.refresh(user)
                             userChecked.clear()
@@ -117,7 +124,7 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
             }
         }
 
-        observedViewModel()
+        setupObservers()
         observedUsersSelected()
     }
 
@@ -129,14 +136,20 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
         )
     }
 
-    private fun observedViewModel() {
-        viewModel.listUser.observe(viewLifecycleOwner, Observer { schedule ->
-            listAdapter = context?.let { UserAdapter(it, schedule, this) }!!
-            rvListUser.adapter = listAdapter
-        })
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                rlBaseListUser.visibility = View.GONE
+    private fun setupObservers(){
+        listUserConfigurationViewModel.getListUserFromFirebase().observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Loading -> rlBaseListUser.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    rlBaseListUser.visibility = View.GONE
+
+                    listAdapter = UserAdapter(requireContext(), result.data, this)
+                    rvListUser.adapter = listAdapter
+                }
+                is Resource.Failure -> {
+                    rlBaseListUser.visibility = View.GONE
+                    Log.i(LIST_USER_FRAGMENT, "Error ${result.exception.message}")
+                }
             }
         })
     }

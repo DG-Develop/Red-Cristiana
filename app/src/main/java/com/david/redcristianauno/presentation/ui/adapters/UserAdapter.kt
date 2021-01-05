@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.david.redcristianauno.R
 import com.david.redcristianauno.core.BaseViewHolder
-import com.david.redcristianauno.data.model.User
+import com.david.redcristianauno.domain.models.User
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.item_user.view.*
 
@@ -52,9 +52,22 @@ class UserAdapter(
         }
 
         private fun putImage(item: User) {
-            when(item.permission){
-                "Postulado" -> itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_normal)
-                "Normal" -> itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_member)
+            when {
+                item.permission.contains("Postulado") -> {
+                    itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_normal)
+                }
+                item.permission.contains("Normal") -> {
+                    itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_member)
+                }
+                item.permission.contains("Lider Celula") -> {
+                    itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_leader_celula)
+                }
+                item.permission.contains("Subred") -> {
+                    itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_leader_subred)
+                }
+                item.permission.contains("Red") -> {
+                    itemView.ivTypeUser.setImageResource(R.drawable.ic_icon_leader_red)
+                }
             }
         }
     }

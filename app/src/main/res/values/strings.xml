@@ -141,5 +141,6 @@ ser aceptado o rechazado por los administradores</string>
     <string name="bs_subnetwork">Subredes</string>
     <string name="bs_cell">Celulas</string>
     <string name="filter_by">Filtrar por:</string>
+    <string name="capture_user_title">Registrar Usuario</string>
 
 </resources>

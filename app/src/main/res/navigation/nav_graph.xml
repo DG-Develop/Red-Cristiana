@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_navSettingFragment_to_bottomSheetConfig"
             app:destination="@id/bottomSheetConfig" />
+        <action
+            android:id="@+id/action_navSettingFragment_to_captureUserFragment"
+            app:destination="@id/captureUserFragment" />
     </fragment>
     <dialog
         android:id="@+id/dataCelulaFragmentDialog"
@@ -141,4 +144,9 @@
             android:id="@+id/action_bottomSheetConfig_to_generalListFragment"
             app:destination="@id/generalListFragment" />
     </dialog>
+    <dialog
+        android:id="@+id/captureUserFragment"
+        android:name="com.david.redcristianauno.presentation.ui.fragments.CaptureUserFragment"
+        android:label="fragment_capture_user"
+        tools:layout="@layout/fragment_capture_user" />
 </navigation>

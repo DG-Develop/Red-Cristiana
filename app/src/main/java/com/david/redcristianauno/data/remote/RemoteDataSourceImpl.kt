@@ -43,28 +43,29 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     @ExperimentalCoroutinesApi
-    override suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>> = callbackFlow {
-        val eventsDocuments = firebaseService.firebaseFirestore
-            .collection(USER_COLLECTION_NAME)
-            .whereArrayContainsAny("permission", filter)
+    override suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>> =
+        callbackFlow {
+            val eventsDocuments = firebaseService.firebaseFirestore
+                .collection(USER_COLLECTION_NAME)
+                .whereArrayContainsAny("permission", filter)
             /*.whereArrayContainsAny("permission", listOf("Normal", "Lider Celula", "Subred", "Red"))*/
 
-        val subscription =
-            eventsDocuments.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
-                if (documentSnapshot != null) {
-                    val users = documentSnapshot
-                        .toObjects(UserDataSource::class.java)
-                        .asListUser()
-                        .sortedBy { it.names }
-                    offer(Resource.Success(users))
-                } else {
-                    channel.close(firebaseFirestoreException?.cause)
+            val subscription =
+                eventsDocuments.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                    if (documentSnapshot != null) {
+                        val users = documentSnapshot
+                            .toObjects(UserDataSource::class.java)
+                            .asListUser()
+                            .sortedBy { it.names }
+                        offer(Resource.Success(users))
+                    } else {
+                        channel.close(firebaseFirestoreException?.cause)
+                    }
+
                 }
 
-            }
-
-        awaitClose { subscription.remove() }
-    }
+            awaitClose { subscription.remove() }
+        }
 
     override suspend fun createUserAuth(email: String, password: String): Resource<AuthResult?> {
         val result = firebaseService.firebaseAuth
@@ -83,21 +84,19 @@ class RemoteDataSourceImpl @Inject constructor(
                 Log.i(REGISTER_ACTIVITY, "Creado con exito")
                 callback.OnSucces(null)
             }
-            .addOnFailureListener{exception ->
+            .addOnFailureListener { exception ->
                 Log.e(REGISTER_ACTIVITY, "Error al crear el archivo: ${exception.message}")
-                callback.onFailure(exception )
+                callback.onFailure(exception)
             }
     }
 
-    override suspend fun updateUserFirestore(fields: Map<String, String>) {
-        getIdUser()?.let { id->
-            firebaseService.firebaseFirestore
-                .collection(USER_COLLECTION_NAME)
-                .document(id)
-                .update(fields)
-                .addOnSuccessListener { Log.i(PROFILE_FRAGMENT, "Update Success") }
-                .addOnFailureListener{ e-> Log.e(PROFILE_FRAGMENT, "Error: Updating document", e)}
-        }
+    override suspend fun updateUserFirestore(fields: Map<String, Any>, id: String) {
+        firebaseService.firebaseFirestore
+            .collection(USER_COLLECTION_NAME)
+            .document(id)
+            .update(fields)
+            .addOnSuccessListener { Log.i(PROFILE_FRAGMENT, "Update Success") }
+            .addOnFailureListener { e -> Log.e(PROFILE_FRAGMENT, "Error: Updating document", e) }
     }
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> {

@@ -97,6 +97,50 @@
                         android:src="@drawable/ic_go_configuration" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvCaptureUser"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="@dimen/Medium"
+                android:elevation="@dimen/Diminute">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/Small">
+
+                    <ImageView
+                        android:id="@+id/ivCaptureUser"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_capture"
+                        android:layout_alignParentStart="true"
+                        app:tint="@color/colorPrimaryDark" />
+
+                    <TextView
+                        android:id="@+id/tvCaptureUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/ivCaptureUser"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="@dimen/Small"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/capture_user_title"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="@dimen/Subtitle"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_go_configuration" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvManageUser"
                 android:layout_width="match_parent"

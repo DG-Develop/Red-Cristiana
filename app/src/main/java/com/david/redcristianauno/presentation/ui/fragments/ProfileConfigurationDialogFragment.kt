@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 
 import com.david.redcristianauno.R
 import com.david.redcristianauno.domain.models.User
-import com.david.redcristianauno.presentation.viewmodel.ProfileViewModelP
+import com.david.redcristianauno.presentation.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_profile_configuration_dialog.*
 
 @AndroidEntryPoint
 class ProfileConfigurationDialogFragment : DialogFragment() {
 
-    private val profileViewModel by viewModels<ProfileViewModelP>()
+    private val profileViewModel by viewModels<ProfileViewModel>()
     private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +61,7 @@ class ProfileConfigurationDialogFragment : DialogFragment() {
             "telephone" to etTelephoneConfigurationDialogFragment.text.toString().trim(),
             "address" to etAddressConfigurationDialogFragment.text.toString().trim()
         )
-        profileViewModel.updateUser(fields)
+        profileViewModel.updateUser(fields, user.id)
     }
 
     private fun enableOrDisableFields(response: Boolean) {

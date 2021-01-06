@@ -13,7 +13,7 @@ interface RemoteDataSource {
     suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>>
     suspend fun createUserAuth(email: String, password: String): Resource<AuthResult?>
     fun createUserFirestore(user: UserDataSource, callback: Callback<Void>)
-    suspend fun updateUserFirestore(fields: Map<String, String>)
+    suspend fun updateUserFirestore(fields: Map<String, Any>, id: String)
     suspend fun loginUser(email: String, password: String): Resource<String?>
     suspend fun signOut()
     suspend fun isCurrentUser(): Boolean

@@ -33,9 +33,9 @@ class ListUserConfigurationViewModel @ViewModelInject constructor(
             }
         }
     }
-    fun updateUserFromFirestore(data: Map<String, String>){
+    fun updatePermissionUserFromFirestore(data: Map<String, List<String>>, id: String){
         viewModelScope.launch {
-            updateUserFirestoreUseCase.invoke(data)
+            updateUserFirestoreUseCase.invoke(data, id)
         }
     }
 }

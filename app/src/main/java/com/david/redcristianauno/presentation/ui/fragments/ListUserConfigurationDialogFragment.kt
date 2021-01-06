@@ -101,9 +101,9 @@ class ListUserConfigurationDialogFragment : DialogFragment(), UserAdapter.OnList
                             val data = array[which]
                             rlBaseListUser.visibility = View.VISIBLE
                             for (userSelected in userChecked) {
-                                /*viewModel.updateUserFromFirebase(userSelected.id, data)*/
-                                listUserConfigurationViewModel.updateUserFromFirestore(
-                                    mapOf("permission" to data)
+                                listUserConfigurationViewModel.updatePermissionUserFromFirestore(
+                                    mapOf("permission" to listOf(data)),
+                                    userSelected.id
                                 )
                             }
                             viewModel.refresh(user)

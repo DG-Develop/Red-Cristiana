@@ -6,14 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.david.redcristianauno.domain.usecases.UpdateUserFirestoreUseCase
 import kotlinx.coroutines.launch
 
-class ProfileViewModelP @ViewModelInject constructor(
+class ProfileViewModel @ViewModelInject constructor(
     private val updateUserFirestoreUseCase: UpdateUserFirestoreUseCase
 ) : ViewModel() {
 
 
-    fun updateUser(fields: Map<String, String>){
+    fun updateUser(fields: Map<String, String>, id: String){
         viewModelScope.launch {
-            updateUserFirestoreUseCase.invoke(fields)
+            updateUserFirestoreUseCase.invoke(fields, id)
         }
     }
 }

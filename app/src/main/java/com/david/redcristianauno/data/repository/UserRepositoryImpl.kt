@@ -57,8 +57,9 @@ class UserRepositoryImpl @Inject constructor(
     override  fun createUserFirestore(user: UserDataSource, callback: Callback<Void>) =
         remoteDataSource.createUserFirestore(user, callback)
 
-    override suspend fun updateUserFirestore(fields: Map<String, String>) =
-        remoteDataSource.updateUserFirestore(fields)
+    override suspend fun updateUserFirestore(fields: Map<String, Any>, id: String) =
+        remoteDataSource.updateUserFirestore(fields, id)
+
 
     override suspend fun loginUser(email: String, password: String): Resource<String?> =
         remoteDataSource.loginUser(email, password)

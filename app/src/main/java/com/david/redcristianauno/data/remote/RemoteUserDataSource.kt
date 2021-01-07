@@ -7,7 +7,7 @@ import com.david.redcristianauno.vo.Resource
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 
-interface RemoteDataSource {
+interface RemoteUserDataSource {
 
     suspend fun getUserById(userId: String): Flow<Resource<User?>>
     suspend fun getListUsers(filter: List<String>): Flow<Resource<List<User>>>

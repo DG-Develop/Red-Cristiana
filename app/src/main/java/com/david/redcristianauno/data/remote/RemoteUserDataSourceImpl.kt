@@ -14,12 +14,11 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 import javax.inject.Inject
 
-class RemoteDataSourceImpl @Inject constructor(
+class RemoteUserDataSourceImpl @Inject constructor(
     private val firebaseService: FirebaseService
-) : RemoteDataSource {
+) : RemoteUserDataSource {
 
     @ExperimentalCoroutinesApi
     override suspend fun getUserById(userId: String): Flow<Resource<User?>> = callbackFlow {

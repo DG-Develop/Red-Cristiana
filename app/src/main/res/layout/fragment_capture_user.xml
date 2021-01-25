@@ -60,9 +60,112 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/horinzontal_cardview"
                         android:layout_marginTop="@dimen/Medium"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/select_celula"
+                        android:textColor="@color/GrayDark"
+                        android:textSize="@dimen/TitleSecondary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/Small"
                         android:fontFamily="@font/roboto"
-                        android:text="@string/title_capture"
+                        android:text="@string/red_user"
                         android:textColor="@color/Gray"
+                        android:textSize="@dimen/TitleSecondary" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilRedCapture"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_marginEnd="@dimen/horinzontal_cardview"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/dropdown_capture_red"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/Small"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/subred_user"
+                        android:textColor="@color/Gray"
+                        android:textSize="@dimen/TitleSecondary" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilSubredCapture"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_marginEnd="@dimen/horinzontal_cardview"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/dropdown_capture_subred"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/Small"
+                        android:fontFamily="@font/roboto"
+                        android:text="@string/celula_user"
+                        android:textColor="@color/Gray"
+                        android:textSize="@dimen/TitleSecondary" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCelulaCapture"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/VerySmall"
+                        android:layout_marginEnd="@dimen/horinzontal_cardview"
+                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
+                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/dropdown_capture_celula"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horinzontal_cardview"
+                        android:layout_marginTop="@dimen/Medium"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="@string/title_capture"
+                        android:textColor="@color/GrayDark"
                         android:textSize="@dimen/TitleSecondary" />
 
 
@@ -248,6 +351,7 @@
                         android:textColorHint="@color/Gray"
                         app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
                         app:boxCornerRadiusBottomStart="@dimen/VerySmall"
+                        android:layout_marginBottom="@dimen/Big"
                         app:boxCornerRadiusTopEnd="@dimen/VerySmall"
                         app:boxCornerRadiusTopStart="@dimen/VerySmall"
                         app:boxStrokeColor="@color/Gray"
@@ -265,38 +369,6 @@
                             android:padding="@dimen/VerySmall"
                             android:textColor="@color/Gray"
                             android:textSize="@dimen/Normal" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/horinzontal_cardview"
-                        android:layout_marginTop="@dimen/Medium"
-                        android:fontFamily="@font/roboto"
-                        android:text="@string/select_celula"
-                        android:textColor="@color/Gray"
-                        android:textSize="@dimen/TitleSecondary" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilCelulaCapture"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/horinzontal_cardview"
-                        android:layout_marginTop="@dimen/Small"
-                        android:layout_marginEnd="@dimen/horinzontal_cardview"
-                        android:layout_marginBottom="@dimen/Big"
-                        app:boxCornerRadiusBottomEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusBottomStart="@dimen/VerySmall"
-                        app:boxCornerRadiusTopEnd="@dimen/VerySmall"
-                        app:boxCornerRadiusTopStart="@dimen/VerySmall">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/filled_exposed_dropdown_capture"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false" />
-
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>

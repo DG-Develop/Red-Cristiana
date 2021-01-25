@@ -1,6 +1,5 @@
 package com.david.redcristianauno.domain.models
 
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 
 data class ChurchDataSource(

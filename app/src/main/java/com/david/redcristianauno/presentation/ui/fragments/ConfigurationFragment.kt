@@ -61,7 +61,9 @@ class ConfigurationFragment : Fragment() {
         }
 
         cvCaptureUser.setOnClickListener{
-            findNavController().navigate(R.id.captureUserFragment)
+            val bundle = Bundle()
+            bundle.putParcelable("user", user)
+            findNavController().navigate(R.id.captureUserFragment, bundle)
         }
 
         cvManageUser.setOnClickListener{

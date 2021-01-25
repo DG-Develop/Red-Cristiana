@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CAPTURE_USER_FRAGMENT
+import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_capture_user.*
 class CaptureUserFragment : DialogFragment() {
 
     private val captureViewModel by viewModels<CaptureUserViewModel>()
+    private lateinit var church: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,10 +44,13 @@ class CaptureUserFragment : DialogFragment() {
             dismiss()
         }
 
+        val user: User = arguments?.getParcelable("user")!!
+
       /*  filled_exposed_dropdown_capture
         fab_send_capture*/
 
-        captureViewModel.getCells()
+        church = getIdEntity("Iglesia", user)
+        captureViewModel.setChurch(church)
 
         setupObservers()
     }
@@ -60,15 +66,49 @@ class CaptureUserFragment : DialogFragment() {
     }
 
     private fun setupObservers(){
-        captureViewModel.getCells().observe(viewLifecycleOwner, Observer { result ->
+        captureViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
                 is Resource.Success -> {
-                    Log.i(CAPTURE_USER_FRAGMENT, "List: ${result.data}")
+                    val list = result.data.map { net->  net.id_red }
+                    dropdown_capture_red.setText(list[0])
+
+                    val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+                    dropdown_capture_red.setAdapter(adapter)
+
+                    captureViewModel.setNetwork(church, list[0])
                 }
                 is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
             }
         })
+
+        captureViewModel.fetchSubNetwork.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
+                is Resource.Success -> {
+                    val list = result.data.map { net->  net.id_subred }
+                    dropdown_capture_subred.setText(list[0])
+
+                    val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+                    dropdown_capture_subred.setAdapter(adapter)
+                }
+                is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
+            }
+        })
+    }
+
+    private fun getIdEntity(type: String, user: User?):String {
+        val documents = user?.iglesia_references?.split("/")
+        if (documents != null) {
+            return when(type){
+                "Iglesia" -> documents[1]
+                "Red" -> documents[3]
+                "Subred" -> documents[5]
+                "Celula" -> documents[7]
+                else -> ""
+            }
+        }
+        return ""
     }
 
     override fun onStart() {

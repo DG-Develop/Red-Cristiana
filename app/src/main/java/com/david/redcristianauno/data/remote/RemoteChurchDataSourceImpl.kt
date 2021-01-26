@@ -1,5 +1,6 @@
 package com.david.redcristianauno.data.remote
 
+import com.david.redcristianauno.application.AppConstants.CELL_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.CHURCH_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.NET_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.SUBNET_COLLECTION_NAME
@@ -44,17 +45,21 @@ class RemoteChurchDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getCell(church: String, network: String, subNetwork: String): Resource<List<CellDataSource>> {
-        TODO("Not yet implemented")
-    }
-
-    /*override suspend fun getAllCells(): Resource<List<ChurchDataSource>> {
         val result = firebaseService.firebaseFirestore
-            .collection(CHURCH_COLLECTION_NAME)
+            .collection(
+                "${CHURCH_COLLECTION_NAME}/" +
+                        "${church}/" +
+                        "${NET_COLLECTION_NAME}/" +
+                        "${network}/" +
+                        "${SUBNET_COLLECTION_NAME}/" +
+                        "${subNetwork}/"+
+                        CELL_COLLECTION_NAME
+            )
             .get()
             .await()
 
-        val listChurch = result.toObjects(ChurchDataSource::class.java)
+        val listCell = result.toObjects(CellDataSource::class.java)
+        return Resource.Success(listCell)
+    }
 
-        return  Resource.Success(listChurch)
-    }*/
 }

@@ -22,6 +22,7 @@ class CaptureUserViewModel @ViewModelInject constructor(
     private val credentials = MutableLiveData<List<String>>()
     private val churchData = MutableLiveData<String>()
     private val networkData = MutableLiveData<List<String>>()
+    private val subNetworkData = MutableLiveData<List<String>>()
 
 
     fun setCredentials(email: String, password: String){
@@ -35,6 +36,11 @@ class CaptureUserViewModel @ViewModelInject constructor(
     fun setNetwork(church: String, network: String){
         val list = listOf(church, network)
         networkData.value = list
+    }
+
+    fun setSubNetwork(church: String, network: String, subNetwork: String){
+        val list = listOf(church, network, subNetwork)
+        subNetworkData.value = list
     }
 
     fun createUserAuthFromFirebase() = credentials.switchMap { list ->
@@ -67,6 +73,18 @@ class CaptureUserViewModel @ViewModelInject constructor(
 
             try {
                 emit(getSubNetworkUseCase.invoke(network[0], network[1]))
+            }catch (e: Exception){
+                emit(Resource.Failure(e))
+            }
+        }
+    }
+
+    val fetchCell = subNetworkData.switchMap { subNetwork ->
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO){
+            emit(Resource.Loading())
+
+            try {
+                emit(getCellsUseCase.invoke(subNetwork[0], subNetwork[1], subNetwork[2]))
             }catch (e: Exception){
                 emit(Resource.Failure(e))
             }

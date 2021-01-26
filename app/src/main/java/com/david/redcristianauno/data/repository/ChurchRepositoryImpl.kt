@@ -24,7 +24,6 @@ class ChurchRepositoryImpl @Inject constructor(
         church: String,
         network: String,
         subNetwork: String
-    ): Resource<List<CellDataSource>> {
-        TODO("Not yet implemented")
-    }
+    ): Resource<List<CellDataSource>> =
+        remoteChurchDataSource.getCell(church, network, subNetwork)
 }

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
@@ -39,23 +40,40 @@ class CaptureUserFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbarCaptureUser.navigationIcon = ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
+        toolbarCaptureUser.navigationIcon =
+            ContextCompat.getDrawable(view.context, R.drawable.ic_arrow_back)
         toolbarCaptureUser.setNavigationOnClickListener {
             dismiss()
         }
 
         val user: User = arguments?.getParcelable("user")!!
 
-      /*  filled_exposed_dropdown_capture
-        fab_send_capture*/
+        /*  filled_exposed_dropdown_capture
+          fab_send_capture*/
 
         church = getIdEntity("Iglesia", user)
         captureViewModel.setChurch(church)
 
+        dropdown_capture_red.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, _, _ ->
+                val data = dropdown_capture_red.text.toString()
+                captureViewModel.setNetwork(church, data)
+            }
+
+        dropdown_capture_subred.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, _, _ ->
+                val data = dropdown_capture_subred.text.toString()
+                captureViewModel.setSubNetwork(
+                    church,
+                    dropdown_capture_red.text.toString(),
+                    data
+                )
+            }
+
         setupObservers()
     }
 
-    fun captureUser(view: View?){
+    fun captureUser(view: View?) {
         val names = etNamesCapture.text.toString().trim()
         val last_name = etLastNamesCapture.text.toString().trim()
         val address = etAddressCapture.text.toString().trim()
@@ -65,42 +83,68 @@ class CaptureUserFragment : DialogFragment() {
         val confirm_password = etConfirmPassCapture.text.toString().trim()
     }
 
-    private fun setupObservers(){
+    private fun setupObservers() {
         captureViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
+            when (result) {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
                 is Resource.Success -> {
-                    val list = result.data.map { net->  net.id_red }
+                    val list = result.data.map { net -> net.id_red }
                     dropdown_capture_red.setText(list[0])
 
-                    val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
-                    dropdown_capture_red.setAdapter(adapter)
+                    val adapter =
+                        ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
 
                     captureViewModel.setNetwork(church, list[0])
+
+                    dropdown_capture_red.setAdapter(adapter)
                 }
                 is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
             }
         })
 
         captureViewModel.fetchSubNetwork.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
+            when (result) {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
                 is Resource.Success -> {
-                    val list = result.data.map { net->  net.id_subred }
+                    val list = result.data.map { net -> net.id_subred }
                     dropdown_capture_subred.setText(list[0])
 
-                    val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+                    val adapter =
+                        ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+
+                    captureViewModel.setSubNetwork(
+                        church,
+                        dropdown_capture_red.text.toString(),
+                        dropdown_capture_subred.text.toString()
+                    )
+
                     dropdown_capture_subred.setAdapter(adapter)
+                }
+                is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
+            }
+        })
+
+        captureViewModel.fetchCell.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
+                is Resource.Success -> {
+                    val list = result.data.map { net -> net.id_celula }
+                    dropdown_capture_celula.setText(list[0])
+
+                    val adapter =
+                        ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
+                    dropdown_capture_celula.setAdapter(adapter)
+
                 }
                 is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
             }
         })
     }
 
-    private fun getIdEntity(type: String, user: User?):String {
+    private fun getIdEntity(type: String, user: User?): String {
         val documents = user?.iglesia_references?.split("/")
         if (documents != null) {
-            return when(type){
+            return when (type) {
                 "Iglesia" -> documents[1]
                 "Red" -> documents[3]
                 "Subred" -> documents[5]
@@ -113,7 +157,10 @@ class CaptureUserFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 
 }

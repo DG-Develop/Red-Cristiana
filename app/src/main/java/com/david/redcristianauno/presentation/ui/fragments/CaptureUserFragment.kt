@@ -1,6 +1,7 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -48,9 +49,6 @@ class CaptureUserFragment : DialogFragment() {
 
         val user: User = arguments?.getParcelable("user")!!
 
-        /*  filled_exposed_dropdown_capture
-          fab_send_capture*/
-
         church = getIdEntity("Iglesia", user)
         captureViewModel.setChurch(church)
 
@@ -70,10 +68,14 @@ class CaptureUserFragment : DialogFragment() {
                 )
             }
 
+        fab_send_capture.setOnClickListener {
+            captureUser()
+        }
+
         setupObservers()
     }
 
-    fun captureUser(view: View?) {
+    private fun captureUser() {
         val names = etNamesCapture.text.toString().trim()
         val last_name = etLastNamesCapture.text.toString().trim()
         val address = etAddressCapture.text.toString().trim()
@@ -81,12 +83,24 @@ class CaptureUserFragment : DialogFragment() {
         val email = etEmailCapture.text.toString().trim()
         val password = etPassCapture.text.toString().trim()
         val confirm_password = etConfirmPassCapture.text.toString().trim()
+
+
+        if (!TextUtils.isEmpty(names) &&
+            !TextUtils.isEmpty(last_name) &&
+            !TextUtils.isEmpty(address) &&
+            !TextUtils.isEmpty(telephone) &&
+            !TextUtils.isEmpty(email) &&
+            !TextUtils.isEmpty(password) &&
+            !TextUtils.isEmpty(confirm_password)
+        ) {
+
+        }
     }
 
     private fun setupObservers() {
         captureViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
+                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Red...")
                 is Resource.Success -> {
                     val list = result.data.map { net -> net.id_red }
                     dropdown_capture_red.setText(list[0])
@@ -104,19 +118,24 @@ class CaptureUserFragment : DialogFragment() {
 
         captureViewModel.fetchSubNetwork.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
+                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Subred...")
                 is Resource.Success -> {
                     val list = result.data.map { net -> net.id_subred }
-                    dropdown_capture_subred.setText(list[0])
+                    val firstData = if (list.isEmpty()) "" else list[0]
+                    dropdown_capture_subred.setText(firstData)
 
                     val adapter =
                         ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)
 
-                    captureViewModel.setSubNetwork(
-                        church,
-                        dropdown_capture_red.text.toString(),
-                        dropdown_capture_subred.text.toString()
-                    )
+                    if (firstData.isBlank()) {
+                        dropdown_capture_celula.setText("")
+                    } else {
+                        captureViewModel.setSubNetwork(
+                            church,
+                            dropdown_capture_red.text.toString(),
+                            firstData
+                        )
+                    }
 
                     dropdown_capture_subred.setAdapter(adapter)
                 }
@@ -126,10 +145,11 @@ class CaptureUserFragment : DialogFragment() {
 
         captureViewModel.fetchCell.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando...")
+                is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Celula...")
                 is Resource.Success -> {
                     val list = result.data.map { net -> net.id_celula }
-                    dropdown_capture_celula.setText(list[0])
+                    val firstData = if (list.isEmpty()) "" else list[0]
+                    dropdown_capture_celula.setText(firstData)
 
                     val adapter =
                         ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, list)

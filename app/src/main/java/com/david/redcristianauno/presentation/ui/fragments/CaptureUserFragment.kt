@@ -14,17 +14,24 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CAPTURE_USER_FRAGMENT
+import com.david.redcristianauno.data.network.Callback
+import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.domain.models.User
+import com.david.redcristianauno.domain.models.UserDataSource
+import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_capture_user.*
+import java.lang.Exception
 
 @AndroidEntryPoint
 class CaptureUserFragment : DialogFragment() {
 
     private val captureViewModel by viewModels<CaptureUserViewModel>()
     private lateinit var church: String
+    private lateinit var user: UserDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,11 +100,56 @@ class CaptureUserFragment : DialogFragment() {
             !TextUtils.isEmpty(password) &&
             !TextUtils.isEmpty(confirm_password)
         ) {
-
+            if (password == confirm_password) {
+                captureViewModel.setCredentials(email, password)
+                user = UserDataSource(
+                    names = names,
+                    last_names = last_name,
+                    address = address,
+                    telephone = telephone,
+                    email = email,
+                    permission = listOf("Postulado")
+                )
+            } else {
+                SnackBarMD.getSBIndefinite(fab_send_capture, "Contraseñas no coinciden")
+            }
         }
     }
 
     private fun setupObservers() {
+        captureViewModel.createUserAuthFromFirebase().observe(this, Observer { result ->
+            when (result) {
+                is Resource.Loading -> rlBaseCapture.visibility = View.VISIBLE
+                is Resource.Success -> {
+                    val id = result.data?.user?.uid.toString()
+
+                    user.id = id
+                    captureViewModel.createUserFirestoreFromFirebase(
+                        user,
+                        object : Callback<Void> {
+                            override fun OnSucces(result: Void?) {
+                                dismiss()
+                            }
+
+                            override fun onFailure(exception: Exception) {
+                                SnackBarMD.getSBIndefinite(
+                                    fab_send_capture,
+                                    "Error al crear al usuario"
+                                )
+                            }
+                        })
+                }
+                is Resource.Failure -> {
+                    if (result.exception is FirebaseAuthUserCollisionException) {
+                        SnackBarMD.getSBIndefinite(fab_send_capture, "Este correo ya esta en uso")
+                    } else {
+                        SnackBarMD.getSBNormal(fab_send_capture, result.exception.message!!)
+                    }
+                    rlBaseCapture.visibility = View.GONE
+                }
+            }
+        })
+
         captureViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Red...")

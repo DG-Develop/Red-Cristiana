@@ -377,8 +377,6 @@
 
         </LinearLayout>
 
-
-
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -390,5 +388,23 @@
         app:backgroundTint="@color/AccentMedium"
         app:tint="@color/colorPrimary"
         app:srcCompat="@drawable/ic_send"/>
+
+    <RelativeLayout
+        android:id="@+id/rlBaseCapture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:alpha="0.4"/>
+
+        <ProgressBar
+            android:id="@+id/pbRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

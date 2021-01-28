@@ -57,12 +57,17 @@ class RegisterActivity : AppCompatActivity() {
             if (password == confirm_password) {
                 registerViewModel.setCredentials(email, password)
                 user = UserDataSource(
-                    names=names,
+                    names = names,
                     last_names = last_name,
                     address = address,
                     telephone = telephone,
                     email = email,
                     permission = listOf("Postulado")
+                )
+            } else {
+                SnackBarMD.getSBIndefinite(
+                    btn_create_account_registerActivity,
+                    "Contraseñas no coinciden"
                 )
             }
         } else {
@@ -84,15 +89,17 @@ class RegisterActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     val id = result.data?.user?.uid.toString()
                     user.id = id
-                    registerViewModel.createUserFirestoreFromFirebase(user, object : Callback<Void>{
-                        override fun OnSucces(result: Void?) {
-                            actionLogin()
-                        }
+                    registerViewModel.createUserFirestoreFromFirebase(
+                        user,
+                        object : Callback<Void> {
+                            override fun OnSucces(result: Void?) {
+                                actionLogin()
+                            }
 
-                        override fun onFailure(exception: Exception) {
-                            showErrorMessage()
-                        }
-                    })
+                            override fun onFailure(exception: Exception) {
+                                showErrorMessage()
+                            }
+                        })
 
                 }
                 is Resource.Failure -> {

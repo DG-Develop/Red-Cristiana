@@ -9,12 +9,13 @@ import com.david.redcristianauno.domain.models.CellDataSource
 import com.david.redcristianauno.domain.models.NetworkDataSource
 import com.david.redcristianauno.domain.models.SubNetworkDataSource
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class RemoteChurchDataSourceImpl @Inject constructor(
     private val firebaseService: FirebaseService
-) : RemoteChurchDataSource{
+) : RemoteChurchDataSource {
 
     override suspend fun getNetwork(church: String): Resource<List<NetworkDataSource>> {
         val result = firebaseService.firebaseFirestore.collection(
@@ -29,12 +30,15 @@ class RemoteChurchDataSourceImpl @Inject constructor(
         return Resource.Success(listNet)
     }
 
-    override suspend fun getSubNetwork(church: String, network: String): Resource<List<SubNetworkDataSource>> {
+    override suspend fun getSubNetwork(
+        church: String,
+        network: String
+    ): Resource<List<SubNetworkDataSource>> {
         val result = firebaseService.firebaseFirestore.collection(
             "${CHURCH_COLLECTION_NAME}/" +
                     "${church}/" +
                     "${NET_COLLECTION_NAME}/" +
-                    "${network}/"+
+                    "${network}/" +
                     SUBNET_COLLECTION_NAME
         )
             .get()
@@ -44,7 +48,11 @@ class RemoteChurchDataSourceImpl @Inject constructor(
         return Resource.Success(listSubNet)
     }
 
-    override suspend fun getCell(church: String, network: String, subNetwork: String): Resource<List<CellDataSource>> {
+    override suspend fun getCell(
+        church: String,
+        network: String,
+        subNetwork: String
+    ): Resource<List<CellDataSource>> {
         val result = firebaseService.firebaseFirestore
             .collection(
                 "${CHURCH_COLLECTION_NAME}/" +
@@ -52,7 +60,7 @@ class RemoteChurchDataSourceImpl @Inject constructor(
                         "${NET_COLLECTION_NAME}/" +
                         "${network}/" +
                         "${SUBNET_COLLECTION_NAME}/" +
-                        "${subNetwork}/"+
+                        "${subNetwork}/" +
                         CELL_COLLECTION_NAME
             )
             .get()
@@ -62,4 +70,23 @@ class RemoteChurchDataSourceImpl @Inject constructor(
         return Resource.Success(listCell)
     }
 
+    override suspend fun getPathCell(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String
+    ): DocumentReference {
+        val result = firebaseService.firebaseFirestore
+            .collection(
+                "${CHURCH_COLLECTION_NAME}/" +
+                        "${church}/" +
+                        "${NET_COLLECTION_NAME}/" +
+                        "${network}/" +
+                        "${SUBNET_COLLECTION_NAME}/" +
+                        "${subNetwork}/" +
+                         CELL_COLLECTION_NAME
+            ).document(cell)
+
+       return result
+    }
 }

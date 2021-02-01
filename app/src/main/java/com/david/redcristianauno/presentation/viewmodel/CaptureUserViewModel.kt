@@ -6,6 +6,7 @@ import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.domain.usecases.*
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -16,6 +17,7 @@ class CaptureUserViewModel @ViewModelInject constructor(
     private val getNetworkUseCase: GetNetworkUseCase,
     private val getSubNetworkUseCase: GetSubNetworkUseCase,
     private val getCellsUseCase: GetCellsUseCase,
+    private val getPathCellUseCase: GePathCellUseCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel(){
 
@@ -41,6 +43,16 @@ class CaptureUserViewModel @ViewModelInject constructor(
     fun setSubNetwork(church: String, network: String, subNetwork: String){
         val list = listOf(church, network, subNetwork)
         subNetworkData.value = list
+    }
+
+    fun getPathCellFromFirebase(
+        church: String, network: String, subNetwork: String, cell: String
+    ): DocumentReference?{
+        var result: DocumentReference? = null
+        viewModelScope.launch {
+            result = getPathCellUseCase.invoke(church, network, subNetwork, cell)
+        }
+        return result
     }
 
     fun createUserAuthFromFirebase() = credentials.switchMap { list ->

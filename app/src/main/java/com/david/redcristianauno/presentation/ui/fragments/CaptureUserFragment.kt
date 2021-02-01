@@ -102,13 +102,21 @@ class CaptureUserFragment : DialogFragment() {
         ) {
             if (password == confirm_password) {
                 captureViewModel.setCredentials(email, password)
+                val churchReference = captureViewModel.getPathCellFromFirebase(
+                    church,
+                    dropdown_capture_red.text.toString(),
+                    dropdown_capture_subred.text.toString(),
+                    dropdown_capture_celula.text.toString()
+                )
+
                 user = UserDataSource(
                     names = names,
                     last_names = last_name,
                     address = address,
                     telephone = telephone,
                     email = email,
-                    permission = listOf("Postulado")
+                    permission = listOf("Postulado"),
+                    iglesia_references = churchReference
                 )
             } else {
                 SnackBarMD.getSBIndefinite(fab_send_capture, "Contraseñas no coinciden")

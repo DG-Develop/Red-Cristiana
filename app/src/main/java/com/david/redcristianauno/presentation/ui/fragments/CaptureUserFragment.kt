@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CAPTURE_USER_FRAGMENT
 import com.david.redcristianauno.data.network.Callback
-import com.david.redcristianauno.data.network.FirebaseService
+import com.david.redcristianauno.domain.models.CellDataSource
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
@@ -32,6 +32,7 @@ class CaptureUserFragment : DialogFragment() {
     private val captureViewModel by viewModels<CaptureUserViewModel>()
     private lateinit var church: String
     private lateinit var user: UserDataSource
+    private lateinit var listCell: List<CellDataSource>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +83,10 @@ class CaptureUserFragment : DialogFragment() {
         setupObservers()
     }
 
+    private fun cellSelected(cell: String): CellDataSource?{
+        return listCell.find { data -> data.id_celula == cell }
+    }
+
     private fun captureUser() {
         val names = etNamesCapture.text.toString().trim()
         val last_name = etLastNamesCapture.text.toString().trim()
@@ -101,6 +106,7 @@ class CaptureUserFragment : DialogFragment() {
             !TextUtils.isEmpty(confirm_password)
         ) {
             if (password == confirm_password) {
+                val cell = cellSelected(dropdown_capture_celula.text.toString())
                 captureViewModel.setCredentials(email, password)
                 val churchReference = captureViewModel.getPathCellFromFirebase(
                     church,
@@ -207,6 +213,7 @@ class CaptureUserFragment : DialogFragment() {
             when (result) {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Celula...")
                 is Resource.Success -> {
+                    listCell = result.data
                     val list = result.data.map { net -> net.id_celula }
                     val firstData = if (list.isEmpty()) "" else list[0]
                     dropdown_capture_celula.setText(firstData)

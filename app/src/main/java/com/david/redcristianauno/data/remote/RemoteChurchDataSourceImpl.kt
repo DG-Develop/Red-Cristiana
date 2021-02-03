@@ -89,4 +89,8 @@ class RemoteChurchDataSourceImpl @Inject constructor(
 
        return result
     }
+
+    override suspend fun updateCell(fields: Map<String, Any>, id: String) {
+        firebaseService.firebaseFirestore
+    }
 }

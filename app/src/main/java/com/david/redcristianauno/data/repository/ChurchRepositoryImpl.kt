@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class ChurchRepositoryImpl @Inject constructor(
     private val remoteChurchDataSource: RemoteChurchDataSource
-) : ChurchRepository{
+) : ChurchRepository {
 
     override suspend fun getNetwork(church: String): Resource<List<NetworkDataSource>> =
         remoteChurchDataSource.getNetwork(church)
@@ -33,6 +33,14 @@ class ChurchRepositoryImpl @Inject constructor(
         network: String,
         subNetwork: String,
         cell: String
-    ): DocumentReference  =
+    ): DocumentReference =
         remoteChurchDataSource.getPathCell(church, network, subNetwork, cell)
+
+    override suspend fun updateCell(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    ) = remoteChurchDataSource.updateCell(church, network, subNetwork, cell, fields)
 }

@@ -14,7 +14,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.david.redcristianauno.R
 import com.david.redcristianauno.application.AppConstants.CAPTURE_USER_FRAGMENT
+import com.david.redcristianauno.application.AppConstants.USER_COLLECTION_NAME
 import com.david.redcristianauno.data.network.Callback
+import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.domain.models.CellDataSource
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.UserDataSource
@@ -22,6 +24,7 @@ import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_capture_user.*
 import java.lang.Exception
@@ -106,7 +109,7 @@ class CaptureUserFragment : DialogFragment() {
             !TextUtils.isEmpty(confirm_password)
         ) {
             if (password == confirm_password) {
-                val cell = cellSelected(dropdown_capture_celula.text.toString())
+
                 captureViewModel.setCredentials(email, password)
                 val churchReference = captureViewModel.getPathCellFromFirebase(
                     church,
@@ -136,6 +139,24 @@ class CaptureUserFragment : DialogFragment() {
                 is Resource.Loading -> rlBaseCapture.visibility = View.VISIBLE
                 is Resource.Success -> {
                     val id = result.data?.user?.uid.toString()
+                    val cell = cellSelected(dropdown_capture_celula.text.toString())
+                    val firebaseService = FirebaseService()
+                    val document:DocumentReference = firebaseService.firebaseFirestore.collection(
+                        USER_COLLECTION_NAME
+                    ).document(id)
+                    cell?.users?.add(document)
+
+                    val fields = mapOf<String, Any>(
+                        "users" to cell?.users!!
+                    )
+
+                    captureViewModel.updatedCellFromFirebase(
+                        church,
+                        dropdown_capture_red.text.toString(),
+                        dropdown_capture_subred.text.toString(),
+                        dropdown_capture_celula.text.toString(),
+                        fields
+                        )
 
                     user.id = id
                     captureViewModel.createUserFirestoreFromFirebase(

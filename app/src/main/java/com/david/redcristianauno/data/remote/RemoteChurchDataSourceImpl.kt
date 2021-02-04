@@ -1,5 +1,7 @@
 package com.david.redcristianauno.data.remote
 
+import android.util.Log
+import com.david.redcristianauno.application.AppConstants.CAPTURE_USER_FRAGMENT
 import com.david.redcristianauno.application.AppConstants.CELL_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.CHURCH_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.NET_COLLECTION_NAME
@@ -84,13 +86,38 @@ class RemoteChurchDataSourceImpl @Inject constructor(
                         "${network}/" +
                         "${SUBNET_COLLECTION_NAME}/" +
                         "${subNetwork}/" +
-                         CELL_COLLECTION_NAME
+                        CELL_COLLECTION_NAME
             ).document(cell)
 
-       return result
+        return result
     }
 
-    override suspend fun updateCell(fields: Map<String, Any>, id: String) {
+    override suspend fun updateCell(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    ) {
         firebaseService.firebaseFirestore
+            .collection(
+                "${CHURCH_COLLECTION_NAME}/" +
+                        "${church}/" +
+                        "${NET_COLLECTION_NAME}/" +
+                        "${network}/" +
+                        "${SUBNET_COLLECTION_NAME}/" +
+                        "${subNetwork}/" +
+                        CELL_COLLECTION_NAME
+            )
+            .document(cell)
+            .update(fields)
+            .addOnSuccessListener { Log.i(CAPTURE_USER_FRAGMENT, "Update Success") }
+            .addOnFailureListener { e ->
+                Log.e(
+                    CAPTURE_USER_FRAGMENT,
+                    "Error: Updating document",
+                    e
+                )
+            }
     }
 }

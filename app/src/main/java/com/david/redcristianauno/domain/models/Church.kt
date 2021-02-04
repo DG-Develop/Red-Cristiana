@@ -25,5 +25,5 @@ data class CellDataSource(
     var created_by: DocumentReference? = null,
     var id_celula: String = "",
     var name_leader: String = "",
-    var users: List<DocumentReference> = listOf()
+    var users: MutableList<DocumentReference> = mutableListOf()
 )

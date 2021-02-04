@@ -43,3 +43,15 @@ class GePathCellUseCase @Inject constructor(
         cell: String
     ): DocumentReference = churchRepository.getPathCell(church, network, subNetwork, cell)
 }
+
+class UpdateCellUseCase @Inject constructor(
+    private val churchRepository: ChurchRepository
+){
+    suspend fun invoke(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    ) = churchRepository.updateCell(church, network, subNetwork, cell, fields)
+}

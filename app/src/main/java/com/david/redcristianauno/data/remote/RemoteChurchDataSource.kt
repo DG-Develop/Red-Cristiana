@@ -18,5 +18,11 @@ interface RemoteChurchDataSource {
         cell: String
     ): DocumentReference
 
-    suspend fun updateCell(fields: Map<String, Any>, id: String)
+    suspend fun updateCell(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    )
 }

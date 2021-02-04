@@ -18,6 +18,7 @@ class CaptureUserViewModel @ViewModelInject constructor(
     private val getSubNetworkUseCase: GetSubNetworkUseCase,
     private val getCellsUseCase: GetCellsUseCase,
     private val getPathCellUseCase: GePathCellUseCase,
+    private val updateCellUseCase: UpdateCellUseCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel(){
 
@@ -106,6 +107,18 @@ class CaptureUserViewModel @ViewModelInject constructor(
 
     fun createUserFirestoreFromFirebase(user: UserDataSource, callback: Callback<Void>){
         createUserFirestoreUseCase.invoke(user, callback)
+    }
+
+    fun updatedCellFromFirebase(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    ){
+        viewModelScope.launch {
+            updateCellUseCase.invoke(church, network, subNetwork, cell, fields)
+        }
     }
 
     fun signOut(){

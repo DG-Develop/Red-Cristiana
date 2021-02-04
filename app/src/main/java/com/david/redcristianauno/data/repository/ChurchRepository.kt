@@ -17,4 +17,11 @@ interface ChurchRepository {
         subNetwork: String,
         cell: String
     ): DocumentReference
+    suspend fun updateCell(
+        church: String,
+        network: String,
+        subNetwork: String,
+        cell: String,
+        fields: Map<String, Any>
+    )
 }

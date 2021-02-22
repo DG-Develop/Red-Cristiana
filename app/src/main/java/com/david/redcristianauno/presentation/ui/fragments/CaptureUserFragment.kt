@@ -23,6 +23,7 @@ import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.AndroidEntryPoint
@@ -163,6 +164,7 @@ class CaptureUserFragment : DialogFragment() {
                         user,
                         object : Callback<Void> {
                             override fun OnSucces(result: Void?) {
+//                                captureViewModel.signOut()
                                 dismiss()
                             }
 

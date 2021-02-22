@@ -114,6 +114,7 @@ class ConfigurationFragment : Fragment() {
 
     private fun hideMenuUserNormal(permissionList: List<String>){
         if(permissionList.isNullOrEmpty()){
+            Log.i(CONFIG_FRAGMENT, "Lista vacia")
             return
         }
 

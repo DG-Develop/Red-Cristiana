@@ -1,27 +1,51 @@
 package com.david.redcristianauno.presentation.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.*
 import com.david.redcristianauno.data.model.Celula
 import com.david.redcristianauno.data.model.GeneralModel
 import com.david.redcristianauno.data.model.Red
 import com.david.redcristianauno.data.model.Subred
 import com.david.redcristianauno.data.network.Callback
 import com.david.redcristianauno.domain.ChurchUseCase
+import com.david.redcristianauno.domain.usecases.GetNetworkUseCase
+import com.david.redcristianauno.vo.Resource
+import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 
-class GeneralListViewModel(churchUseCase: ChurchUseCase): ViewModel() {
+class GeneralListViewModel @ViewModelInject constructor(
+    churchUseCase: ChurchUseCase,
+    private val getNetworkUseCase: GetNetworkUseCase
+): ViewModel() {
+
     private val church = churchUseCase
     var redes = MutableLiveData<MutableList<GeneralModel>>()
     var subredes = MutableLiveData<MutableList<GeneralModel>>()
     var celulas = MutableLiveData<MutableList<GeneralModel>>()
     private val list: MutableList<GeneralModel> = mutableListOf()
 
+    private val churchData = MutableLiveData<String>()
     // Section fill dropdown list
     var dropdownRed = MutableLiveData<MutableList<String>>()
     var dropdownSubred = MutableLiveData<MutableList<String>>()
 
     // Functions
+    fun setChurch(church: String){
+        churchData.value = church
+    }
+
+    val fetchNetwork = churchData.switchMap { church ->
+        liveData(viewModelScope.coroutineContext + Dispatchers.IO){
+            emit(Resource.Loading())
+            try {
+                emit(getNetworkUseCase.invoke(church))
+            }catch (e: Exception){
+                emit(Resource.Failure(e))
+            }
+        }
+    }
+
+
     fun listRedesFromFirebase(name: String){
         church.getRedObject(name, object : Callback<MutableList<Red>>{
             override fun OnSucces(result: MutableList<Red>?) {

@@ -21,4 +21,5 @@ object AppConstants {
     const val PROFILE_FRAGMENT = "DEBUG_PROFILE"
     const val LIST_USER_FRAGMENT = "DEBUG_LIST"
     const val CAPTURE_USER_FRAGMENT = "DEBUG_CAPTURE"
+    const val GENERAL_LIST_FRAGMENT = "DEBUG_GENERAL_LIST"
 }

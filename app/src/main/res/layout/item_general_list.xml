@@ -56,8 +56,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="centerCrop"
-                android:tint="@color/colorAccent"
-                tools:src="@drawable/ic_icon_leader_red"/>
+                tools:src="@drawable/ic_icon_leader_red"
+                app:tint="@color/colorAccent" />
 
         </com.google.android.material.card.MaterialCardView>
 

@@ -1,5 +1,6 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -21,8 +22,10 @@ import com.david.redcristianauno.domain.models.CellDataSource
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.UserDataSource
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
+import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.DocumentReference
@@ -81,13 +84,13 @@ class CaptureUserFragment : DialogFragment() {
             }
 
         fab_send_capture.setOnClickListener {
-            captureUser()
+            closeSession()
         }
 
         setupObservers()
     }
 
-    private fun cellSelected(cell: String): CellDataSource?{
+    private fun cellSelected(cell: String): CellDataSource? {
         return listCell.find { data -> data.id_celula == cell }
     }
 
@@ -142,7 +145,7 @@ class CaptureUserFragment : DialogFragment() {
                     val id = result.data?.user?.uid.toString()
                     val cell = cellSelected(dropdown_capture_celula.text.toString())
                     val firebaseService = FirebaseService()
-                    val document:DocumentReference = firebaseService.firebaseFirestore.collection(
+                    val document: DocumentReference = firebaseService.firebaseFirestore.collection(
                         USER_COLLECTION_NAME
                     ).document(id)
                     cell?.users?.add(document)
@@ -157,15 +160,16 @@ class CaptureUserFragment : DialogFragment() {
                         dropdown_capture_subred.text.toString(),
                         dropdown_capture_celula.text.toString(),
                         fields
-                        )
+                    )
 
                     user.id = id
                     captureViewModel.createUserFirestoreFromFirebase(
                         user,
                         object : Callback<Void> {
                             override fun OnSucces(result: Void?) {
-//                                captureViewModel.signOut()
-                                dismiss()
+                                captureViewModel.signOut()
+                                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+                                requireActivity().finish()
                             }
 
                             override fun onFailure(exception: Exception) {
@@ -249,6 +253,23 @@ class CaptureUserFragment : DialogFragment() {
                 is Resource.Failure -> Log.e(CAPTURE_USER_FRAGMENT, "Error: ${result.exception}")
             }
         })
+    }
+
+    private fun closeSession() {
+        MaterialAlertDialogBuilder(
+            requireContext(),
+            R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog
+        )
+            .setTitle("Capturar Usuario")
+            .setMessage("Por motivos de seguridad al momento de crear " +
+                    "un usuario se requiere cerrar el inicio de sesión actual, " +
+                    "¿Desea continuar?")
+            .setPositiveButton("Aceptar"){ _, _ ->
+                captureUser()
+            }
+            .setNegativeButton("Cancelar"){dialog, _ ->
+                dialog.cancel()
+            }.show()
     }
 
     private fun getIdEntity(type: String, user: User?): String {

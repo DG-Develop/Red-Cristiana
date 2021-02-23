@@ -39,6 +39,11 @@ class GeneralListAdapter(
         override fun bind(item: GeneralModel, position: Int) {
             itemView.tvTitleCard.text = item.id
             itemView.tvContentGeneral.text = item.name_leader
+            putImage(item)
+        }
+
+        private fun putImage(item: GeneralModel) {
+            itemView.circleImage
         }
     }
 }

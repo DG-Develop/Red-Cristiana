@@ -1,6 +1,7 @@
 package com.david.redcristianauno.presentation.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,24 +10,32 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.david.redcristianauno.R
+import com.david.redcristianauno.application.AppConstants.GENERAL_LIST_FRAGMENT
 import com.david.redcristianauno.data.network.ChurchRepositoryImpl
 import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.domain.models.User
+import com.david.redcristianauno.domain.models.asListGeneralModel
 import com.david.redcristianauno.presentation.ui.adapters.GeneralListAdapter
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModel
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModelFactory
+import com.david.redcristianauno.vo.Resource
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_general_list.*
 
+@AndroidEntryPoint
 class GeneralListFragment : DialogFragment() {
 
     private lateinit var listAdapter: GeneralListAdapter
     private lateinit var type: String
     private lateinit var userData: User
+
+    private val generalListViewModel by viewModels<GeneralListViewModel> ()
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -106,9 +115,21 @@ class GeneralListFragment : DialogFragment() {
     }
 
     private fun observedViewModel() {
-        viewModel.redes.observe(viewLifecycleOwner, Observer { redes ->
-            listAdapter = context?.let { GeneralListAdapter(it, redes) }!!
-            rvListUserGeneral.adapter = listAdapter
+//        viewModel.redes.observe(viewLifecycleOwner, Observer { redes ->
+//            listAdapter = context?.let { GeneralListAdapter(it, redes) }!!
+//            rvListUserGeneral.adapter = listAdapter
+//        })
+
+        generalListViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result->
+            when(result){
+                is Resource.Loading -> { Log.i(GENERAL_LIST_FRAGMENT, "Cargando...")}
+                is Resource.Success -> {
+                    listAdapter = GeneralListAdapter(requireContext(), result.data.asListGeneralModel())
+                }
+                is Resource.Failure -> {
+                    Log.e(GENERAL_LIST_FRAGMENT, "Error al traer los datos", result.exception)
+                }
+            }
         })
 
         viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes ->
@@ -170,7 +191,8 @@ class GeneralListFragment : DialogFragment() {
         if(userData.permission.contains("Admin")){
             when (val dataType = arguments?.getString("dataType")) {
                 "Red" -> {
-                    viewModel.listRedesFromFirebase(getIdEntity("Iglesia", userData))
+                    generalListViewModel.setChurch(getIdEntity("Iglesia", userData))
+//                    viewModel.listRedesFromFirebase(getIdEntity("Iglesia", userData))
                     rvTitleGeneral.text = "Lista de Redes"
                     type = dataType
                 }

@@ -98,7 +98,7 @@ class ChurchRepositoryImpl : ChurchRepository {
                 val redesList = result.toObjects(Red::class.java)
 
                 for (red in redesList) {
-                    list.add(GeneralModel(red.id_red, red.name_leader))
+                    //list.add(GeneralModel(red.id_red, red.name_leader))
                 }
 
                 callback.OnSucces(redesList)
@@ -123,7 +123,7 @@ class ChurchRepositoryImpl : ChurchRepository {
                 val subredesList = result.toObjects(Subred::class.java)
 
                 for (subred in subredesList) {
-                    list.add(GeneralModel(subred.id_subred, subred.name_leader))
+                    //list.add(GeneralModel(subred.id_subred, subred.name_leader))
                 }
 
                 callback.OnSucces(subredesList)
@@ -150,7 +150,7 @@ class ChurchRepositoryImpl : ChurchRepository {
                 val celulasList = result.toObjects(Celula::class.java)
 
                 for (celula in celulasList) {
-                    list.add(GeneralModel(celula.id_celula, celula.name_leader))
+                    //list.add(GeneralModel(celula.id_celula, celula.name_leader))
                 }
 
                 callback.OnSucces(celulasList)

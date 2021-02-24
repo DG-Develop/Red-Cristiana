@@ -7,9 +7,7 @@ import com.david.redcristianauno.application.AppConstants.CHURCH_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.NET_COLLECTION_NAME
 import com.david.redcristianauno.application.AppConstants.SUBNET_COLLECTION_NAME
 import com.david.redcristianauno.data.network.FirebaseService
-import com.david.redcristianauno.domain.models.CellDataSource
-import com.david.redcristianauno.domain.models.NetworkDataSource
-import com.david.redcristianauno.domain.models.SubNetworkDataSource
+import com.david.redcristianauno.domain.models.*
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
 import kotlinx.coroutines.tasks.await
@@ -19,7 +17,7 @@ class RemoteChurchDataSourceImpl @Inject constructor(
     private val firebaseService: FirebaseService
 ) : RemoteChurchDataSource {
 
-    override suspend fun getNetwork(church: String): Resource<List<NetworkDataSource>> {
+    override suspend fun getNetwork(church: String): Resource<List<NetWork>> {
         val result = firebaseService.firebaseFirestore.collection(
             "${CHURCH_COLLECTION_NAME}/" +
                     "${church}/" +
@@ -29,13 +27,28 @@ class RemoteChurchDataSourceImpl @Inject constructor(
             .await()
 
         val listNet = result.toObjects(NetworkDataSource::class.java)
-        return Resource.Success(listNet)
+
+        val listNetResult = listNet.map { networkDataSource ->
+            val searchLeader = firebaseService.firebaseFirestore
+                .document(networkDataSource.leader!!.path)
+                .get().await()
+            val searchCreate = firebaseService.firebaseFirestore
+                .document(networkDataSource.created_by!!.path)
+                .get().await()
+
+            NetWork(
+                networkDataSource.id_red,
+                searchCreate.toObject(UserDataSource::class.java)!!,
+                searchLeader.toObject(UserDataSource::class.java)!!
+            )
+        }
+        return Resource.Success(listNetResult)
     }
 
     override suspend fun getSubNetwork(
         church: String,
         network: String
-    ): Resource<List<SubNetworkDataSource>> {
+    ): Resource<List<SubNetwork>> {
         val result = firebaseService.firebaseFirestore.collection(
             "${CHURCH_COLLECTION_NAME}/" +
                     "${church}/" +
@@ -47,7 +60,22 @@ class RemoteChurchDataSourceImpl @Inject constructor(
             .await()
 
         val listSubNet = result.toObjects(SubNetworkDataSource::class.java)
-        return Resource.Success(listSubNet)
+
+        val listSubNetResult = listSubNet.map { subNetworkDataSource ->
+            val searchLeader = firebaseService.firebaseFirestore
+                .document(subNetworkDataSource.leader!!.path)
+                .get().await()
+            val searchCreate = firebaseService.firebaseFirestore
+                .document(subNetworkDataSource.created_by!!.path)
+                .get().await()
+
+            SubNetwork(
+                subNetworkDataSource.id_subred,
+                searchCreate.toObject(UserDataSource::class.java)!!,
+                searchLeader.toObject(UserDataSource::class.java)!!
+            )
+        }
+        return Resource.Success(listSubNetResult)
     }
 
     override suspend fun getCell(

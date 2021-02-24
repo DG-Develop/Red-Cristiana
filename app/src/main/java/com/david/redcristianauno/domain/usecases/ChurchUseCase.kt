@@ -2,7 +2,8 @@ package com.david.redcristianauno.domain.usecases
 
 import com.david.redcristianauno.data.repository.ChurchRepository
 import com.david.redcristianauno.domain.models.CellDataSource
-import com.david.redcristianauno.domain.models.NetworkDataSource
+import com.david.redcristianauno.domain.models.NetWork
+import com.david.redcristianauno.domain.models.SubNetwork
 import com.david.redcristianauno.domain.models.SubNetworkDataSource
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
@@ -12,14 +13,14 @@ import javax.inject.Inject
 class GetNetworkUseCase @Inject constructor(
     private val churchRepository: ChurchRepository
 ) {
-    suspend fun invoke(church: String): Resource<List<NetworkDataSource>> =
+    suspend fun invoke(church: String): Resource<List<NetWork>> =
         churchRepository.getNetwork(church)
 }
 
 class GetSubNetworkUseCase @Inject constructor(
     private val churchRepository: ChurchRepository
 ) {
-    suspend fun invoke(church: String, network: String): Resource<List<SubNetworkDataSource>> =
+    suspend fun invoke(church: String, network: String): Resource<List<SubNetwork>> =
         churchRepository.getSubNetwork(church, network)
 }
 

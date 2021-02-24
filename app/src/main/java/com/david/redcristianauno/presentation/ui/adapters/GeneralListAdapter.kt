@@ -43,7 +43,20 @@ class GeneralListAdapter(
         }
 
         private fun putImage(item: GeneralModel) {
-            itemView.circleImage
+            when{
+                item.permission.contains("Normal") -> {
+                    itemView.circleImage.setImageResource(R.drawable.ic_icon_member)
+                }
+                item.permission.contains("Lider Celula") -> {
+                    itemView.circleImage.setImageResource(R.drawable.ic_icon_member)
+                }
+                item.permission.contains("Subred") -> {
+                    itemView.circleImage.setImageResource(R.drawable.ic_icon_member)
+                }
+                item.permission.contains("Red") -> {
+                    itemView.circleImage.setImageResource(R.drawable.ic_icon_member)
+                }
+            }
         }
     }
 }

@@ -21,9 +21,11 @@ import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.asListGeneralModel
+import com.david.redcristianauno.domain.models.asListGeneralModelSub
 import com.david.redcristianauno.presentation.ui.adapters.GeneralListAdapter
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModel
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModelFactory
+import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModelP
 import com.david.redcristianauno.vo.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_general_list.*
@@ -35,7 +37,7 @@ class GeneralListFragment : DialogFragment() {
     private lateinit var type: String
     private lateinit var userData: User
 
-    private val generalListViewModel by viewModels<GeneralListViewModel> ()
+    private val generalListViewModel by viewModels<GeneralListViewModelP>()
 
     private val viewModel by lazy {
         ViewModelProvider(
@@ -70,7 +72,7 @@ class GeneralListFragment : DialogFragment() {
             findNavController().navigate(R.id.navSettingFragment)
         }
 
-         userData= arguments?.getParcelable("user")!!
+        userData = arguments?.getParcelable("user")!!
 
         putTitle()
 
@@ -106,7 +108,8 @@ class GeneralListFragment : DialogFragment() {
     private fun fillListOrFillDropdownEntity(name: String) {
         when (arguments?.getString("dataType")) {
             "Subred" -> {
-                viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), name)
+                //viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), name)
+                generalListViewModel.setNetwork(getIdEntity("Iglesia", userData), name)
             }
             "Celula" -> {
                 viewModel.fillTilSubred(getIdEntity("Iglesia", userData), name)
@@ -115,16 +118,17 @@ class GeneralListFragment : DialogFragment() {
     }
 
     private fun observedViewModel() {
-//        viewModel.redes.observe(viewLifecycleOwner, Observer { redes ->
-//            listAdapter = context?.let { GeneralListAdapter(it, redes) }!!
-//            rvListUserGeneral.adapter = listAdapter
-//        })
 
-        generalListViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result->
-            when(result){
-                is Resource.Loading -> { Log.i(GENERAL_LIST_FRAGMENT, "Cargando...")}
+        generalListViewModel.fetchNetwork.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    Log.i(GENERAL_LIST_FRAGMENT, "Cargando...")
+                }
                 is Resource.Success -> {
-                    listAdapter = GeneralListAdapter(requireContext(), result.data.asListGeneralModel())
+                    //Log.i(GENERAL_LIST_FRAGMENT, "list: ${result.data.asListGeneralModel()}")
+                    listAdapter =
+                        GeneralListAdapter(requireContext(), result.data.asListGeneralModel())
+                    rvListUserGeneral.adapter = listAdapter
                 }
                 is Resource.Failure -> {
                     Log.e(GENERAL_LIST_FRAGMENT, "Error al traer los datos", result.exception)
@@ -132,10 +136,22 @@ class GeneralListFragment : DialogFragment() {
             }
         })
 
-        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes ->
-            listAdapter = context?.let { GeneralListAdapter(it, subredes) }!!
-            rvListUserGeneral.adapter = listAdapter
+        generalListViewModel.fetchSubNetwork.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading ->  Log.i(GENERAL_LIST_FRAGMENT, "Cargando...")
+                is Resource.Success -> {
+                    listAdapter =
+                        GeneralListAdapter(requireContext(), result.data.asListGeneralModelSub())
+                    rvListUserGeneral.adapter = listAdapter
+                }
+                is Resource.Failure -> Log.e(GENERAL_LIST_FRAGMENT, "Error al traer los datos", result.exception)
+            }
         })
+
+//        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes ->
+//            listAdapter = context?.let { GeneralListAdapter(it, subredes) }!!
+//            rvListUserGeneral.adapter = listAdapter
+//        })
 
         viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas ->
             listAdapter = context?.let { GeneralListAdapter(it, celulas) }!!
@@ -155,12 +171,12 @@ class GeneralListFragment : DialogFragment() {
                 ArrayAdapter(requireContext(), R.layout.dropdown_menu_popup_item, listRedes)
             dropdown_entity_general_red.setAdapter(adapter)
 
-            if(arguments?.getString("dataType") == "Celula"){
+            if (arguments?.getString("dataType") == "Celula") {
                 viewModel.fillTilSubred(
                     getIdEntity("Iglesia", userData),
                     firstData
                 )
-            }else{
+            } else {
                 viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), firstData)
             }
 
@@ -188,11 +204,10 @@ class GeneralListFragment : DialogFragment() {
     }
 
     private fun putTitle() {
-        if(userData.permission.contains("Admin")){
+        if (userData.permission.contains("Admin")) {
             when (val dataType = arguments?.getString("dataType")) {
                 "Red" -> {
                     generalListViewModel.setChurch(getIdEntity("Iglesia", userData))
-//                    viewModel.listRedesFromFirebase(getIdEntity("Iglesia", userData))
                     rvTitleGeneral.text = "Lista de Redes"
                     type = dataType
                 }
@@ -214,10 +229,10 @@ class GeneralListFragment : DialogFragment() {
         }
     }
 
-    private fun getIdEntity(type: String, user: User?):String {
+    private fun getIdEntity(type: String, user: User?): String {
         val documents = user?.iglesia_references?.split("/")
         if (documents != null) {
-            return when(type){
+            return when (type) {
                 "Iglesia" -> documents[1]
                 "Red" -> documents[3]
                 "Subred" -> documents[5]

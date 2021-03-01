@@ -1,10 +1,7 @@
 package com.david.redcristianauno.data.repository
 
 import com.david.redcristianauno.data.remote.RemoteChurchDataSource
-import com.david.redcristianauno.domain.models.CellDataSource
-import com.david.redcristianauno.domain.models.NetWork
-import com.david.redcristianauno.domain.models.SubNetwork
-import com.david.redcristianauno.domain.models.SubNetworkDataSource
+import com.david.redcristianauno.domain.models.*
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
 import javax.inject.Inject
@@ -27,7 +24,7 @@ class ChurchRepositoryImpl @Inject constructor(
         church: String,
         network: String,
         subNetwork: String
-    ): Resource<List<CellDataSource>> =
+    ): Resource<List<Cell>> =
         remoteChurchDataSource.getCell(church, network, subNetwork)
 
     override suspend fun getPathCell(

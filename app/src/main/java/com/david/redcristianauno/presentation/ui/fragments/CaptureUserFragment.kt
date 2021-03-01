@@ -21,12 +21,12 @@ import com.david.redcristianauno.data.network.FirebaseService
 import com.david.redcristianauno.domain.models.CellDataSource
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.UserDataSource
+import com.david.redcristianauno.domain.models.asListCellDataSource
 import com.david.redcristianauno.presentation.objectsUtils.SnackBarMD
 import com.david.redcristianauno.presentation.ui.activities.LoginActivity
 import com.david.redcristianauno.presentation.viewmodel.CaptureUserViewModel
 import com.david.redcristianauno.vo.Resource
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.DocumentReference
 import dagger.hilt.android.AndroidEntryPoint
@@ -214,6 +214,7 @@ class CaptureUserFragment : DialogFragment() {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Subred...")
                 is Resource.Success -> {
                     val list = result.data.map { net -> net.id_subred }
+                    
                     val firstData = if (list.isEmpty()) "" else list[0]
                     dropdown_capture_subred.setText(firstData)
 
@@ -240,8 +241,9 @@ class CaptureUserFragment : DialogFragment() {
             when (result) {
                 is Resource.Loading -> Log.i(CAPTURE_USER_FRAGMENT, "Cargando Celula...")
                 is Resource.Success -> {
-                    listCell = result.data
-                    val list = result.data.map { net -> net.id_celula }
+                    val data = result.data.asListCellDataSource()
+                    listCell = data
+                    val list = data.map { net -> net.id_celula }
                     val firstData = if (list.isEmpty()) "" else list[0]
                     dropdown_capture_celula.setText(firstData)
 

@@ -1,10 +1,7 @@
 package com.david.redcristianauno.domain.usecases
 
 import com.david.redcristianauno.data.repository.ChurchRepository
-import com.david.redcristianauno.domain.models.CellDataSource
-import com.david.redcristianauno.domain.models.NetWork
-import com.david.redcristianauno.domain.models.SubNetwork
-import com.david.redcristianauno.domain.models.SubNetworkDataSource
+import com.david.redcristianauno.domain.models.*
 import com.david.redcristianauno.vo.Resource
 import com.google.firebase.firestore.DocumentReference
 import javax.inject.Inject
@@ -31,7 +28,7 @@ class GetCellsUseCase @Inject constructor(
         church: String,
         network: String,
         subNetwork: String
-    ): Resource<List<CellDataSource>> = churchRepository.getCell(church, network, subNetwork)
+    ): Resource<List<Cell>> = churchRepository.getCell(church, network, subNetwork)
 }
 
 class GePathCellUseCase @Inject constructor(

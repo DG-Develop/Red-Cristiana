@@ -82,7 +82,7 @@ class RemoteChurchDataSourceImpl @Inject constructor(
         church: String,
         network: String,
         subNetwork: String
-    ): Resource<List<CellDataSource>> {
+    ): Resource<List<Cell>> {
         val result = firebaseService.firebaseFirestore
             .collection(
                 "${CHURCH_COLLECTION_NAME}/" +
@@ -97,7 +97,31 @@ class RemoteChurchDataSourceImpl @Inject constructor(
             .await()
 
         val listCell = result.toObjects(CellDataSource::class.java)
-        return Resource.Success(listCell)
+
+        val listCellResult = listCell.map { cellDataSource ->
+            val searchLeader = firebaseService.firebaseFirestore
+                .document(cellDataSource.leader!!.path)
+                .get().await()
+            val searchCreate = firebaseService.firebaseFirestore
+                .document(cellDataSource.created_by!!.path)
+                .get().await()
+            val searchList = cellDataSource.users.map { docs ->
+                val search = firebaseService.firebaseFirestore
+                    .document(docs.path)
+                    .get().await()
+
+                search.toObject(UserDataSource::class.java)
+            }
+
+            Cell(
+                cellDataSource.id_celula,
+                searchCreate.toObject(UserDataSource::class.java)!!,
+                searchLeader.toObject(UserDataSource::class.java)!!,
+                searchList.toMutableList()
+            )
+        }
+
+        return Resource.Success(listCellResult)
     }
 
     override suspend fun getPathCell(

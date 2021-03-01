@@ -21,6 +21,7 @@ import com.david.redcristianauno.data.network.UserRepositoryImpl
 import com.david.redcristianauno.domain.ChurchUseCaseImpl
 import com.david.redcristianauno.domain.models.User
 import com.david.redcristianauno.domain.models.asListGeneralModel
+import com.david.redcristianauno.domain.models.asListGeneralModelCell
 import com.david.redcristianauno.domain.models.asListGeneralModelSub
 import com.david.redcristianauno.presentation.ui.adapters.GeneralListAdapter
 import com.david.redcristianauno.presentation.viewmodel.GeneralListViewModel
@@ -84,11 +85,11 @@ class GeneralListFragment : DialogFragment() {
 
         dropdown_entity_general_subred.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, _, _ ->
-                val subred = dropdown_entity_general_subred.text.toString()
-                viewModel.listCelulasFromFirebase(
+                val subNet = dropdown_entity_general_subred.text.toString()
+                generalListViewModel.setSubNetwork(
                     getIdEntity("Iglesia", userData),
                     dropdown_entity_general_red.text.toString(),
-                    subred
+                    subNet
                 )
             }
 
@@ -148,15 +149,23 @@ class GeneralListFragment : DialogFragment() {
             }
         })
 
-//        viewModel.subredes.observe(viewLifecycleOwner, Observer { subredes ->
-//            listAdapter = context?.let { GeneralListAdapter(it, subredes) }!!
+        generalListViewModel.fetchCell.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Resource.Loading -> Log.i(GENERAL_LIST_FRAGMENT, "Cargando...")
+                is Resource.Success -> {
+                    listAdapter =
+                        GeneralListAdapter(requireContext(), result.data.asListGeneralModelCell())
+                    rvListUserGeneral.adapter = listAdapter
+                }
+                is Resource.Failure -> Log.e(GENERAL_LIST_FRAGMENT, "Error al traer los datos", result.exception)
+            }
+        })
+
+
+//        viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas ->
+//            listAdapter = context?.let { GeneralListAdapter(it, celulas) }!!
 //            rvListUserGeneral.adapter = listAdapter
 //        })
-
-        viewModel.celulas.observe(viewLifecycleOwner, Observer { celulas ->
-            listAdapter = context?.let { GeneralListAdapter(it, celulas) }!!
-            rvListUserGeneral.adapter = listAdapter
-        })
 
         // dropdown observes
         viewModel.dropdownRed.observe(viewLifecycleOwner, Observer { listRedes ->
@@ -177,7 +186,8 @@ class GeneralListFragment : DialogFragment() {
                     firstData
                 )
             } else {
-                viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), firstData)
+                generalListViewModel.setNetwork(getIdEntity("Iglesia", userData), firstData)
+                //viewModel.listSubredesFromFirebase(getIdEntity("Iglesia", userData), firstData)
             }
 
         })
@@ -194,7 +204,12 @@ class GeneralListFragment : DialogFragment() {
             dropdown_entity_general_subred.setAdapter(adapter)
 
             if (dropdown_entity_general_red.text.toString().isNotEmpty()) {
-                viewModel.listCelulasFromFirebase(
+//                viewModel.listCelulasFromFirebase(
+//                    getIdEntity("Iglesia", userData),
+//                    dropdown_entity_general_red.text.toString(),
+//                    firstData
+//                )
+                generalListViewModel.setSubNetwork(
                     getIdEntity("Iglesia", userData),
                     dropdown_entity_general_red.text.toString(),
                     firstData

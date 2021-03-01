@@ -1,6 +1,8 @@
 package com.david.redcristianauno.domain.models
 
+import com.david.redcristianauno.application.AppConstants
 import com.david.redcristianauno.data.model.GeneralModel
+import com.david.redcristianauno.data.network.FirebaseService
 import com.google.firebase.firestore.DocumentReference
 import java.io.Serializable
 
@@ -34,7 +36,7 @@ data class SubNetwork(
     val created_by: UserDataSource,
     val leader: UserDataSource,
     var max_celula: Int = 0
-)
+): Serializable
 
 data class CellDataSource(
     var created_by: DocumentReference? = null,
@@ -42,6 +44,32 @@ data class CellDataSource(
     var leader: DocumentReference? = null,
     var users: MutableList<DocumentReference> = mutableListOf()
 )
+
+data class Cell(
+    var id_celula: String = "",
+    var created_by: UserDataSource,
+    var leader: UserDataSource,
+    var users: MutableList<UserDataSource?> = mutableListOf()
+): Serializable
+
+fun List<Cell>.asListCellDataSource(): List<CellDataSource> = this.map {
+    val firebaseService = FirebaseService()
+    val created_by: DocumentReference = firebaseService.firebaseFirestore.collection(
+        AppConstants.USER_COLLECTION_NAME
+    ).document(it.created_by.id)
+
+    val leader: DocumentReference = firebaseService.firebaseFirestore.collection(
+        AppConstants.USER_COLLECTION_NAME
+    ).document(it.leader.id)
+
+    val users = it.users.map { user->
+       firebaseService.firebaseFirestore.collection(
+            AppConstants.USER_COLLECTION_NAME
+        ).document(user!!.id)
+    }
+
+    CellDataSource(created_by, it.id_celula, leader, users.toMutableList())
+}
 
 fun List<NetWork>.asListGeneralModel(): List<GeneralModel> = this.map {
     GeneralModel(
@@ -52,5 +80,11 @@ fun List<NetWork>.asListGeneralModel(): List<GeneralModel> = this.map {
 fun List<SubNetwork>.asListGeneralModelSub(): List<GeneralModel> = this.map {
     GeneralModel(
         it.id_subred, it.leader.names, it.leader.permission
+    )
+}
+
+fun List<Cell>.asListGeneralModelCell(): List<GeneralModel> = this.map {
+    GeneralModel(
+        it.id_celula, it.leader.names, it.leader.permission
     )
 }
